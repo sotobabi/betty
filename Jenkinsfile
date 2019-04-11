@@ -26,11 +26,9 @@ pipeline {
                 input "Does the staging environment look ok ?"
             }
         }
-        stage('Prod') {
+        stage('Deploy') {
             steps {
-                'echo:' {
-                    echo "Deploying to production"
-                }
+                echo "Deploying to production"
             }
         }
     }
