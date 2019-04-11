@@ -1,16 +1,14 @@
 pipeline {
-    agent none
+    agent any
 
     stages {
         stage('Build') {
-            agent { label 'gradle' }
             steps {
                 checkout scm
                 sh "gradle build --stacktrace"
             }
         }
         stage('Test') {
-            agent { label 'gradle' }
             steps {
                 parallel(
                     'check': {
@@ -29,7 +27,6 @@ pipeline {
             }
         }
         stage('Prod') {
-            agent { label 'gradle' }
             steps {
                 'echo:' {
                     echo "Deploying to production"
