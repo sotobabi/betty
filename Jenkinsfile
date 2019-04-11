@@ -5,14 +5,14 @@ pipeline {
         stage('Build') {
             steps {
                 checkout scm
-                sh "gradle build --stacktrace"
+                sh "./gradlew build --stacktrace"
             }
         }
         stage('Test') {
             steps {
                 parallel(
                     'check': {
-                        sh "gradle check --stacktrace"
+                        sh "./gradlew check --stacktrace"
                     },
                     'echo': {
                         echo "ok in parallel"
