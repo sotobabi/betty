@@ -15,3 +15,6 @@ notifications:
     - codingnomads2019:d1aWT8GvnxhOMXgNmiIHV0eJ#java-travis
     on_success: always
     on_failure: always
+before_install:
+- openssl aes-256-cbc -K $encrypted_71f9d37c0817_key -iv $encrypted_71f9d37c0817_iv
+  -in secrets/betty-webserver-key.pem.enc -out secrets/betty-webserver-key.pem -d
