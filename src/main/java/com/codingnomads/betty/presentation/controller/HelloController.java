@@ -1,4 +1,4 @@
-package com.codingnomads.betty.controller;
+package com.codingnomads.betty.presentation.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
