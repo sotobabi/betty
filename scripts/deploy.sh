@@ -2,11 +2,15 @@
 
 echo "Starting file validation and SCP to Tomcat Server..."
 
-WAR_FILE=build/libs/betty-0.0.1-SNAPSHOT.war
 PEM_FILE=secrets/betty-webserver-key.pem
 DEPLOY_FOLDER=/opt/tomcat/latest/webapps/
 
 if [ ! -f "$WAR_FILE" ]; then
+    echo "----------------------->"
+    ls ../
+    echo "----------------------->"
+    ls
+    echo "----------------------->"
     echo "$WAR_FILE does not exist"
     exit 127
 fi
