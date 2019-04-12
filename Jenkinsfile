@@ -20,12 +20,6 @@ pipeline {
                 )
             }
         }
-        stage('Approve') {
-            agent none
-            steps {
-                input "Does the staging environment look ok ?"
-            }
-        }
         stage('Deploy') {
             steps {
                 echo "Deploying to production"
