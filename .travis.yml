@@ -1,0 +1,17 @@
+language: java
+install: true
+jdk:
+- oraclejdk8
+script:
+- "./gradlew build --stacktrace"
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  on:
+    branch: master
+notifications:
+  slack:
+    rooms:
+    - codingnomads2019:d1aWT8GvnxhOMXgNmiIHV0eJ#java-travis
+    on_success: always
+    on_failure: always
