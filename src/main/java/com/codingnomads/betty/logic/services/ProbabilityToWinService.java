@@ -1,5 +1,6 @@
 package com.codingnomads.betty.logic.services;
 
+import com.codingnomads.betty.logic.exceptions.InvalidScoreException;
 import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
 import com.codingnomads.betty.logic.models.TeamSentimentScore;
 import org.springframework.stereotype.Service;
@@ -23,22 +24,19 @@ public class ProbabilityToWinService {
         teamProbabilityToWin.setTeamName(teamSentimentScore.getTeamName());
         teamProbabilityToWin.setMatchDateTime(teamSentimentScore.getMatchDateTime());
         teamProbabilityToWin.setPlayingHome(teamSentimentScore.getPlayingHome());
+        teamProbabilityToWin.setProbabilityToWin(transformScoreToProbability(teamScore));
 
-        return calculateTeamProbabilityToWin(teamScore, teamProbabilityToWin);
+        return teamProbabilityToWin;
     }
 
-    private TeamProbabilityToWin calculateTeamProbabilityToWin(Integer teamScore, TeamProbabilityToWin teamProbabilityToWin) {
+    private Double transformScoreToProbability(Integer teamScore) {
         if (teamScore <= 0) {
-            return calculateTeamProbabilityWithNegativeScore(teamScore, teamProbabilityToWin);
+            throw new InvalidScoreException("Team Score cannot be negative");
         }
-        teamProbabilityToWin.setProbabilityToWin((double) (teamScore/100));
-        return teamProbabilityToWin;
+
+        return (double) (teamScore/100);
     }
 
-    private TeamProbabilityToWin calculateTeamProbabilityWithNegativeScore(Integer teamScore, TeamProbabilityToWin teamProbabilityToWin) {
-        teamProbabilityToWin.setProbabilityToWin(0.00);
-        return teamProbabilityToWin;
-    }
 
 
 }

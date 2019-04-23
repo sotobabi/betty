@@ -1,24 +1,32 @@
 package com.codingnomads.betty.logic.services;
 
-import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
+import com.codingnomads.betty.logic.exceptions.InvalidScoreException;
 import com.codingnomads.betty.logic.models.TeamSentimentScore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProbabilityToWinServiceTests {
+
+    private ProbabilityToWinService service;
+
+    @Before
+    public void setUp() throws Exception {
+        service = new ProbabilityToWinService();
+    }
 
     @Test(expected = NullPointerException.class)
     public void ifTeamSentimentScoreIsNull_throwANullPointerException() {
         TeamSentimentScore teamSentimentScore = new TeamSentimentScore();
         teamSentimentScore.setScore(null);
 
-        ProbabilityToWinService service = new ProbabilityToWinService();
         service.getProbabilityToWinFromSentimentAnalysis(teamSentimentScore);
 
     }
@@ -28,25 +36,18 @@ public class ProbabilityToWinServiceTests {
         TeamSentimentScore givenTeamSentiment = new TeamSentimentScore();
         givenTeamSentiment.setScore(227);
 
-        ProbabilityToWinService service = new ProbabilityToWinService();
+        assertThat(service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment).getProbabilityToWin())
+                .isEqualTo(givenTeamSentiment.getScore()/100);
 
-        assertEquals(givenTeamSentiment.getScore() / 100,
-                (double) service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment).getProbabilityToWin(),
-                0.0);
     }
 
-    @Test
-    public void givenANegativeTeamSentimentScore_aTeamProbabilityOfZeroIsReturned() {
+    @Test(expected = InvalidScoreException.class)
+    public void givenANegativeTeamSentimentScore_anInvalidScoreExceptionIsThrown() {
         TeamSentimentScore givenTeamSentiment = new TeamSentimentScore();
         givenTeamSentiment.setScore(-185);
 
-        ProbabilityToWinService service = new ProbabilityToWinService();
+        service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment);
 
-        assertTrue(service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment)
-                .getProbabilityToWin() >= 0.0);
     }
-
-
-
 
 }
