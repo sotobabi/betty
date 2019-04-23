@@ -1,30 +1,17 @@
 package com.codingnomads.betty.logic.services;
 
-import com.codingnomads.betty.logic.TwitterAuthenticator;
+import com.codingnomads.betty.logic.repositories.TwitterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import twitter4j.*;
-
+import twitter4j.Status;
 import java.util.List;
 
-@Service
 public class TwitterService {
 
     @Autowired
-    private TwitterAuthenticator twitterAuthenticator;
+    private TwitterRepository twitterRepository;
 
-    public List<Status> searchTweets() throws TwitterException {
+    public List<Status> searchTweets(String keyword, int numberOfStatus){
 
-        Twitter twitter = twitterAuthenticator.getTwitter();
-
-        Query query = new Query("source:dogs");
-
-        query.setCount(10);
-
-        QueryResult queryResult = twitter.search(query);
-
-        List<Status> tweets = queryResult.getTweets();
-
-        return tweets;
+        return twitterRepository.searchTweets(keyword, numberOfStatus);
     }
 }

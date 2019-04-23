@@ -1,4 +1,4 @@
-package com.codingnomads.betty.logic;
+package com.codingnomads.betty.configurations;
 
 import org.springframework.stereotype.Component;
 import twitter4j.Twitter;
@@ -6,12 +6,21 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 @Component
-public class TwitterAuthenticator {
+public class TwitterConfigurer {
 
     private Twitter twitter;
     private TwitterFactory twitterFactory;
 
-    private void buildTwitterConfiguration(){
+    public TwitterConfigurer() {
+
+        buildTwitterConfiguration();
+    }
+
+    public Twitter getTwitter() {
+        return twitter;
+    }
+
+    private void buildTwitterConfiguration() {
 
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 
@@ -23,15 +32,8 @@ public class TwitterAuthenticator {
                 .setOAuthAccessTokenSecret("onVEyjUBZp4SQX3yXiSytZ1UfnYpcxBSnpr8DF20bEIHb");
 
         twitterFactory = new TwitterFactory(configurationBuilder.build());
-    }
-
-    public TwitterAuthenticator() {
-
-        buildTwitterConfiguration();
         twitter = twitterFactory.getInstance();
     }
-
-    public Twitter getTwitter() {
-        return twitter;
-    }
 }
+
+
