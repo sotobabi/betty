@@ -8,7 +8,7 @@ addons:
       token:
         secure: $SONAR_TOKEN
 script:
-- "./gradlew build --stacktrace"
+- "./gradlew build jacocoTestReport --stacktrace"
 - sonar-scanner
 
 deploy:
