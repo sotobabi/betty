@@ -23,3 +23,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		csv.enabled false
+	}
+}
