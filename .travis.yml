@@ -3,14 +3,13 @@ install: true
 jdk:
 - oraclejdk8
 addons:
-    sonarcloud:
-      organization: "sotobabi"
-      token:
-        secure: $SONAR_TOKEN
+  sonarcloud:
+    organization: sotobabi
+    token:
+      secure: "$SONAR_TOKEN"
 script:
 - "./gradlew build jacocoTestReport --stacktrace"
 - sonar-scanner
-
 deploy:
   provider: script
   script: bash scripts/deploy.sh
@@ -26,3 +25,6 @@ notifications:
 before_install:
 - openssl aes-256-cbc -K $encrypted_71f9d37c0817_key -iv $encrypted_71f9d37c0817_iv
   -in secrets/betty-webserver-key.pem.enc -out secrets/betty-webserver-key.pem -d
+env:
+  global:
+    secure: idmOniLC19rHiEskob6TCR8ESXSYdfwGRIJH4d0SDWLrXiIC8uZcL7/16i6ukjKV2izcS1dLK9plAWCui0kevpjQZIZ6pa09auMynt8sMQjFv5pPGHIJYUTUmM4py8wqiUPIlgLGtHWDCpD9AjoRHQIp7q/eqHpwQYxMMlzV9IT6QfM7+DvX+zSyDXzDRA3cLflqGpH5COhCxjnhqnmC1V7fVc0vfFaAYC5R1eErnKBtCEdCOGZRcgl+Obg1IWCnOQ4oWhxSBU5FUIfpxwhyllfu+nzivD+7ElF++7gcz8h76XwgJStT4eGEtI2ESYcJfdM9LsHIKoDHe6REeUuO1gOhCSuCoS0mSLbrsPAKG3SGRFfgvVCbilpIJbMnV0+Ynq8GWn1cRYFEm4T74jppK840s3u0XH9ahgxi20LX/rdeRWC1L92lmLdrYZGVLoyEnZnVQKR9BogPaUhDTocr7Zp2Yt78UA+lzdXY46lvGrDyPZqrNGSyhQ7O8cx0hCRwVVVLGz3im0UJYXv8h3ZWJucRTFEBTi68wnuOElAEeNV8FzR8BZAfqEZAC6jWmVqaXIu05vfBHIxSfX8zpwMjVsF6uTlCR7uTSc83furOYvOR//KsQWAyklqcG6ziTC4XfVURVBgvx9K8ZZB7xWmXglJRtyyfJJUdSjdRC3AA2QI=
