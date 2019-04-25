@@ -17,6 +17,7 @@ public class Tweet {
     private String text;
     @NotBlank
     private String createdAt;
+    private String keywordUsed;
 
     public Long getId() {
         return id;
@@ -48,5 +49,13 @@ public class Tweet {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getKeywordUsed() {
+        return keywordUsed;
+    }
+
+    public void setKeywordUsed(String keywordUsed) {
+        this.keywordUsed = keywordUsed;
     }
 }

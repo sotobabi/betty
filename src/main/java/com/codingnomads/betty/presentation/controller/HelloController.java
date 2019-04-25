@@ -1,6 +1,6 @@
 package com.codingnomads.betty.presentation.controller;
 
-import com.codingnomads.betty.data.api.TwitterSourceRepository;
+import com.codingnomads.betty.data.api.TwitterSourceMinerRepository;
 import com.codingnomads.betty.logic.services.TwitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HelloController {
 
     @Autowired
-    private TwitterSourceRepository twitterSourceRepository;
+    private TwitterSourceMinerRepository twitterSourceRepository;
     @Autowired
     private TwitterService twitterService;
 
@@ -21,7 +21,7 @@ public class HelloController {
 
     @GetMapping("/api-to-database")
     public String makeApiCallAndSinkTweetsToRemoteDatabase() {
-        twitterService.searchTweets("cat", 15);
+        twitterService.callApiAndSaveStatusesAsTweets("cat", 15);
         return "api-to-database";
     }
 

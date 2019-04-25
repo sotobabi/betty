@@ -1,11 +1,11 @@
 package com.codingnomads.betty.logic.interfaces;
 
 import com.codingnomads.betty.data.models.Tweet;
-import org.springframework.data.jpa.repository.JpaRepository;
-import twitter4j.Status;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface TwitterRepository {
-    List<Status> searchTweets(String keyword, int numberOfStatus);
+    void saveTweets(List<Tweet> listOfTweets);
 }
