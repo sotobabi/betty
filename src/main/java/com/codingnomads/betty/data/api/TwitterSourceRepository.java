@@ -1,11 +1,10 @@
-package com.codingnomads.betty.database;
+package com.codingnomads.betty.data.api;
 
 import com.codingnomads.betty.configurations.TwitterConfigurer;
 import com.codingnomads.betty.logic.exceptions.TwitterSearchFailedException;
-import com.codingnomads.betty.logic.repositories.TwitterRepository;
+import com.codingnomads.betty.logic.interfaces.TwitterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import twitter4j.*;
 import java.util.List;
 
