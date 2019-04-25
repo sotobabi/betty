@@ -1,4 +1,4 @@
-package com.codingnomads.betty.logic.repositories;
+package com.codingnomads.betty.logic.interfaces;
 
 import twitter4j.Status;
 import java.util.List;
