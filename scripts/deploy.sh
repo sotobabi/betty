@@ -19,7 +19,5 @@ fi
 chmod 400 $PEM_FILE
 scp -o StrictHostKeyChecking=no -i $PEM_FILE $WAR_FILE ubuntu@3.19.108.19:"$DEPLOY_FOLDER"ROOT.war
 echo "PEACE TO WORLD"
-echo "Below is the env variable------------"
-echo $DATABASE_USERNAME
 
 
