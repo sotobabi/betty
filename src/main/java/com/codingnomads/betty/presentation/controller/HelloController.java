@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HelloController {
 
-    private static final String keyword = "cat";
-    private static final int numberOfTweets = 15;
-
     @Autowired
     private TwitterSourceRepository twitterSourceRepository;
     @Autowired
@@ -19,8 +16,14 @@ public class HelloController {
 
     @GetMapping("/")
     public String sayHello() {
-        twitterService.searchTweets(keyword, numberOfTweets);
-        System.out.println("<---------------STUFF GOT DONE----------------->");
         return "hello";
     }
+
+    @GetMapping("/api-to-database")
+    public String makeApiCallAndSinkTweetsToRemoteDatabase() {
+        twitterService.searchTweets("cat", 15);
+        return "api-to-database";
+    }
+
+
 }
