@@ -34,7 +34,7 @@ public class ProbabilityToWinServiceTests {
     @Test
     public void givenAPositiveTeamSentimentScore_aTeamProbabilityToWinBetween0And100IsReturned() {
         TeamSentimentScore givenTeamSentiment = new TeamSentimentScore();
-        givenTeamSentiment.setScore(227);
+        givenTeamSentiment.setScore(227.0);
 
         assertThat(service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment).getProbabilityToWin())
                 .isEqualTo(givenTeamSentiment.getScore()/100.00);
@@ -44,7 +44,7 @@ public class ProbabilityToWinServiceTests {
     @Test(expected = InvalidScoreException.class)
     public void givenANegativeTeamSentimentScore_anInvalidScoreExceptionIsThrown() {
         TeamSentimentScore givenTeamSentiment = new TeamSentimentScore();
-        givenTeamSentiment.setScore(-185);
+        givenTeamSentiment.setScore(-185.0);
 
         service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment);
 
