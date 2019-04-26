@@ -6,6 +6,7 @@ import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
 import com.codingnomads.betty.logic.models.TeamSentimentScore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import twitter4j.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,11 @@ public class AnalyzeTweetsService {
     ProbabilityToWinService probabilityToWinService;
 
     public TeamProbabilityToWin calculateProbabilityWithTweets(String teamName) {
-        List<Tweet> tweets = twitterService.searchTweets(teamName, 30); //todo: for now manually setting the number of tweets to be analyzed
+        List<Status> tweets = twitterService.searchTweets(teamName, 30); //todo: for now manually setting the number of tweets to be analyzed
 
         List<SentimentResult> sentimentResultList = new ArrayList<>();
-        for(Tweet tweet : tweets){
+
+        for(Status tweet : tweets){
             String tweetContent = tweet.getText();
             SentimentResult sentimentResult = sentimentAnalyserService.getSentimentResult(tweetContent);
             sentimentResultList.add(sentimentResult);
