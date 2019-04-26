@@ -3,6 +3,7 @@ package com.codingnomads.betty.data.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "tweets")
@@ -16,7 +17,7 @@ public class Tweet {
     @Column(length = 512)
     private String text;
     @NotBlank
-    private String createdAt;
+    private Date createdAt;
     private String keywordUsed;
 
     public Long getId() {
@@ -43,11 +44,11 @@ public class Tweet {
         this.text = text;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
