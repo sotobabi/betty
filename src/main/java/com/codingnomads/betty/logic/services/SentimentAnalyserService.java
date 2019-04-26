@@ -3,6 +3,7 @@ package com.codingnomads.betty.logic.services;
 import com.codingnomads.betty.logic.exceptions.InvalidInputException;
 import com.codingnomads.betty.logic.models.SentimentClassification;
 import com.codingnomads.betty.logic.models.SentimentResult;
+import com.codingnomads.betty.logic.models.TeamSentimentScore;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -29,8 +30,6 @@ public class SentimentAnalyserService {
     @Autowired
     private StanfordCoreNLP pipeline;
 
-    public List<SentimentResult> sentimentResultList = new ArrayList<>();
-
     public SentimentResult getSentimentResult(String text) {
         validateInput(text);
 
@@ -44,6 +43,7 @@ public class SentimentAnalyserService {
     }
 
     private SentimentResult getSentimentResult(Annotation annotation) {
+        List<SentimentResult> sentimentResultList = new ArrayList<>();
 
         SentimentResult sentimentResult = null;
         for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
@@ -59,7 +59,7 @@ public class SentimentAnalyserService {
         return sentimentResult;
     }
 
-    public double getAverageSentimentScore(List<SentimentResult> sentimentResultList) {
+    public TeamSentimentScore getAverageSentimentScore(List<SentimentResult> sentimentResultList) {
         double averageSentimentScore = 0.0;
 
         for (SentimentResult sentimentResult : sentimentResultList) {
@@ -68,7 +68,11 @@ public class SentimentAnalyserService {
 
         averageSentimentScore = averageSentimentScore / sentimentResultList.size();
 
-        return averageSentimentScore;
+        //todo: need to set other fields in TeamSentimentScore
+        TeamSentimentScore teamSentimentScore = new TeamSentimentScore();
+        teamSentimentScore.setScore(averageSentimentScore);
+
+        return teamSentimentScore;
     }
 
     private SentimentClassification getClassification(SimpleMatrix simpleMatrix) {

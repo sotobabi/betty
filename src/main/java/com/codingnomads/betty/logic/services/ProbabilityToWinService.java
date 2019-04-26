@@ -18,7 +18,7 @@ public class ProbabilityToWinService {
 
     private TeamProbabilityToWin createTeamProbability(TeamSentimentScore teamSentimentScore) {
 
-        Integer teamScore = teamSentimentScore.getScore();
+        Double teamScore = teamSentimentScore.getScore();
 
         TeamProbabilityToWin teamProbabilityToWin = new TeamProbabilityToWin();
         teamProbabilityToWin.setTeamName(teamSentimentScore.getTeamName());
@@ -29,12 +29,12 @@ public class ProbabilityToWinService {
         return teamProbabilityToWin;
     }
 
-    private Double transformScoreToProbability(Integer teamScore) {
+    private Double transformScoreToProbability(Double teamScore) {
         if (teamScore <= 0) {
             throw new InvalidScoreException("Team Score cannot be negative");
         }
 
-        return teamScore/100.0;
+        return teamScore/100;
     }
 
 
