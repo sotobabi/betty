@@ -13,10 +13,12 @@ public class Tweet {
     private Long id;
     @Size(max = 15)
     private String language;
-    @NotBlank
+    @NotBlank()
+    @Size(max = 512)
     private String text;
     @NotBlank
     private String createdAt;
+    private String keywordUsed;
 
     public Long getId() {
         return id;
@@ -48,5 +50,13 @@ public class Tweet {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getKeywordUsed() {
+        return keywordUsed;
+    }
+
+    public void setKeywordUsed(String keywordUsed) {
+        this.keywordUsed = keywordUsed;
     }
 }

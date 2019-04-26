@@ -34,7 +34,7 @@ public class ProbabilityToWinService {
             throw new InvalidScoreException("Team Score cannot be negative");
         }
 
-        return (double) (teamScore/100);
+        return teamScore/100.0;
     }
 
 

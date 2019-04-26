@@ -1,4 +1,4 @@
-package com.codingnomads.betty.logic.services;
+package com.codingnomads.betty.logic.exceptions;
 
 public class InvalidInputException extends RuntimeException {
     public InvalidInputException(String message) {

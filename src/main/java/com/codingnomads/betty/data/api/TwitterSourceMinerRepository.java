@@ -1,18 +1,18 @@
 package com.codingnomads.betty.data.api;
 
-import com.codingnomads.betty.configurations.TwitterConfigurer;
+import com.codingnomads.betty.configurations.TwitterConfig;
 import com.codingnomads.betty.logic.exceptions.TwitterSearchFailedException;
-import com.codingnomads.betty.logic.interfaces.TwitterRepository;
+import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import twitter4j.*;
 import java.util.List;
 
 @Repository
-public class TwitterSourceRepository implements TwitterRepository {
+public class TwitterSourceMinerRepository implements TwitterMinerRepository {
 
     @Autowired
-    private TwitterConfigurer twitterConfigurer;
+    private TwitterConfig twitterConfigurer;
 
     public List<Status> searchTweets(String keyword, int numberOfStatus){
 
