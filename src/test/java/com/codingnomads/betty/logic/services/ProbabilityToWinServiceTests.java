@@ -37,7 +37,7 @@ public class ProbabilityToWinServiceTests {
         givenTeamSentiment.setScore(227);
 
         assertThat(service.getProbabilityToWinFromSentimentAnalysis(givenTeamSentiment).getProbabilityToWin())
-                .isEqualTo(givenTeamSentiment.getScore()/100);
+                .isEqualTo(givenTeamSentiment.getScore()/100.00);
 
     }
 
