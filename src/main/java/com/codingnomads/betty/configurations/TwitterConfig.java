@@ -6,12 +6,12 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 @Component
-public class TwitterConfigurer {
+public class TwitterConfig {
 
     private Twitter twitter;
     private TwitterFactory twitterFactory;
 
-    public TwitterConfigurer() {
+    public TwitterConfig() {
 
         buildTwitterConfiguration();
     }

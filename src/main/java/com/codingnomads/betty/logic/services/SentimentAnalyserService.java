@@ -1,5 +1,6 @@
 package com.codingnomads.betty.logic.services;
 
+import com.codingnomads.betty.logic.exceptions.InvalidInputException;
 import com.codingnomads.betty.logic.models.SentimentClassification;
 import com.codingnomads.betty.logic.models.SentimentResult;
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -57,7 +57,6 @@ public class SentimentAnalyserService {
 
             printSentimentResultBySentence(sentimentResult, sentence);
         }
-        //TODO: Returning the last result instead of a summary?!?!
 
         return sentimentResult;
     }

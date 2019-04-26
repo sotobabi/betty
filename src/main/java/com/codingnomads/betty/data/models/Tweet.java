@@ -13,7 +13,8 @@ public class Tweet {
     private Long id;
     @Size(max = 15)
     private String language;
-    @NotBlank
+    @NotBlank()
+    @Size(max = 512)
     private String text;
     @NotBlank
     private String createdAt;

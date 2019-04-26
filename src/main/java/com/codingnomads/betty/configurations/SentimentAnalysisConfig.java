@@ -1,4 +1,4 @@
-package com.codingnomads.betty.configuration;
+package com.codingnomads.betty.configurations;
 
 import com.codingnomads.betty.logic.models.SentimentClassification;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
