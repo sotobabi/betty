@@ -15,13 +15,14 @@ public class AmazonRdsRepository implements TwitterRepository {
     private TwitterJpaRepository twitterJpaRepository;
 
     @Override
-    public void saveTweets(List<Tweet> listOfTweets) {
-        saveListToDatabaseAndFlush(listOfTweets);
+    public Boolean saveTweets(List<Tweet> listOfTweets) {
+        return saveListToDatabaseAndFlush(listOfTweets);
     }
 
-    private void saveListToDatabaseAndFlush(List<Tweet> listOfTweets) {
+    private Boolean saveListToDatabaseAndFlush(List<Tweet> listOfTweets) {
         twitterJpaRepository.saveAll(listOfTweets);
         twitterJpaRepository.flush();
+        return true;
     }
 
 

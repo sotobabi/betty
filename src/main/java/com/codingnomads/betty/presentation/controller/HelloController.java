@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HelloController {
 
-    @Autowired
-    private TwitterSourceMinerRepository twitterSourceRepository;
-    @Autowired
     private TwitterService twitterService;
+
+    @Autowired
+    public HelloController(TwitterService twitterService) {
+        this.twitterService = twitterService;
+    }
+
 
     @GetMapping("/")
     public String sayHello() {

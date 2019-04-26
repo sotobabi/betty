@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface TwitterRepository {
-    void saveTweets(List<Tweet> listOfTweets);
+    Boolean saveTweets(List<Tweet> listOfTweets);
 }
