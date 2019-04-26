@@ -55,9 +55,7 @@ public class SentimentAnalyserService {
             sentimentResult.setSentimentScore(RNNCoreAnnotations.getPredictedClass(tree));
             sentimentResultList.add(sentimentResult);
 
-            printSentimentResultBySentence(sentimentResult, sentence);
         }
-
         return sentimentResult;
     }
 
@@ -81,12 +79,5 @@ public class SentimentAnalyserService {
         classification.setPositive((int) Math.round(simpleMatrix.get(3) * 100d));
         classification.setVeryPositive((int) Math.round(simpleMatrix.get(4) * 100d));
         return classification;
-    }
-
-    private void printSentimentResultBySentence(SentimentResult sentimentResult, CoreMap sentence) {
-        System.out.println("-------------------->");
-        System.out.println(sentence);
-        System.out.println(sentimentResult);
-        System.out.println("-------------------->");
     }
 }

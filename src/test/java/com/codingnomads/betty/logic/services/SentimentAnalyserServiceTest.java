@@ -22,7 +22,7 @@ public class SentimentAnalyserServiceTest {
     private SentimentResult sentimentResult;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         service = new SentimentAnalyserService();
     }
 
