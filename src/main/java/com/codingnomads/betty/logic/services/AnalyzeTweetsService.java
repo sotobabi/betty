@@ -1,6 +1,5 @@
 package com.codingnomads.betty.logic.services;
 
-import com.codingnomads.betty.data.models.Tweet;
 import com.codingnomads.betty.logic.models.SentimentResult;
 import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
 import com.codingnomads.betty.logic.models.TeamSentimentScore;
@@ -28,7 +27,7 @@ public class AnalyzeTweetsService {
 
         List<SentimentResult> sentimentResultList = new ArrayList<>();
 
-        for(Status tweet : tweets){
+        for (Status tweet : tweets) {
             String tweetContent = tweet.getText();
             SentimentResult sentimentResult = sentimentAnalyserService.getSentimentResult(tweetContent);
             sentimentResultList.add(sentimentResult);

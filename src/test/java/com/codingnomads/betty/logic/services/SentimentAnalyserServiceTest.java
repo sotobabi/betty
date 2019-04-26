@@ -1,7 +1,6 @@
 package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.logic.models.SentimentResult;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,8 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -30,7 +27,7 @@ public class SentimentAnalyserServiceTest {
     @Test(expected = NullPointerException.class)
     public void ifAverageSentimentResultScoreIsNull_throwANullPointerException() {
         List<SentimentResult> sentimentResultList = new ArrayList<SentimentResult>();
-        sentimentResultList.add(0,sentimentResult);
+        sentimentResultList.add(0, sentimentResult);
 
         service.getAverageSentimentScore(sentimentResultList);
 
