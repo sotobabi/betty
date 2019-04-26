@@ -7,12 +7,14 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-inline my-2 my-lg-0" th:action="@{/search}"
-          th:object="${searchRequest}" method="get">
+    <form class="form-inline my-2 my-lg-0" th:action="@{/getOdds}"
+          th:object="${inputTeam}" method="get">
         <input class="form-control mr-sm-2" type="search" placeholder="Enter team name here." aria-label="Search"
                th:field="*{teamName}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+
+    <h3>Your team's probability to win is <span th:text="${teamProbabilityToWin.probabilityToWin}"> </span></h3>
 </div>
 </body>
 </html>

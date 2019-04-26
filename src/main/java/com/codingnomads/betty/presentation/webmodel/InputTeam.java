@@ -1,6 +1,6 @@
 package com.codingnomads.betty.presentation.webmodel;
 
-public class SearchRequest {
+public class InputTeam {
     String teamName;
 
     public String getTeamName() {
