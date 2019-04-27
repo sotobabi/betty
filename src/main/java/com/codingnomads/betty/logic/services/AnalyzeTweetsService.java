@@ -23,6 +23,11 @@ public class AnalyzeTweetsService {
     ProbabilityToWinService probabilityToWinService;
 
     public TeamProbabilityToWin calculateProbabilityWithTweets(String teamName) {
+
+        if(teamName == null){
+            return new TeamProbabilityToWin();
+        }
+
         List<Status> tweets = twitterService.searchTweets(teamName, 30); //todo: for now manually setting the number of tweets to be analyzed
 
         List<SentimentResult> sentimentResultList = new ArrayList<>();
