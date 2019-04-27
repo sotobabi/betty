@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Event {
+public class EventJSON {
 
     @JsonProperty("name")
     private String name;
@@ -15,7 +15,7 @@ public class Event {
     private String start;
 
     @JsonProperty("markets")
-    private List<Market> markets;
+    private List<MarketJSON> markets;
 
     public String getName() {
         return name;
@@ -33,20 +33,20 @@ public class Event {
         this.start = start;
     }
 
-    public List<Market> getMarkets() {
+    public List<MarketJSON> getMarketJSONS() {
         return markets;
     }
 
-    public void setMarkets(List<Market> markets) {
-        this.markets = markets;
+    public void setMarketJSONS(List<MarketJSON> marketJSONS) {
+        this.markets = marketJSONS;
     }
 
     @Override
     public String toString() {
-        return "Event{" +
+        return "EventJSON{" +
                 "name='" + name + '\'' +
                 ", start='" + start + '\'' +
-                ", markets=" + markets +
+                ", marketJSONS=" + markets +
                 '}';
     }
 }

@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Runner {
+public class RunnerJSON {
 
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("prices")
-    private List<Price> prices;
+    private List<PriceJSON> prices;
 
     public String getName() {
         return name;
@@ -22,19 +22,19 @@ public class Runner {
         this.name = name;
     }
 
-    public List<Price> getPrices() {
+    public List<PriceJSON> getPriceJSONS() {
         return prices;
     }
 
-    public void setPrices(List<Price> prices) {
-        this.prices = prices;
+    public void setPriceJSONS(List<PriceJSON> priceJSONS) {
+        this.prices = priceJSONS;
     }
 
     @Override
     public String toString() {
-        return "Runner{" +
+        return "RunnerJSON{" +
                 "name='" + name + '\'' +
-                ", prices=" + prices +
+                ", priceJSONS=" + prices +
                 '}';
     }
 }

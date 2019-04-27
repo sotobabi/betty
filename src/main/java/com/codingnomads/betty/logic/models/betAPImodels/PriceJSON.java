@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Price {
+public class PriceJSON {
 
     @JsonProperty("odds")
     private double odds;
@@ -19,7 +19,7 @@ public class Price {
 
     @Override
     public String toString() {
-        return "Price{" +
+        return "PriceJSON{" +
                 "odds=" + odds +
                 '}';
     }
