@@ -1,6 +1,7 @@
 package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.data.api.GameInformationAPIRepository;
+import com.codingnomads.betty.logic.exceptions.JSONNotFoundException;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
 import com.codingnomads.betty.logic.models.betAPImodels.*;
 import org.junit.Before;
@@ -55,6 +56,14 @@ public class GameInformationServiceTest {
 
         assertThat(testGameInformationService.getOddsByMatch(teamName1, teamName2))
                 .matches((map)-> map.get(teamName2) == 2.0);
+    }
+
+    @Test(expected = JSONNotFoundException.class)
+    public void whenGivenInvalidTeamName_shouldThrownException(){
+
+        when(mockGameInformationRepository.getGameInformation()).thenReturn(gameInformationJSON);
+
+        testGameInformationService.getOddsByMatch("wrong1", "wrong2");
     }
 
     private GameInformationJSON createGameInformationJSON(){
