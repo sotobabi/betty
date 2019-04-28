@@ -1,5 +1,6 @@
 package com.codingnomads.betty.logic.services;
 
+import com.codingnomads.betty.data.models.Tweet;
 import com.codingnomads.betty.logic.models.SentimentResult;
 import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
 import com.codingnomads.betty.logic.models.TeamSentimentScore;
@@ -13,14 +14,16 @@ import java.util.List;
 @Service
 public class AnalyzeTweetsService {
 
-    @Autowired
     private TwitterService twitterService;
+    private SentimentAnalyserService sentimentAnalyserService;
+    private ProbabilityToWinService probabilityToWinService;
 
     @Autowired
-    SentimentAnalyserService sentimentAnalyserService;
-
-    @Autowired
-    ProbabilityToWinService probabilityToWinService;
+    public AnalyzeTweetsService(TwitterService twitterService, SentimentAnalyserService sentimentAnalyserService, ProbabilityToWinService probabilityToWinService) {
+        this.twitterService = twitterService;
+        this.sentimentAnalyserService = sentimentAnalyserService;
+        this.probabilityToWinService = probabilityToWinService;
+    }
 
     public TeamProbabilityToWin calculateProbabilityWithTweets(String teamName) {
 
@@ -28,7 +31,7 @@ public class AnalyzeTweetsService {
             return new TeamProbabilityToWin();
         }
 
-        List<Status> tweets = twitterService.searchTweets(teamName, 30); //todo: for now manually setting the number of tweets to be analyzed
+        List<Status> tweets = twitterService.searchTweets(teamName, 30);
 
         List<SentimentResult> sentimentResultList = new ArrayList<>();
 

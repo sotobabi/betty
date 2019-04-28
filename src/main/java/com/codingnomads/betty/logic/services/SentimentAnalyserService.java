@@ -86,4 +86,6 @@ public class SentimentAnalyserService {
         classification.setVeryPositive((int) Math.round(simpleMatrix.get(4) * 100d));
         return classification;
     }
+
+
 }

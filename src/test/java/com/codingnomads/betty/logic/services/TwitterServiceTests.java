@@ -9,9 +9,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import twitter4j.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -36,7 +36,6 @@ public class TwitterServiceTests {
         testTwitterService = new TwitterService(mockTwitterMinerRepository, mockTwitterRepository);
         mockTweet = mock(Tweet.class);
     }
-
 
 
     @Test
