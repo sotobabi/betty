@@ -1,6 +1,6 @@
 package com.codingnomads.betty;
 
-import com.codingnomads.betty.presentation.controller.HelloController;
+import com.codingnomads.betty.presentation.controller.HomeController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +15,13 @@ public class BettyApplicationTests {
     @Test
     public void contextLoads() {
 
+    }
+
+    @Test
+    public void whenRootMappingIsCalled_helloTemplateIsReturned() {
+        HomeController testController = new HomeController();
+
+        assertEquals("index", testController.index());
     }
 
 }
