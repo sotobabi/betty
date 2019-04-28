@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -71,7 +73,7 @@ public class SentimentAnalyserService {
         //todo: need to set other fields in TeamSentimentScore
         TeamSentimentScore teamSentimentScore = new TeamSentimentScore();
         teamSentimentScore.setScore(averageSentimentScore);
-
+        teamSentimentScore.setAnalysisDateTime(LocalDateTime.now());
         return teamSentimentScore;
     }
 

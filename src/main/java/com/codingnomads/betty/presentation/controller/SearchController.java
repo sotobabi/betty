@@ -1,6 +1,5 @@
 package com.codingnomads.betty.presentation.controller;
 
-import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
 import com.codingnomads.betty.logic.services.AnalyzeTweetsService;
 import com.codingnomads.betty.logic.services.TwitterService;
 import com.codingnomads.betty.presentation.webmodel.InputTeam;
