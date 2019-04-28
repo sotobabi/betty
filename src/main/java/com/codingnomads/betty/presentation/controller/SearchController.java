@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SearchController {
 
-    @Autowired
     private AnalyzeTweetsService analyzeTweetsService;
+    private TwitterService twitterService;
 
     @Autowired
-    private TwitterService twitterService;
+    public SearchController(AnalyzeTweetsService analyzeTweetsService, TwitterService twitterService) {
+        this.analyzeTweetsService = analyzeTweetsService;
+        this.twitterService = twitterService;
+    }
 
     @GetMapping("/getOdds")
     public String estimateTeamOdds(@RequestParam(name = "teamName", required = false) String teamName, Model model) {
@@ -25,4 +28,11 @@ public class SearchController {
         model.addAttribute("teamProbabilityToWin", analyzeTweetsService.calculateProbabilityWithTweets(teamName)); //manually putting in keyword for now (PS. dog has 38% of winning, cats 40%)
         return "/getOdds";
     }
+
+    @GetMapping("/api-to-database")
+    public String makeApiCallAndSinkTweetsToRemoteDatabase() {
+        twitterService.callApiAndSaveStatusesAsTweets("cat", 15);
+        return "api-to-database";
+    }
+
 }

@@ -16,7 +16,7 @@ public class Tweet {
     private String language;
     @Column(length = 512)
     private String text;
-    @NotBlank
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     private String keywordUsed;
 

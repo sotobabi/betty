@@ -37,7 +37,7 @@ public class TwitterService {
 
         for (Status status : listOfStatus) {
             Tweet tweet = new Tweet();
-            tweet.setCreatedAt(status.getCreatedAt().toString());
+            tweet.setCreatedAt(status.getCreatedAt());
             tweet.setText(status.getText());
             tweet.setLanguage(status.getLang());
             tweet.setKeywordUsed(keyword);

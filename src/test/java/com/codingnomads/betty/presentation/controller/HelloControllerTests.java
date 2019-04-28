@@ -1,5 +1,6 @@
 package com.codingnomads.betty.presentation.controller;
 
+import com.codingnomads.betty.logic.services.AnalyzeTweetsService;
 import com.codingnomads.betty.logic.services.TwitterService;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,18 +19,18 @@ public class HelloControllerTests {
 
     @Mock
     private TwitterService mockTwitterService;
-    private HelloController testController;
+    private SearchController testController;
+
+    @Mock
+    private AnalyzeTweetsService mockAnalyzeTweetsService;
 
     @Before
     public void setUp() {
         mockTwitterService = mock(TwitterService.class);
-        testController = new HelloController(mockTwitterService);
+        mockAnalyzeTweetsService= mock(AnalyzeTweetsService.class);
+        testController = new SearchController(mockAnalyzeTweetsService,mockTwitterService);
     }
 
-    @Test
-    public void whenRootMappingIsCalled_helloTemplateIsReturned() {
-        assertThat(testController.sayHello().contains("hello")).isTrue();
-    }
 
     @Test
     public void whenApiToDatabaseIsCalled_apiToDatabaseIsReturned() {
