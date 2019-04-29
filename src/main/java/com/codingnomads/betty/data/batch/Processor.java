@@ -13,8 +13,12 @@ import java.util.List;
 @Component
 public class Processor implements ItemProcessor<List<Status>, List<Tweet>> {
 
-    @Autowired
     private StatusItemReader statusItemReader;
+
+    @Autowired
+    public Processor(StatusItemReader statusItemReader) {
+        this.statusItemReader = statusItemReader;
+    }
 
     @Override
     public List<Tweet> process(List<Status> statusList) throws Exception {

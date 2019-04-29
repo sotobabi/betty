@@ -22,7 +22,6 @@ public class RdsWriter implements ItemWriter<List<Tweet>> {
     public void write(List<? extends List<Tweet>> tweetsList) throws Exception {
         for (List<Tweet> tweets : tweetsList) {
             twitterJpaRepository.saveAll(tweets);
-
         }
     }
 }
