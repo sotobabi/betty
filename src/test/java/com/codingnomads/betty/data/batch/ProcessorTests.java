@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import twitter4j.Status;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +38,18 @@ public class ProcessorTests {
         List<Tweet> expectedTweetsList = new ArrayList<>();
 
         when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
-
         assertThat(testProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+    }
+
+    @Test
+    public void whenProcessorIsCalledWithNullListOfStatus_returnsANullListOfTweets() throws Exception {
+        List<Status> mockListOfStatus = new ArrayList<>();
+        mockListOfStatus.add(null);
+
+        List<Tweet> expectedTweetsList = Collections.emptyList();
+
+        when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
+        assertThat(testProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+
     }
 }

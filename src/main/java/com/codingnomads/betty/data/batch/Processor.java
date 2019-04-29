@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -26,7 +28,7 @@ public class Processor implements ItemProcessor<List<Status>, List<Tweet>> {
 
         for (Status status : statusList) {
             if (status == null) {
-                return null;
+                return Collections.emptyList();
             }
             Tweet tweet = new Tweet();
             tweet.setCreatedAt(status.getCreatedAt());
