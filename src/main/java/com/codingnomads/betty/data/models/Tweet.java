@@ -10,7 +10,7 @@ import java.util.Date;
 public class Tweet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Size(max = 15)
     private String language;
