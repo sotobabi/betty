@@ -128,7 +128,7 @@ public class GameInformationService {
         try {
             date = sdf.parse(dateFromAPI);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Match Date Time Parsing Error!", e);
         }
 
         long mills = date.getTime();
