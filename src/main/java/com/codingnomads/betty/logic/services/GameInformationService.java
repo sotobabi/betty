@@ -11,7 +11,6 @@ import com.codingnomads.betty.logic.models.betAPImodels.RunnerJSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -78,11 +77,11 @@ public class GameInformationService {
 
     private EventJSON getEventJSONforMatch(String match, GameInformationJSON gameInformationJSON) {
 
-        for (EventJSON eventJSON : gameInformationJSON.getEventJSONS()) {
+        for (EventJSON event : gameInformationJSON.getEventJSONS()) {
 
-            if (eventJSON.getName().equalsIgnoreCase(match)) {
+            if (event.getName().equalsIgnoreCase(match)) {
 
-                return eventJSON;
+                return event;
             }
         }
 
