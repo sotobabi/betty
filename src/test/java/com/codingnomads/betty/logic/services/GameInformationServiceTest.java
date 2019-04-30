@@ -1,20 +1,29 @@
 package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.data.api.GameInformationAPIRepository;
+import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.exceptions.JSONNotFoundException;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
+import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.models.betAPImodels.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,11 +34,13 @@ public class GameInformationServiceTest {
     private GameInformationAPIRepository mockGameInformationAPIRepository;
     private GameInformationRepository mockGameInformationRepository;
     private GameInformationService testGameInformationService;
+    private MatchOddsJpaRepository mockMatchOddsJpaRepository;
     private Map<String, Double> map = new HashMap<>();
     private static final String teamName1 = "team1";
     private static final  String teamName2 = "team2";
     private static final String eventName = "team1 vs team2";
     private static final String marketName = "Match Odds";
+    private static final String date = "2019-01-01 ";
     private static final double oddForTeam1 = 1.0;
     private static final double oddForTeam2 = 2.0;
     private GameInformationJSON gameInformationJSON;
@@ -38,7 +49,8 @@ public class GameInformationServiceTest {
     public void setUp(){
         mockGameInformationAPIRepository = mock(GameInformationAPIRepository.class);
         mockGameInformationRepository = mock(GameInformationRepository.class);
-        testGameInformationService = new GameInformationService(mockGameInformationRepository);
+        mockMatchOddsJpaRepository = mock(MatchOddsJpaRepository.class);
+        testGameInformationService = new GameInformationService(mockGameInformationRepository, mockMatchOddsJpaRepository);
 
         gameInformationJSON = createGameInformationJSON();
 
@@ -66,6 +78,22 @@ public class GameInformationServiceTest {
         testGameInformationService.getOddsByMatch("wrong1", "wrong2");
     }
 
+    @Test
+    public void whenRunSaveMatchOddsMethod_shouldSaveMatchOddsToDatabaseAndReturnMatchOddsObject(){
+
+        when(mockGameInformationRepository.getGameInformation()).thenReturn(gameInformationJSON);
+
+        MatchOdds matchOdds = new MatchOdds();
+        matchOdds.setHomeTeam(teamName1);
+        matchOdds.setAwayTeam(teamName2);
+        matchOdds.setHomeTeamOdd(oddForTeam1);
+        matchOdds.setAwayTeamOdd(oddForTeam2);
+
+        when(mockMatchOddsJpaRepository.save(any(MatchOdds.class))).thenReturn(matchOdds);
+
+        assertThat(testGameInformationService.saveMatchOdds(teamName1, teamName2)).isEqualTo(matchOdds);
+    }
+
     private GameInformationJSON createGameInformationJSON(){
 
         PriceJSON priceJSONforTeam1 = createPriceJSON(oddForTeam1);
@@ -88,6 +116,7 @@ public class GameInformationServiceTest {
 
         EventJSON eventJSON = new EventJSON();
         eventJSON.setName(eventName);
+        eventJSON.setStart(date);
         eventJSON.setMarketJSONS(Arrays.asList(marketJSON));
 
         return eventJSON;
