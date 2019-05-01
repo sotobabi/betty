@@ -43,17 +43,18 @@ public class SearchControllerTests {
 
     @Test
     public void whenEstimateTeamOddsIsCalled_calculateOddsIsReturned(){
+        String teamName = "testTeam";
         TeamProbabilityToWin testProbability = new TeamProbabilityToWin();
         Model uiModel = new ConcurrentModel();
-        when(mockAnalyzeTweetsService.calculateProbabilityWithTweets("teamName")).thenReturn(testProbability);
-        assertThat(testController.estimateTeamOdds("teamName",uiModel)).contains("calculateOdds");
+        when(mockAnalyzeTweetsService.calculateProbabilityWithTweets(teamName)).thenReturn(testProbability);
+        assertThat(testController.estimateTeamOdds(teamName,uiModel)).contains("calculateOdds");
 
     }
 
     @Test
     public void whenDisplayTeamOddsIsCalled_displayOddsIsReturned(){
         Model uiModel = new ConcurrentModel();
-        assertThat(testController.displayTeamOdds("teamName",uiModel)).contains("displayOdds");
+        assertThat(testController.displayTeamOdds("someTeam",uiModel)).contains("displayOdds");
 
     }
 

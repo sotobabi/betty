@@ -35,14 +35,15 @@ public class SourceToResultPipelineServiceTest {
     public void whenTransformTextToTeamProbability_shouldReturnTeamProbability() {
 
 
+        String teamName = "testTeam";
         List<String> texts = new ArrayList<>();
         texts.add("a");
         SentimentResult sentimentResult = new SentimentResult();
         sentimentResult.setSentimentScore(1);
         TeamSentimentScore teamSentimentScore = new TeamSentimentScore();
-        teamSentimentScore.setTeamName("testTeam");
+        teamSentimentScore.setTeamName(teamName);
         TeamProbabilityToWin teamProbabilityToWin = new TeamProbabilityToWin();
-        teamProbabilityToWin.setTeamName("testTeam");
+        teamProbabilityToWin.setTeamName(teamName);
 
         when(mockSentimentAnalyserService.getSentimentResult("a")).thenReturn(sentimentResult);
         when(mockSentimentAnalyserService.getAverageSentimentScore(Arrays.asList(sentimentResult))).thenReturn(teamSentimentScore);
@@ -51,7 +52,7 @@ public class SourceToResultPipelineServiceTest {
         TeamProbabilityToWin testResult = testSourceToResultPipelineService.transformTextToTeamProbability(texts);
 
         assertThat(testResult).isEqualTo(teamProbabilityToWin);
-        assertThat(testResult.getTeamName()).isEqualTo("testTeam");
+        assertThat(testResult.getTeamName()).isEqualTo(teamName);
 
     }
 }
