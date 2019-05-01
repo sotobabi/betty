@@ -14,7 +14,7 @@ public class Tweet {
     private Long id;
     @Size(max = 15)
     private String language;
-    @Column(length = 512)
+    @Column(length = 1024)
     private String text;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
