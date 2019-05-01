@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.models;
+package com.codingnomads.betty.data.batch.batchreaders;
 
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.batch.item.ItemReader;
