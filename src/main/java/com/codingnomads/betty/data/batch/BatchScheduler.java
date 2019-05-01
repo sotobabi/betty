@@ -26,7 +26,7 @@ public class BatchScheduler {
         this.job = job;
     }
 
-    @Scheduled(cron = "0 0 0/6 ? * * *")
+    @Scheduled(cron = "0 0 */6 ? * *")
     public BatchStatus tweetToDbJobScheduler() {
         JobParameters parameters = getJobParameters();
         JobExecution jobExecution = null;
