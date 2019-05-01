@@ -55,6 +55,13 @@ public class GameInformationService {
 
     public MatchOdds saveMatchOdds(String homeTeamName, String awayTeamName){
 
+        matchOdds = getMatchOdds(homeTeamName, awayTeamName);
+
+        return matchOddsJpaRepository.save(matchOdds);
+    }
+
+    public MatchOdds getMatchOdds(String homeTeamName, String awayTeamName){
+
         Map<String, Double> odds = getOddsByMatch(homeTeamName, awayTeamName);
 
         matchOdds = new MatchOdds();
@@ -67,7 +74,7 @@ public class GameInformationService {
 
         matchOdds.setMatchDateTime(getFormattedDate());
 
-        return matchOddsJpaRepository.save(matchOdds);
+        return matchOdds;
     }
 
     private GameInformationJSON getGameInformation() {
