@@ -1,5 +1,8 @@
 package com.codingnomads.betty.logic.models;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.time.LocalDateTime;
 
 public class TeamSentimentScore {
@@ -59,5 +62,33 @@ public class TeamSentimentScore {
                 ", score=" + score +
                 ", isPlayingHome=" + isPlayingHome +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TeamSentimentScore that = (TeamSentimentScore) o;
+
+        return new EqualsBuilder()
+                .append(analysisDateTime, that.analysisDateTime)
+                .append(matchDateTime, that.matchDateTime)
+                .append(teamName, that.teamName)
+                .append(score, that.score)
+                .append(isPlayingHome, that.isPlayingHome)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(analysisDateTime)
+                .append(matchDateTime)
+                .append(teamName)
+                .append(score)
+                .append(isPlayingHome)
+                .toHashCode();
     }
 }
