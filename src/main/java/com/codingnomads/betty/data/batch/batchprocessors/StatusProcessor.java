@@ -12,12 +12,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class Processor implements ItemProcessor<List<Status>, List<Tweet>> {
+public class StatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
 
     private StatusItemReader statusItemReader;
 
     @Autowired
-    public Processor(StatusItemReader statusItemReader) {
+    public StatusProcessor(StatusItemReader statusItemReader) {
         this.statusItemReader = statusItemReader;
     }
 

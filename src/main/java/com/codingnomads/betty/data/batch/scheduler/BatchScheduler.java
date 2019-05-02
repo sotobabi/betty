@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch;
+package com.codingnomads.betty.data.batch.scheduler;
 
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -6,6 +6,7 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -23,27 +24,27 @@ public class BatchScheduler {
     private Job jobForOdds;
 
     @Autowired
-    public BatchScheduler(JobLauncher jobLauncherForTweets, JobLauncher jobLauncherForOdds, Job jobForTweets, Job jobForOdds) {
+    public BatchScheduler(JobLauncher jobLauncherForTweets, JobLauncher jobLauncherForOdds
+            , @Qualifier("tweets") Job jobForTweets, @Qualifier("odds") Job jobForOdds) {
+
         this.jobLauncherForTweets = jobLauncherForTweets;
         this.jobLauncherForOdds = jobLauncherForOdds;
         this.jobForTweets = jobForTweets;
         this.jobForOdds = jobForOdds;
     }
 
-    @Scheduled(cron = "*/50 * * * * *") //(cron = "0 0 */6 ? * *")
+   @Scheduled(cron = "*/10 * * * * *") //(cron = "0 0 */6 ? * *")
     public BatchStatus tweetToDbJobScheduler() {
         JobParameters parameters = getTweetJobParameters();
-        JobExecution jobExecution = null;
-        jobExecution = runTweetsJob(parameters, jobExecution);
+        JobExecution jobExecution = runTweetsJob(parameters);
 
         return getBatchStatus(jobExecution);
     }
 
-    @Scheduled(cron = "*/50 * * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     public BatchStatus oddsToDbJobScheduler(){
         JobParameters parameters = getOddsJobParameters();
-        JobExecution jobExecution = null;
-        jobExecution = runOddsJob(parameters, jobExecution);
+        JobExecution jobExecution = runOddsJob(parameters);
 
         return getBatchStatus(jobExecution);
     }
@@ -60,9 +61,9 @@ public class BatchScheduler {
         return new JobParameters(maps);
     }
 
-    private JobExecution runTweetsJob(JobParameters parameters, JobExecution jobExecution) {
+    private JobExecution runTweetsJob(JobParameters parameters) {
         try {
-            jobExecution = jobLauncherForTweets.run(jobForTweets, parameters);
+            return jobLauncherForTweets.run(jobForTweets, parameters);
         } catch (JobExecutionAlreadyRunningException e) {
             System.out.println("EXCEPTION CAUGHT -> Job Already running...");
             e.printStackTrace();
@@ -76,13 +77,13 @@ public class BatchScheduler {
             System.out.println("EXCEPTION CAUGHT -> Illegal attempt to restart jobForTweets...");
             e.printStackTrace();
         }
-        return jobExecution;
+        return null;
     }
 
-    private JobExecution runOddsJob(JobParameters parameters, JobExecution jobExecution){
+    private JobExecution runOddsJob(JobParameters parameters){
 
         try {
-            jobExecution = jobLauncherForOdds.run(jobForOdds, parameters);
+            return jobLauncherForOdds.run(jobForOdds, parameters);
         } catch (JobExecutionAlreadyRunningException e) {
             System.out.println("EXCEPTION CAUGHT -> Odds Job Already running...");
             e.printStackTrace();
@@ -97,7 +98,7 @@ public class BatchScheduler {
             e.printStackTrace();
         }
 
-        return jobExecution;
+        return null;
     }
 
     private BatchStatus getBatchStatus(JobExecution jobExecution) {

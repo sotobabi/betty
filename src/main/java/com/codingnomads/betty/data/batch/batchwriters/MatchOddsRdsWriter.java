@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class MatchOddsWriter implements ItemWriter<MatchOdds>{
+public class MatchOddsRdsWriter implements ItemWriter<MatchOdds>{
 
     private MatchOddsJpaRepository matchOddsJpaRepository;
 
     @Autowired
-    public MatchOddsWriter(MatchOddsJpaRepository matchOddsJpaRepository) {
+    public MatchOddsRdsWriter(MatchOddsJpaRepository matchOddsJpaRepository) {
         this.matchOddsJpaRepository = matchOddsJpaRepository;
     }
 

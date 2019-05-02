@@ -31,6 +31,8 @@ public class MatchOddsReader implements ItemReader<MatchOdds> {
             return gameInformationService.getMatchOdds(homeTeam, awayTeam);
         }
 
+        batchJobState = false;
+
         return null;
     }
 }

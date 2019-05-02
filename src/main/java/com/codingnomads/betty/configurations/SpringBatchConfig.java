@@ -13,7 +13,6 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import twitter4j.Status;
 
 import java.util.List;
@@ -22,14 +21,13 @@ import java.util.List;
 @EnableBatchProcessing
 public class SpringBatchConfig {
 
-    @Primary
-    @Bean
+    @Bean("tweets")
     public Job tweetJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
                    ItemReader<List<Status>> itemReader, ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
                    ItemWriter<List<Tweet>> itemWriter) {
 
         Step step = stepBuilderFactory.get("Sink-Tweets-To-DB")
-                .<List<Status>, List<Tweet>>chunk(10)
+                .<List<Status>, List<Tweet>>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
@@ -41,24 +39,21 @@ public class SpringBatchConfig {
                 .build();
     }
 
-    @Bean
+    @Bean("odds")
     public Job oddToDbJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
             ,ItemReader<MatchOdds> itemReader, ItemProcessor<MatchOdds, MatchOdds> itemProcessor
             ,ItemWriter<MatchOdds> itemWriter){
 
         Step step = stepBuilderFactory.get("Saving Odds To Database")
-                .<MatchOdds, MatchOdds>chunk(10)
+                .<MatchOdds, MatchOdds>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
                 .build();
 
-        return jobBuilderFactory.get("Match-Odds-To-DB")
+        return jobBuilderFactory.get("Match-Odds-To-DB ")
                 .incrementer(new RunIdIncrementer())
                 .start(step)
                 .build();
     }
-
-
-
 }
