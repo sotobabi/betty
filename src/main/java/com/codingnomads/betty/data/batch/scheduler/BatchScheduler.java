@@ -33,7 +33,7 @@ public class BatchScheduler {
         this.jobForOdds = jobForOdds;
     }
 
-   @Scheduled(cron = "*/10 * * * * *") //(cron = "0 0 */6 ? * *")
+   @Scheduled(cron = "0 0 */6 ? * *")
     public BatchStatus tweetToDbJobScheduler() {
         JobParameters parameters = getTweetJobParameters();
         JobExecution jobExecution = runTweetsJob(parameters);
@@ -41,7 +41,7 @@ public class BatchScheduler {
         return getBatchStatus(jobExecution);
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 */6 ? * *")
     public BatchStatus oddsToDbJobScheduler(){
         JobParameters parameters = getOddsJobParameters();
         JobExecution jobExecution = runOddsJob(parameters);
