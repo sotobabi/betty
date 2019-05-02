@@ -20,7 +20,7 @@ public class SearchController {
     private ProcessTweetsThroughNlpService processTweetsThroughNlpService;
 
     @Autowired
-    public SearchController(AnalyzeTweetsService analyzeTweetsService, TwitterService twitterService, SourceToResultPipelineService sourceToResultPipelineService) {
+    public SearchController(ProcessTweetsThroughNlpService processTweetsThroughNlpService, AnalyzeTweetsService analyzeTweetsService, TwitterService twitterService, SourceToResultPipelineService sourceToResultPipelineService) {
         this.analyzeTweetsService = analyzeTweetsService;
         this.twitterService = twitterService;
         this.sourceToResultPipelineService = sourceToResultPipelineService;
@@ -35,7 +35,7 @@ public class SearchController {
     }
 
     @GetMapping("/display-odds")
-    public String displayTeamOdds(@RequestParam(name = "teamName", required = false) String teamName, Model model){
+    public String displayTeamOdds(@RequestParam(name = "teamName", required = false) String teamName, Model model) {
         model.addAttribute("inputTeam", new InputTeam());
         return "/displayOdds";
     }
@@ -46,12 +46,10 @@ public class SearchController {
         return "api-to-database";
     }
 
-    @GetMapping("/getTweets")
-    public String retrieveTweetsbyKeyword(@RequestParam(name = "keyword", required = true) String keyword) {
-        processTweetsThroughNlpService.retrieveTweetsFromDatabase("cat");
-        return "databaseTweetSearchResults";
+    @GetMapping("/get-tweets")
+    public String getSentimentScoreByKeywordUsed(@RequestParam(name = "keyword", required = true) String keyword) {
+        double v = processTweetsThroughNlpService.returnSentimentScoreByKeywordUsed(keyword);
+        return "display-sentiment-score";
     }
-
-
 
 }

@@ -38,7 +38,7 @@ public class SearchControllerTests {
         mockTwitterService = mock(TwitterService.class);
         mockAnalyzeTweetsService = mock(AnalyzeTweetsService.class);
         mockSourceToResultPipelineService = mock(SourceToResultPipelineService.class);
-        testController = new SearchController(mockAnalyzeTweetsService,mockTwitterService,mockSourceToResultPipelineService);
+        testController = new SearchController(mockAnalyzeTweetsService, mockTwitterService, mockSourceToResultPipelineService);
     }
 
     @Test
