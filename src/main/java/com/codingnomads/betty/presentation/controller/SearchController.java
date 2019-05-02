@@ -2,6 +2,7 @@ package com.codingnomads.betty.presentation.controller;
 
 import com.codingnomads.betty.logic.services.AnalyzeTweetsService;
 import com.codingnomads.betty.logic.services.SourceToResultPipelineService;
+import com.codingnomads.betty.logic.services.ProcessTweetsThroughNlpService;
 import com.codingnomads.betty.logic.services.TwitterService;
 import com.codingnomads.betty.presentation.webmodel.InputTeam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,14 @@ public class SearchController {
     private AnalyzeTweetsService analyzeTweetsService;
     private TwitterService twitterService;
     private SourceToResultPipelineService sourceToResultPipelineService;
+    private ProcessTweetsThroughNlpService processTweetsThroughNlpService;
 
     @Autowired
     public SearchController(AnalyzeTweetsService analyzeTweetsService, TwitterService twitterService, SourceToResultPipelineService sourceToResultPipelineService) {
         this.analyzeTweetsService = analyzeTweetsService;
         this.twitterService = twitterService;
         this.sourceToResultPipelineService = sourceToResultPipelineService;
+        this.processTweetsThroughNlpService = processTweetsThroughNlpService;
     }
 
     @GetMapping("/calculate-odds")
@@ -42,5 +45,13 @@ public class SearchController {
         twitterService.callApiAndSaveStatusesAsTweets("cat", 15);
         return "api-to-database";
     }
+
+    @GetMapping("/getTweets")
+    public String retrieveTweetsbyKeyword(@RequestParam(name = "keyword", required = true) String keyword) {
+        processTweetsThroughNlpService.retrieveTweetsFromDatabase("cat");
+        return "databaseTweetSearchResults";
+    }
+
+
 
 }
