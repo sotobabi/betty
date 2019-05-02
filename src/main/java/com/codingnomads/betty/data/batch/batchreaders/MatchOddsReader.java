@@ -24,7 +24,7 @@ public class MatchOddsReader implements ItemReader<MatchOdds> {
     }
 
     @Override
-    public MatchOdds read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public MatchOdds read() {
 
         if(!batchJobState){
             batchJobState = true;
@@ -34,5 +34,13 @@ public class MatchOddsReader implements ItemReader<MatchOdds> {
         batchJobState = false;
 
         return null;
+    }
+
+    public boolean isBatchJobState() {
+        return batchJobState;
+    }
+
+    public void setBatchJobState(boolean batchJobState) {
+        this.batchJobState = batchJobState;
     }
 }

@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.batchprocessors;
+package com.codingnomads.betty.data.batch.processors;
 
 import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
 import com.codingnomads.betty.data.models.Tweet;

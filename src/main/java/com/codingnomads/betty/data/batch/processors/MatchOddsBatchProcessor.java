@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.batchprocessors;
+package com.codingnomads.betty.data.batch.processors;
 
 import com.codingnomads.betty.data.models.MatchOdds;
 import org.springframework.batch.item.ItemProcessor;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class MatchOddsBatchProcessor implements ItemProcessor<MatchOdds, MatchOdds> {
 
     @Override
-    public MatchOdds process(MatchOdds item) throws Exception {
+    public MatchOdds process(MatchOdds item){
 
         return item;
     }
