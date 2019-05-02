@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class RdsWriter implements ItemWriter<List<Tweet>>{
+public class TweetsRdsWriter implements ItemWriter<List<Tweet>>{
 
     private TwitterJpaRepository twitterJpaRepository;
 
     @Autowired
-    public RdsWriter(TwitterJpaRepository twitterJpaRepository) {
+    public TweetsRdsWriter(TwitterJpaRepository twitterJpaRepository) {
         this.twitterJpaRepository = twitterJpaRepository;
     }
 

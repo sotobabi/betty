@@ -1,6 +1,6 @@
 package com.codingnomads.betty.data.batch;
 
-import com.codingnomads.betty.data.batch.batchprocessors.Processor;
+import com.codingnomads.betty.data.batch.batchprocessors.StatusProcessor;
 import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
@@ -21,16 +21,16 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProcessorTests {
+public class StatusProcessorTests {
 
     @Mock
     private StatusItemReader mockStatusItemReader;
-    private Processor testProcessor;
+    private StatusProcessor testStatusProcessor;
 
     @Before
     public void setUp() throws Exception {
         mockStatusItemReader = mock(StatusItemReader.class);
-        testProcessor = new Processor(mockStatusItemReader);
+        testStatusProcessor = new StatusProcessor(mockStatusItemReader);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ProcessorTests {
         List<Tweet> expectedTweetsList = new ArrayList<>();
 
         when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
-        assertThat(testProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+        assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ProcessorTests {
         List<Tweet> expectedTweetsList = Collections.emptyList();
 
         when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
-        assertThat(testProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+        assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
 
     }
 }
