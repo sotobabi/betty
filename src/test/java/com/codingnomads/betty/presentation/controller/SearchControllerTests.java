@@ -2,6 +2,7 @@ package com.codingnomads.betty.presentation.controller;
 
 import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
 import com.codingnomads.betty.logic.services.AnalyzeTweetsService;
+import com.codingnomads.betty.logic.services.SourceToResultPipelineService;
 import com.codingnomads.betty.logic.services.TwitterService;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,26 +22,39 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class SearchControllerTests {
 
+    private SearchController testController;
+
     @Mock
     private TwitterService mockTwitterService;
-    private SearchController testController;
 
     @Mock
     private AnalyzeTweetsService mockAnalyzeTweetsService;
 
+    @Mock
+    private SourceToResultPipelineService mockSourceToResultPipelineService;
+
     @Before
     public void setUp() {
         mockTwitterService = mock(TwitterService.class);
-        mockAnalyzeTweetsService= mock(AnalyzeTweetsService.class);
-        testController = new SearchController(mockAnalyzeTweetsService,mockTwitterService);
+        mockAnalyzeTweetsService = mock(AnalyzeTweetsService.class);
+        mockSourceToResultPipelineService = mock(SourceToResultPipelineService.class);
+        testController = new SearchController(mockAnalyzeTweetsService,mockTwitterService,mockSourceToResultPipelineService);
     }
 
     @Test
-    public void whenEstimateTeamOddsIsCalled_probabilityIsReturned(){
+    public void whenEstimateTeamOddsIsCalled_calculateOddsIsReturned(){
+        String teamName = "testTeam";
         TeamProbabilityToWin testProbability = new TeamProbabilityToWin();
         Model uiModel = new ConcurrentModel();
-        when(mockAnalyzeTweetsService.calculateProbabilityWithTweets("teamName")).thenReturn(testProbability);
-        assertThat(testController.estimateTeamOdds("teamName",uiModel)).contains("getOdds");
+        when(mockAnalyzeTweetsService.calculateProbabilityWithTweets(teamName)).thenReturn(testProbability);
+        assertThat(testController.estimateTeamOdds(teamName,uiModel)).contains("calculateOdds");
+
+    }
+
+    @Test
+    public void whenDisplayTeamOddsIsCalled_displayOddsIsReturned(){
+        Model uiModel = new ConcurrentModel();
+        assertThat(testController.displayTeamOdds("someTeam",uiModel)).contains("displayOdds");
 
     }
 
