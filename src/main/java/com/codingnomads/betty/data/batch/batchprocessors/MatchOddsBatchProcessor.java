@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.processors;
+package com.codingnomads.betty.data.batch.batchprocessors;
 
 import com.codingnomads.betty.data.models.MatchOdds;
 import org.springframework.batch.item.ItemProcessor;

@@ -34,7 +34,7 @@ public class BatchScheduler {
     }
 
    @Scheduled(cron = "0 0 */6 ? * *")
-    public BatchStatus tweetToDbJobScheduler() {
+    public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         JobParameters parameters = getTweetJobParameters();
         JobExecution jobExecution = runTweetsJob(parameters);
 
@@ -42,7 +42,7 @@ public class BatchScheduler {
     }
 
     @Scheduled(cron = "0 0 */6 ? * *")
-    public BatchStatus oddsToDbJobScheduler(){
+    public BatchStatus oddsToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         JobParameters parameters = getOddsJobParameters();
         JobExecution jobExecution = runOddsJob(parameters);
 
@@ -61,44 +61,16 @@ public class BatchScheduler {
         return new JobParameters(maps);
     }
 
-    private JobExecution runTweetsJob(JobParameters parameters) {
-        try {
-            return jobLauncherForTweets.run(jobForTweets, parameters);
-        } catch (JobExecutionAlreadyRunningException e) {
-            System.out.println("EXCEPTION CAUGHT -> Job Already running...");
-            e.printStackTrace();
-        } catch (JobInstanceAlreadyCompleteException e) {
-            System.out.println("EXCEPTION CAUGHT -> Job Already Completed Exception...");
-            e.printStackTrace();
-        } catch (JobParametersInvalidException e) {
-            System.out.println("EXCEPTION CAUGHT -> Job Parameters are invalid");
-            e.printStackTrace();
-        } catch (JobRestartException e) {
-            System.out.println("EXCEPTION CAUGHT -> Illegal attempt to restart jobForTweets...");
-            e.printStackTrace();
-        }
-        return null;
+    private JobExecution runTweetsJob(JobParameters parameters) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+
+        return jobLauncherForTweets.run(jobForTweets, parameters);
+
     }
 
-    private JobExecution runOddsJob(JobParameters parameters){
+    private JobExecution runOddsJob(JobParameters parameters) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
-        try {
-            return jobLauncherForOdds.run(jobForOdds, parameters);
-        } catch (JobExecutionAlreadyRunningException e) {
-            System.out.println("EXCEPTION CAUGHT -> Odds Job Already running...");
-            e.printStackTrace();
-        } catch (JobRestartException e) {
-            System.out.println("EXCEPTION CAUGHT -> Illegal attempt to restart jobForOdds...");
-            e.printStackTrace();
-        } catch (JobInstanceAlreadyCompleteException e) {
-            System.out.println("EXCEPTION CAUGHT -> Odds Job Already Completed Exception...");
-            e.printStackTrace();
-        } catch (JobParametersInvalidException e) {
-            System.out.println("EXCEPTION CAUGHT -> Odd Job Parameters are invalid");
-            e.printStackTrace();
-        }
+        return jobLauncherForOdds.run(jobForOdds, parameters);
 
-        return null;
     }
 
     private BatchStatus getBatchStatus(JobExecution jobExecution) {

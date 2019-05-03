@@ -33,11 +33,13 @@ public class MatchOddsReader implements ItemReader<MatchOdds> {
         return null;
     }
 
-    public boolean isBatchJobState() {
-        return batchJobState;
+    public String getHomeTeam() {
+        return homeTeam;
     }
 
-    public void setBatchJobState(boolean batchJobState) {
-        this.batchJobState = batchJobState;
+    public String getAwayTeam() {
+        return awayTeam;
     }
 }
+
+
