@@ -25,7 +25,7 @@ public class ProcessTweetsThroughNlpService {
         this.sourceToResultPipelineService = sourceToResultPipelineService;
     }
 
-    public double returnSentimentScoreByKeywordUsed(String keyword) {
+    public Double returnSentimentScoreByKeywordUsed(String keyword) {
         List<Tweet> tweetList = twitterJpaRepository.findByKeywordUsedLike(keyword);
         List<String> stringsFromTweets = extractStringsFromTweets(tweetList);
         TeamSentimentScore teamSentimentScore = sourceToResultPipelineService.convertTextsToSentimentResultList(stringsFromTweets);
