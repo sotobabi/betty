@@ -27,7 +27,7 @@ public class MatchOddsRdsWriterTests {
     }
 
     @Test
-    public void whenWriteRun_shouldCallMatchOddsJpaRepositorySaveMethod() {
+    public void whenWriteRun_shouldCallMatchOddsJpaRepositorySaveMethod() throws Exception {
 
         when(mockMatchOddsJpaRepository.save(matchOdds)).thenReturn(matchOdds);
 

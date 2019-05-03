@@ -19,7 +19,7 @@ public class MatchOddsRdsWriter implements ItemWriter<MatchOdds>{
     }
 
     @Override
-    public void write(List<? extends MatchOdds> items){
+    public void write(List<? extends MatchOdds> items) throws Exception {
 
         matchOddsJpaRepository.save(items.get(0));
     }
