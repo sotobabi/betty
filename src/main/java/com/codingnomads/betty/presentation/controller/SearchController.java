@@ -46,9 +46,10 @@ public class SearchController {
         return "api-to-database";
     }
 
-    @GetMapping("/get-tweets")
-    public String getSentimentScoreByKeywordUsed(@RequestParam(name = "keyword", required = true) String keyword) {
-        double v = processTweetsThroughNlpService.returnSentimentScoreByKeywordUsed(keyword);
+    @GetMapping("/get-sentiment-score")
+    public String getSentimentScoreByKeywordUsed(@RequestParam(name = "keyword", required = true) String keyword, Model model) {
+        double sentimentScore = processTweetsThroughNlpService.returnSentimentScoreByKeywordUsed(keyword);
+        model.addAttribute("sentimentScore", sentimentScore);
         return "display-sentiment-score";
     }
 
