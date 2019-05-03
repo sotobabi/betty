@@ -31,7 +31,7 @@ public class ProcessTweetsThroughNlpServiceTest {
 
     @Mock
     SourceToResultPipelineService mockSourceToResultPipelineService;
-    
+
 
     @Test(expected = NullPointerException.class)
     public void ifKeywordUsedIsNull_throwNullPointerException() {
