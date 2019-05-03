@@ -11,8 +11,12 @@ import java.util.List;
 @Repository
 public class TwitterSourceMinerRepository implements TwitterMinerRepository {
 
-    @Autowired
     private TwitterConfig twitterConfigurer;
+
+    @Autowired
+    public TwitterSourceMinerRepository(TwitterConfig twitterConfigurer) {
+        this.twitterConfigurer = twitterConfigurer;
+    }
 
     public List<Status> searchTweets(String keyword, int numberOfStatus){
 
