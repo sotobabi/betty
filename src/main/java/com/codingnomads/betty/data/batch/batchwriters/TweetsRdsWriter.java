@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch;
+package com.codingnomads.betty.data.batch.batchwriters;
 
 import com.codingnomads.betty.data.models.Tweet;
 import com.codingnomads.betty.logic.interfaces.TwitterJpaRepository;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class RdsWriter implements ItemWriter<List<Tweet>> {
+public class TweetsRdsWriter implements ItemWriter<List<Tweet>>{
 
     private TwitterJpaRepository twitterJpaRepository;
 
     @Autowired
-    public RdsWriter(TwitterJpaRepository twitterJpaRepository) {
+    public TweetsRdsWriter(TwitterJpaRepository twitterJpaRepository) {
         this.twitterJpaRepository = twitterJpaRepository;
     }
 

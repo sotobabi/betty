@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.models;
+package com.codingnomads.betty.data.batch.batchreaders;
 
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.batch.item.ItemReader;
@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class StatusItemReader implements ItemReader<List<Status>> {
@@ -20,8 +19,6 @@ public class StatusItemReader implements ItemReader<List<Status>> {
     private String keyword;
     private int numberOfStatus;
     private boolean batchJobState = false;
-
-
 
     //TODO: Keyword and status should not be hardcoded
     @Autowired
@@ -37,7 +34,10 @@ public class StatusItemReader implements ItemReader<List<Status>> {
             batchJobState = true;
             return twitterMinerRepository.searchTweets(keyword,numberOfStatus);
         }
-        return null;
+
+        batchJobState = false;
+
+        return Collections.EMPTY_LIST;
     }
 
     public String getKeyword() {
@@ -55,5 +55,4 @@ public class StatusItemReader implements ItemReader<List<Status>> {
     public void setNumberOfStatus(int numberOfStatus) {
         this.numberOfStatus = numberOfStatus;
     }
-
 }
