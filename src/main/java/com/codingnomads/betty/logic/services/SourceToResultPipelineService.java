@@ -30,7 +30,7 @@ public class SourceToResultPipelineService {
 
     }
 
-    private TeamSentimentScore convertTextsToSentimentResultList(List<String> listOfTextToAnalyze) {
+    TeamSentimentScore convertTextsToSentimentResultList(List<String> listOfTextToAnalyze) {
         List<SentimentResult> sentimentResultList = new ArrayList<>();
 
         for (String text : listOfTextToAnalyze) {
