@@ -35,7 +35,7 @@ public class BatchScheduler {
 
    @Scheduled(cron = "0 0 */6 ? * *")
     public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        JobParameters parameters = getTweetJobParameters();
+        JobParameters parameters = getJobParameters();
         JobExecution jobExecution = runTweetsJob(parameters);
 
         return getBatchStatus(jobExecution);
@@ -43,19 +43,13 @@ public class BatchScheduler {
 
     @Scheduled(cron = "0 0 */6 ? * *")
     public BatchStatus oddsToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        JobParameters parameters = getOddsJobParameters();
+        JobParameters parameters = getJobParameters();
         JobExecution jobExecution = runOddsJob(parameters);
 
         return getBatchStatus(jobExecution);
     }
 
-    private JobParameters getTweetJobParameters() {
-        Map<String, JobParameter> maps = new HashMap<>();
-        maps.put("time", new JobParameter(System.currentTimeMillis()));
-        return new JobParameters(maps);
-    }
-
-    private JobParameters getOddsJobParameters(){
+    private JobParameters getJobParameters(){
         Map<String, JobParameter> maps = new HashMap<>();
         maps.put("time", new JobParameter(System.currentTimeMillis()));
         return new JobParameters(maps);

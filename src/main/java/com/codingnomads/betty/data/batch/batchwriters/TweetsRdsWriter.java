@@ -19,7 +19,7 @@ public class TweetsRdsWriter implements ItemWriter<List<Tweet>>{
     }
 
     @Override
-    public void write(List<? extends List<Tweet>> tweetsList) throws Exception {
+    public void write(List<? extends List<Tweet>> tweetsList) {
         for (List<Tweet> tweets : tweetsList) {
             twitterJpaRepository.saveAll(tweets);
         }

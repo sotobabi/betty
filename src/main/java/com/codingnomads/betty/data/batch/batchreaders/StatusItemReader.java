@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -36,7 +37,7 @@ public class StatusItemReader implements ItemReader<List<Status>> {
 
         batchJobState = false;
 
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     public String getKeyword() {
