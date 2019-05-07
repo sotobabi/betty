@@ -18,23 +18,23 @@ public class ExpectedValueCalculationService {
         this.gameInformationService = gameInformationService;
     }
 
-    public Map<String, Double> calculateExpectedValue(String teamName1, String teamName2){
+    public Map<String, Double> calculateExpectedValue(String homeTeamName, String awayTeamName){
 
         Map<String, Double> expectedValueMap = new HashMap<>();
 
-        double probabilityWithTweets = analyzeTweetsService.calculateProbabilityWithTweets(teamName1).getProbabilityToWin();
+        double probabilityWithTweets = analyzeTweetsService.calculateProbabilityWithTweets(homeTeamName).getProbabilityToWin();
 
-        Map<String, Double> marketOdds = gameInformationService.getOddsByMatch(teamName1, teamName2);
+        Map<String, Double> marketOdds = gameInformationService.getOddsByMatch(homeTeamName, awayTeamName);
 
-        double expectedValue = probabilityWithTweets * (marketOdds.get(teamName1) - 1) - (1 - probabilityWithTweets) * marketOdds.get(teamName2);
+        double expectedValue = probabilityWithTweets * (marketOdds.get(homeTeamName) - 1) - (1 - probabilityWithTweets) * marketOdds.get(awayTeamName);
 
-        expectedValueMap.put(teamName1, expectedValue);
+        expectedValueMap.put(homeTeamName, expectedValue);
 
-        probabilityWithTweets = analyzeTweetsService.calculateProbabilityWithTweets(teamName2).getProbabilityToWin();
+        probabilityWithTweets = analyzeTweetsService.calculateProbabilityWithTweets(awayTeamName).getProbabilityToWin();
 
-        expectedValue = probabilityWithTweets * (marketOdds.get(teamName2) -1) - (1 - probabilityWithTweets) * marketOdds.get(teamName1);
+        expectedValue = probabilityWithTweets * (marketOdds.get(awayTeamName) -1) - (1 - probabilityWithTweets) * marketOdds.get(homeTeamName);
 
-        expectedValueMap.put(teamName2, expectedValue);
+        expectedValueMap.put(awayTeamName, expectedValue);
 
         return expectedValueMap;
     }
