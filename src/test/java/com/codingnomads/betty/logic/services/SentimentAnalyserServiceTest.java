@@ -23,13 +23,14 @@ public class SentimentAnalyserServiceTest {
     private SentimentAnalyserService mockSentimentAnalyserService;
 
 
-    @InjectMocks
+    @Mock
     private StanfordCoreNLP pipeline;
 
 
     @Before
     public void setUp() {
         mockSentimentAnalyserService = new SentimentAnalyserService();
+        pipeline = new StanfordCoreNLP();
     }
 
     @Test(expected = NullPointerException.class)
@@ -63,7 +64,7 @@ public class SentimentAnalyserServiceTest {
             e.printStackTrace();
         }
 
-        mockSentimentAnalyserService.getSentimentResult(text);
+        mockSentimentAnalyserService.getSentimentResult("Test text sentence.");
 
     }
 }
