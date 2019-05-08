@@ -1,17 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-    <title>Hello!</title>
+
+  <div th:replace="fragments/head :: headFragment"></div>
+
 </head>
+
 <body>
 
-<h3>Hello! Welcome to Betty!</h3>
-<div>
-    <a href="/calculate-odds">Click here to calculate your team's probability of winning. This includes a live searching of recent tweets on the corresponding team.</a>
-</div>
-<div>
-    <a href="/display-odds">Click here to display your team's probability of winning which was calculated based on tweets saved in the database. (WIP)</a>
-</div>
+  <div th:replace="fragments/navBar :: navBarFragment"></div>
+  <div th:replace="fragments/mastHead :: mastHeadFragment"></div>
+  <div th:replace="fragments/iconsGrid :: iconsGridFragment"></div>
+  <div th:replace="fragments/imageShowcases :: imageShowcasesFragment"></div>
+  <div th:replace="fragments/testimonials :: testimonialsFragment"></div>
+  <div th:replace="fragments/callToAction :: callToActionFragment"></div>
+  <div th:replace="fragments/footer :: footerFragment"></div>
+  <div th:replace="fragments/bootstrapCoreJs :: bootstrapCoreJsFragment"></div>
+
 </body>
+
 </html>
