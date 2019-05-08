@@ -43,25 +43,7 @@ public class SentimentAnalyserServiceTest {
         sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
 
     }
-
-    @Test
-    public void ifAverageSentimentScoreIsPassedSentimentResultList_teamSentimentScoreIsReturned() {
-        List<SentimentResult> sentimentResultList = new ArrayList<>();
-        TeamSentimentScore teamSentimentScore = new TeamSentimentScore();
-        teamSentimentScore.setScore(100.0);
-
-        for(int i = 0; i <= 10; i++) {
-
-            SentimentResult sentimentResult = new SentimentResult();
-            sentimentResult.setSentimentScore(100);
-            sentimentResultList.add(sentimentResult);
-
-        }
-
-        when(mockSentimentAnalyserService.getAverageSentimentScore(sentimentResultList)).thenReturn(teamSentimentScore);
-
-    }
-
+    
     @Test
     public void ifSentimentResultListContainingScores4IsPassedToAverageSentimentScore_averageSentimentScoreReturns100() {
 
