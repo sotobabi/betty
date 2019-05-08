@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
-public class MatchOddsBatchProcessorTest {
+public class MatchToOddsProcessorTest {
 
-    private MatchOddsBatchProcessor testMatchOddsBatchProcessor;
+    private MatchToOddsProcessor testMatchToOddsProcessor;
 
     @Before
     public void setUp(){
 
-        testMatchOddsBatchProcessor = new MatchOddsBatchProcessor();
+        testMatchToOddsProcessor = new MatchToOddsProcessor();
     }
 
     @Test
@@ -22,6 +22,6 @@ public class MatchOddsBatchProcessorTest {
         MatchOdds matchOdds = new MatchOdds();
         matchOdds.setHomeTeam("team");
 
-        assertThat(testMatchOddsBatchProcessor.process(matchOdds)).isEqualTo(matchOdds);
+        assertThat(testMatchToOddsProcessor.process(matchOdds)).isEqualTo(matchOdds);
     }
 }

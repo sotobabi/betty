@@ -1,7 +1,9 @@
 package com.codingnomads.betty.logic.services;
 
+import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.exceptions.JSONNotFoundException;
+import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.models.betAPImodels.EventJSON;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.Map;
 @Service
 public class GameInformationService {
 
+    private FootballMatchesInfoJpaRepository footballJpaRepository;
     private GameInformationRepository gameInformationRepository;
     private MatchOddsJpaRepository matchOddsJpaRepository;
     private GameInformationJSON gameInformationJSON;
@@ -28,28 +32,32 @@ public class GameInformationService {
     private MatchOdds matchOdds;
 
     @Autowired
-    public GameInformationService(GameInformationRepository gameInformationRepository, MatchOddsJpaRepository matchOddsJpaRepository) {
+    public GameInformationService(GameInformationRepository gameInformationRepository
+            , MatchOddsJpaRepository matchOddsJpaRepository
+            , FootballMatchesInfoJpaRepository footballJpaRepository) {
+
         this.gameInformationRepository = gameInformationRepository;
         this.matchOddsJpaRepository = matchOddsJpaRepository;
+        this.footballJpaRepository = footballJpaRepository;
     }
 
-    public Map<String, Double> getOddsByMatch(String team1, String team2) {
+    public Map<String, Double> getOddsByMatch(String homeTeamName, String awayTeamName) {
 
         gameInformationJSON = getGameInformation();
 
-        String match = team1 + " vs " + team2;
+        String match = homeTeamName + " vs " + awayTeamName;
 
         eventJSON = getEventJSONforMatch(match, gameInformationJSON);
 
         MarketJSON marketJSON = getMarketJSONforMatch(eventJSON);
 
-        Double oddForTeam1 = getRunnerJSONforMarket(marketJSON, team1).getPriceJSONS().get(0).getOdds();
-        Double oddForTeam2 = getRunnerJSONforMarket(marketJSON, team2).getPriceJSONS().get(0).getOdds();
+        Double oddForTeam1 = getRunnerJSONforMarket(marketJSON, homeTeamName).getPriceJSONS().get(0).getOdds();
+        Double oddForTeam2 = getRunnerJSONforMarket(marketJSON, awayTeamName).getPriceJSONS().get(0).getOdds();
 
         Map<String, Double> odds = new HashMap();
 
-        odds.put(team1, oddForTeam1);
-        odds.put(team2, oddForTeam2);
+        odds.put(homeTeamName, oddForTeam1);
+        odds.put(awayTeamName, oddForTeam2);
 
         return odds;
     }
@@ -73,9 +81,54 @@ public class GameInformationService {
         matchOdds.setAwayTeam(awayTeamName);
         matchOdds.setAwayTeamOdd(odds.get(awayTeamName));
 
-        matchOdds.setMatchDate(getFormattedDate());
+        matchOdds.setMatchDateTime(getFormattedDate(eventJSON.getStart()));
 
         return matchOdds;
+    }
+
+    public List<MatchOdds> createOddsListFromFootballList(List<FootballMatchInfo> matchInfoList){
+
+        List<MatchOdds> oddsList = new ArrayList<>();
+
+        for (FootballMatchInfo matchInfo : matchInfoList) {
+
+            String [] teams = matchInfo.getName().split(" vs ");
+
+            MatchOdds odds = getMatchOdds(teams[0], teams[1]);
+
+            oddsList.add(odds);
+        }
+
+        return oddsList;
+    }
+
+    public List<FootballMatchInfo> getFootballMatchListFromApi(){
+
+        GameInformationJSON gameInformation = getGameInformation();
+
+        List<FootballMatchInfo> footballMatchInfoList = new ArrayList<>();
+
+        for (EventJSON event :gameInformation.getEventJSONS()) {
+
+            FootballMatchInfo footballMatchInfo = new FootballMatchInfo();
+
+            footballMatchInfo.setApi_id(event.getId());
+
+            footballMatchInfo.setMatchDate(getFormattedDate(event.getStart()));
+
+            footballMatchInfo.setName(event.getName());
+
+            footballMatchInfoList.add(footballMatchInfo);
+        }
+
+        return footballMatchInfoList;
+    }
+
+    public List<FootballMatchInfo> saveFootballMatches(){
+
+        List<FootballMatchInfo> footballMatchInfoList = getFootballMatchListFromApi();
+
+         return footballJpaRepository.saveAll(footballMatchInfoList);
     }
 
     private GameInformationJSON getGameInformation() {
@@ -122,9 +175,9 @@ public class GameInformationService {
         throw new JSONNotFoundException("Team Not Found in RunnerJSON!");
     }
 
-    private Date getFormattedDate(){
+    private Date getFormattedDate(String dateFromAPI){
 
-        String dateFromAPI = eventJSON.getStart().substring(0,11);
+        dateFromAPI = dateFromAPI.substring(0,11);
 
         dateFromAPI = dateFromAPI.replace('-', '/');
         dateFromAPI = dateFromAPI.replace('T', ' ');

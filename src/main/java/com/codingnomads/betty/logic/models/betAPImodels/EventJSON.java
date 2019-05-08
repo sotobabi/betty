@@ -8,6 +8,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventJSON {
 
+    @JsonProperty("id")
+    private String id;
+
     @JsonProperty("name")
     private String name;
 
@@ -41,12 +44,29 @@ public class EventJSON {
         this.markets = marketJSONS;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<MarketJSON> getMarkets() {
+        return markets;
+    }
+
+    public void setMarkets(List<MarketJSON> markets) {
+        this.markets = markets;
+    }
+
     @Override
     public String toString() {
         return "EventJSON{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", start='" + start + '\'' +
-                ", marketJSONS=" + markets +
+                ", markets=" + markets +
                 '}';
     }
 }

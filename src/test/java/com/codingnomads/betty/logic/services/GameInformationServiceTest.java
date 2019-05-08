@@ -3,6 +3,7 @@ package com.codingnomads.betty.logic.services;
 import com.codingnomads.betty.data.api.GameInformationAPIRepository;
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.exceptions.JSONNotFoundException;
+import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.models.betAPImodels.*;
@@ -23,6 +24,7 @@ public class GameInformationServiceTest {
     private GameInformationRepository mockGameInformationRepository;
     private GameInformationService testGameInformationService;
     private MatchOddsJpaRepository mockMatchOddsJpaRepository;
+    private FootballMatchesInfoJpaRepository mockFootballRepository;
     private Map<String, Double> map = new HashMap<>();
     private static final String teamName1 = "team1";
     private static final  String teamName2 = "team2";
@@ -38,7 +40,10 @@ public class GameInformationServiceTest {
         mockGameInformationAPIRepository = mock(GameInformationAPIRepository.class);
         mockGameInformationRepository = mock(GameInformationRepository.class);
         mockMatchOddsJpaRepository = mock(MatchOddsJpaRepository.class);
-        testGameInformationService = new GameInformationService(mockGameInformationRepository, mockMatchOddsJpaRepository);
+        mockFootballRepository = mock(FootballMatchesInfoJpaRepository.class);
+        testGameInformationService = new GameInformationService(mockGameInformationRepository
+                , mockMatchOddsJpaRepository
+                , mockFootballRepository);
 
         gameInformationJSON = createGameInformationJSON();
 
