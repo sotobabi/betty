@@ -36,8 +36,7 @@ public class StatusItemReader implements ItemReader<List<Status>> {
         }
 
         batchJobState = false;
-
-        return Collections.EMPTY_LIST;
+        return null;
     }
 
     public String getKeyword() {
