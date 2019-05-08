@@ -1,70 +1,101 @@
 package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.logic.models.SentimentResult;
-import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+
+import com.codingnomads.betty.logic.models.TeamSentimentScore;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+import static org.mockito.Mockito.*;
+
+
+@RunWith(MockitoJUnitRunner.class)
 public class SentimentAnalyserServiceTest {
-
-    private SentimentResult sentimentResult;
 
 
     @Mock
     private SentimentAnalyserService mockSentimentAnalyserService;
 
-
-    @Mock
-    private StanfordCoreNLP pipeline;
-
+    @InjectMocks
+    private SentimentAnalyserService sentimentAnalyserService;
 
     @Before
     public void setUp() {
-        mockSentimentAnalyserService = new SentimentAnalyserService();
-        pipeline = new StanfordCoreNLP();
+        mockSentimentAnalyserService = mock(SentimentAnalyserService.class);
     }
+
 
     @Test(expected = NullPointerException.class)
     public void ifAverageSentimentResultScoreIsNull_throwANullPointerException() {
+        SentimentResult sentimentResult = new SentimentResult();
         List<SentimentResult> sentimentResultList = new ArrayList<SentimentResult>();
         sentimentResultList.add(0, sentimentResult);
 
-        mockSentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
+        sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
 
     }
 
     @Test
-    public void givenATextFile_ListOfSentimentScorePerSentenceIsDisplayed() {
+    public void ifAverageSentimentScoreIsPassedSentimentResultList_teamSentimentScoreIsReturned() {
+        List<SentimentResult> sentimentResultList = new ArrayList<>();
+        TeamSentimentScore teamSentimentScore = new TeamSentimentScore();
+        teamSentimentScore.setScore(100.0);
 
-        String fileName = "/home/pbx/Downloads/pride_and_prejudice_chapter1.txt";
-        Path path = Paths.get(fileName);
-        String text = "";
+        for(int i = 0; i <= 10; i++) {
 
-        try {
-            Scanner scanner = new Scanner(path);
+            SentimentResult sentimentResult = new SentimentResult();
+            sentimentResult.setSentimentScore(100);
+            sentimentResultList.add(sentimentResult);
 
-            System.out.println("Read text file using Scanner");
-            //read line by line
-
-            while(scanner.hasNextLine()) {
-                //add each line to List
-                text += scanner.nextLine();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        mockSentimentAnalyserService.getSentimentResult("Test text sentence.");
+        when(mockSentimentAnalyserService.getAverageSentimentScore(sentimentResultList)).thenReturn(teamSentimentScore);
 
     }
+
+    @Test
+    public void ifSentimentResultListContainingScores4IsPassedToAverageSentimentScore_averageSentimentScoreReturns100() {
+
+        List<SentimentResult> sentimentResultList = new ArrayList<>();
+        Double teamSentimentScore = 100.0;
+
+        for(int i = 0; i <= 10; i++) {
+
+            SentimentResult sentimentResult = new SentimentResult();
+            sentimentResult.setSentimentScore(4);
+            sentimentResultList.add(sentimentResult);
+
+        }
+
+        TeamSentimentScore teamSentimentScore2 = sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
+        Assert.assertEquals((teamSentimentScore2.getScore()), teamSentimentScore);
+    }
+
+    @Test
+    public void ifSentimentResultListContainingScores0IsPassedToAverageSentimentScore_averageSentimentScoreReturns100() {
+
+        List<SentimentResult> sentimentResultList = new ArrayList<>();
+        Double teamSentimentScore = 0.0;
+
+        for(int i = 0; i <= 10; i++) {
+
+            SentimentResult sentimentResult = new SentimentResult();
+            sentimentResult.setSentimentScore(0);
+            sentimentResultList.add(sentimentResult);
+
+        }
+
+        TeamSentimentScore teamSentimentScore2 = sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
+        Assert.assertEquals((teamSentimentScore2.getScore()), teamSentimentScore);
+    }
+
 }
