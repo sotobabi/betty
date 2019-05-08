@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface TwitterMinerRepository {
     List<Status> searchTweets(String keyword, int numberOfStatus);
+
+    void searchTweetsByUserId(String keyword);
 }

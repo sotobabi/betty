@@ -46,5 +46,8 @@ public class TwitterService {
         return twitterRepository.saveTweets(listOfTweets);
     }
 
+    public void searchTweetsByUserId(String keyword){
+        twitterMinerRepository.searchTweetsByUserId(keyword);
+    }
 
 }
