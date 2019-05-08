@@ -17,11 +17,6 @@ public class BettyApplicationTests {
 
     }
 
-    @Test
-    public void whenRootMappingIsCalled_helloTemplateIsReturned() {
-        HomeController testController = new HomeController();
 
-        assertEquals("index", testController.index());
-    }
 
 }
