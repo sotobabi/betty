@@ -26,41 +26,34 @@ public class BatchScheduler {
     private Job jobForFootballGames;
 
     @Autowired
-    public BatchScheduler(JobLauncher jobLauncherForFootballGames, @Qualifier("matches")Job jobForFootballGames) {
+    public BatchScheduler(JobLauncher jobLauncherForTweets, JobLauncher jobLauncherForOdds
+            , JobLauncher jobLauncherForFootballGames
+            , @Qualifier("tweets") Job jobForTweets, @Qualifier("odds") Job jobForOdds
+            , @Qualifier("matches") Job jobForFootballGames) {
+
+        this.jobLauncherForTweets = jobLauncherForTweets;
+        this.jobLauncherForOdds = jobLauncherForOdds;
         this.jobLauncherForFootballGames = jobLauncherForFootballGames;
+        this.jobForTweets = jobForTweets;
+        this.jobForOdds = jobForOdds;
         this.jobForFootballGames = jobForFootballGames;
     }
 
+   @Scheduled(cron = "0 0 */6 ? * *")
+    public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        JobParameters parameters = getJobParameters();
+        JobExecution jobExecution = runTweetsJob(parameters);
 
-    //    @Autowired
-//    public BatchScheduler(JobLauncher jobLauncherForTweets, JobLauncher jobLauncherForOdds
-//            , JobLauncher jobLauncherForFootballGames
-//            , @Qualifier("tweets") Job jobForTweets, @Qualifier("odds") Job jobForOdds
-//            , @Qualifier("matches") Job jobForFootballGames) {
-//
-//        this.jobLauncherForTweets = jobLauncherForTweets;
-//        this.jobLauncherForOdds = jobLauncherForOdds;
-//        this.jobLauncherForFootballGames = jobLauncherForFootballGames;
-//        this.jobForTweets = jobForTweets;
-//        this.jobForOdds = jobForOdds;
-//        this.jobForFootballGames = jobForFootballGames;
-//    }
+        return getBatchStatus(jobExecution);
+    }
 
-//   @Scheduled(cron = "0 0 */6 ? * *")
-//    public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-//        JobParameters parameters = getJobParameters();
-//        JobExecution jobExecution = runTweetsJob(parameters);
-//
-//        return getBatchStatus(jobExecution);
-//    }
-//
-//    @Scheduled(cron = "0 0 */6 ? * *")
-//    public BatchStatus oddsToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-//        JobParameters parameters = getJobParameters();
-//        JobExecution jobExecution = runOddsJob(parameters);
-//
-//        return getBatchStatus(jobExecution);
-//    }
+    @Scheduled(cron = "0 0 */6 ? * *")
+    public BatchStatus oddsToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        JobParameters parameters = getJobParameters();
+        JobExecution jobExecution = runOddsJob(parameters);
+
+        return getBatchStatus(jobExecution);
+    }
 
     @Scheduled(cron = "0 0 0 * * *")
     public BatchStatus footballMatchesToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {

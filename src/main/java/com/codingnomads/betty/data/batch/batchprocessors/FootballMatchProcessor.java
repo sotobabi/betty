@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 @Component
@@ -25,22 +25,34 @@ public class FootballMatchProcessor implements ItemProcessor<List<FootballMatchI
 
         List<FootballMatchInfo> listFromDb = infoJpaRepository.findByMatch_Date();
 
-        for (FootballMatchInfo infoFromApi : listFromApi) {
+        Iterator<FootballMatchInfo> apiIterator = listFromApi.iterator();
 
-            for (FootballMatchInfo infoFromDb : listFromDb) {
+        List<FootballMatchInfo> uniqueList = new ArrayList<>();
 
-                if(infoFromApi.getApi_id().equals(infoFromDb.getApi_id())) {
+        while(apiIterator.hasNext()){
 
-                    System.out.println(infoFromDb.getName());
+            FootballMatchInfo infoApi = apiIterator.next();
 
-                    listFromApi.remove(infoFromDb);
+            boolean flag = false;
+
+            Iterator<FootballMatchInfo> dbIterator = listFromDb.iterator();
+
+            while(dbIterator.hasNext()){
+
+                FootballMatchInfo infoDb = dbIterator.next();
+
+                if(infoApi.getApi_id().equals(infoDb.getApi_id())){
+
+                    flag = true;
                 }
+            }
+
+            if(!flag){
+
+                uniqueList.add(infoApi);
             }
         }
 
-        System.out.println(listFromApi.size());
-
-        return listFromApi;
-
+        return uniqueList;
     }
 }

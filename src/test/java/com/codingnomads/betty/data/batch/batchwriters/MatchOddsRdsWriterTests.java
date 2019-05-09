@@ -16,6 +16,7 @@ public class MatchOddsRdsWriterTests {
     private MatchOddsJpaRepository mockMatchOddsJpaRepository;
     private MatchOdds matchOdds;
     private List<MatchOdds> list = Arrays.asList(matchOdds);
+    private List<List<MatchOdds>> items;
 
     @Before
     public void setUp(){
@@ -24,15 +25,16 @@ public class MatchOddsRdsWriterTests {
         testMatchOddsRdsWriter = new MatchOddsRdsWriter(mockMatchOddsJpaRepository);
         matchOdds = new MatchOdds();
         list = Arrays.asList(matchOdds);
+        items = Arrays.asList(list);
     }
 
     @Test
     public void whenWriteRun_shouldCallMatchOddsJpaRepositorySaveMethod() throws Exception {
 
-        when(mockMatchOddsJpaRepository.save(matchOdds)).thenReturn(matchOdds);
+        when(mockMatchOddsJpaRepository.saveAll(list)).thenReturn(list);
 
-        testMatchOddsRdsWriter.write(list);
+        testMatchOddsRdsWriter.write(items);
 
-        verify(mockMatchOddsJpaRepository, times(1)).save(matchOdds);
+        verify(mockMatchOddsJpaRepository, times(1)).saveAll(list);
     }
 }

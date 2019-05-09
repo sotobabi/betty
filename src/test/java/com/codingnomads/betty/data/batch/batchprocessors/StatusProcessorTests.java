@@ -4,10 +4,7 @@ import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import twitter4j.Status;
 
 import java.util.ArrayList;
