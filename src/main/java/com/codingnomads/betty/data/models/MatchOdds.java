@@ -67,12 +67,13 @@ public class MatchOdds {
         this.awayTeamOdd = awayTeamOdd;
     }
 
-    public Date getMatchDateTime() {
+
+    public Date getMatchDate() {
         return matchDate;
     }
 
-    public void setMatchDateTime(Date matchDateTime) {
-        this.matchDate = matchDateTime;
+    public void setMatchDate(Date matchDate) {
+        this.matchDate = matchDate;
     }
 
     @Override
