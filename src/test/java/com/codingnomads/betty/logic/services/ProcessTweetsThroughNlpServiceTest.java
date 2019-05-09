@@ -9,8 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,4 +55,5 @@ public class ProcessTweetsThroughNlpServiceTest {
         Double score = nlpService.returnSentimentScoreByKeywordUsed(keywordUsed);
         assertThat(score).isBetween(0.0, 100.0);
     }
+
 }

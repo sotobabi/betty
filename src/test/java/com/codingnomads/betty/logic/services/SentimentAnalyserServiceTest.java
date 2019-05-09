@@ -1,29 +1,83 @@
 package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.logic.models.SentimentResult;
+
+import com.codingnomads.betty.logic.models.TeamSentimentScore;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.*;
+
+
+@RunWith(MockitoJUnitRunner.class)
 public class SentimentAnalyserServiceTest {
 
-    private SentimentAnalyserService service;
-    private SentimentResult sentimentResult;
+
+    @Mock
+    private SentimentAnalyserService mockSentimentAnalyserService;
+
+    @InjectMocks
+    private SentimentAnalyserService sentimentAnalyserService;
 
     @Before
     public void setUp() {
-        service = new SentimentAnalyserService();
+        mockSentimentAnalyserService = mock(SentimentAnalyserService.class);
     }
 
 
     @Test(expected = NullPointerException.class)
     public void ifAverageSentimentResultScoreIsNull_throwANullPointerException() {
+        SentimentResult sentimentResult = new SentimentResult();
         List<SentimentResult> sentimentResultList = new ArrayList<SentimentResult>();
         sentimentResultList.add(0, sentimentResult);
 
-        service.getAverageSentimentScore(sentimentResultList);
+        sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
 
     }
+    
+    @Test
+    public void ifSentimentResultListContainingScores4IsPassedToAverageSentimentScore_averageSentimentScoreReturns100() {
+
+        List<SentimentResult> sentimentResultList = new ArrayList<>();
+        Double teamSentimentScore = 100.0;
+
+        for(int i = 0; i <= 10; i++) {
+
+            SentimentResult sentimentResult = new SentimentResult();
+            sentimentResult.setSentimentScore(4);
+            sentimentResultList.add(sentimentResult);
+
+        }
+
+        TeamSentimentScore teamSentimentScore2 = sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
+        Assert.assertEquals((teamSentimentScore2.getScore()), teamSentimentScore);
+    }
+
+    @Test
+    public void ifSentimentResultListContainingScores0IsPassedToAverageSentimentScore_averageSentimentScoreReturns100() {
+
+        List<SentimentResult> sentimentResultList = new ArrayList<>();
+        Double teamSentimentScore = 0.0;
+
+        for(int i = 0; i <= 10; i++) {
+
+            SentimentResult sentimentResult = new SentimentResult();
+            sentimentResult.setSentimentScore(0);
+            sentimentResultList.add(sentimentResult);
+
+        }
+
+        TeamSentimentScore teamSentimentScore2 = sentimentAnalyserService.getAverageSentimentScore(sentimentResultList);
+        Assert.assertEquals((teamSentimentScore2.getScore()), teamSentimentScore);
+    }
+
 }
