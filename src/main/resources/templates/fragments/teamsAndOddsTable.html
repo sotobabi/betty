@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="teamsAndOddsTableFragment">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Match Date</th>
+            <th>Home Team</th>
+            <th>Home Team Odds</th>
+            <th>Away Team</th>
+            <th>Away Team Odds</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${mostCurrentOddsAndMatches.empty}">
+            <td colspan="2"> No Info Available </td>
+        </tr>
+        <tr th:each="currentOddAndMatch : ${mostCurrentOddsAndMatches}">
+            <td><span th:text="${currentOddAndMatch.matchDate}"></span></td>
+            <td><span th:text="${currentOddAndMatch.homeTeam}"></span></td>
+            <td><span th:text="${currentOddAndMatch.homeTeamOdd}"></span></td>
+            <td><span th:text="${currentOddAndMatch.awayTeam}"></span></td>
+            <td><span th:text="${currentOddAndMatch.awayTeamOdd}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

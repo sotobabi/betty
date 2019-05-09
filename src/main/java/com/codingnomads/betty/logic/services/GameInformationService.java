@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -72,7 +73,7 @@ public class GameInformationService {
         matchOdds.setAwayTeam(awayTeamName);
         matchOdds.setAwayTeamOdd(odds.get(awayTeamName));
 
-        matchOdds.setMatchDateTime(getFormattedDate());
+        matchOdds.setMatchDate(getFormattedDate());
 
         return matchOdds;
     }
@@ -141,5 +142,10 @@ public class GameInformationService {
         long mills = date.getTime();
 
         return new Date(mills);
+    }
+
+    public List<MatchOdds> findMostRecentMatchesAndOdds() {
+        List<MatchOdds> mostCurrentOddsAndMatches = matchOddsJpaRepository.findAll();
+        return mostCurrentOddsAndMatches;
     }
 }
