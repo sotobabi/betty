@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.batchwriters;
 
+import com.codingnomads.betty.data.batch.exceptions.EmptyItemException;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
 import org.springframework.batch.item.ItemWriter;
@@ -22,7 +23,7 @@ public class FootballMatchRdsWriter implements ItemWriter<List<FootballMatchInfo
     public void write(List<? extends List<FootballMatchInfo>> items) throws Exception {
 
         if(items == null){
-            return;
+            throw new EmptyItemException("There are no new football matches to write!");
         }
 
         for (List<FootballMatchInfo> matchList : items) {

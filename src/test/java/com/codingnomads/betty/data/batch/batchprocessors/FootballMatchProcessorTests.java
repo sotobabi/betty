@@ -16,9 +16,9 @@ public class FootballMatchProcessorTests {
 
     private FootballMatchesInfoJpaRepository mockMatchesInfoJpaRepository;
     private FootballMatchProcessor testFootballMatchProcessor;
-    private FootballMatchInfo mockFootballMatchInfo1;
-    private FootballMatchInfo mockFootballMatchInfo2;
-    private FootballMatchInfo mockFootballMatchInfo3;
+    private FootballMatchInfo footballMatchInfo1;
+    private FootballMatchInfo footballMatchInfo2;
+    private FootballMatchInfo footballMatchInfo3;
     private List<FootballMatchInfo> apiList;
     private List<FootballMatchInfo> dbList;
     private List<FootballMatchInfo> newList;
@@ -30,23 +30,23 @@ public class FootballMatchProcessorTests {
         mockMatchesInfoJpaRepository = mock(FootballMatchesInfoJpaRepository.class);
         testFootballMatchProcessor = new FootballMatchProcessor(mockMatchesInfoJpaRepository);
 
-        mockFootballMatchInfo1 = new FootballMatchInfo();
-        mockFootballMatchInfo2 = new FootballMatchInfo();
-        mockFootballMatchInfo3 = new FootballMatchInfo();
+        footballMatchInfo1 = new FootballMatchInfo();
+        footballMatchInfo2 = new FootballMatchInfo();
+        footballMatchInfo3 = new FootballMatchInfo();
 
-        mockFootballMatchInfo1.setApi_id("1");
-
-        mockFootballMatchInfo2.setApi_id("2");
-
-        mockFootballMatchInfo3.setApi_id("3");
-
-        apiList = Arrays.asList(mockFootballMatchInfo1, mockFootballMatchInfo2,mockFootballMatchInfo3);
-        dbList = Arrays.asList(mockFootballMatchInfo1, mockFootballMatchInfo2);
-        newList = Arrays.asList(mockFootballMatchInfo3);
+        apiList = Arrays.asList(footballMatchInfo1, footballMatchInfo2, footballMatchInfo3);
+        dbList = Arrays.asList(footballMatchInfo1, footballMatchInfo2);
+        newList = Arrays.asList(footballMatchInfo3);
     }
 
     @Test
     public void whenProcessRun_shouldReturnUniqueList() throws Exception {
+
+        footballMatchInfo1.setApi_id("1");
+
+        footballMatchInfo2.setApi_id("2");
+
+        footballMatchInfo3.setApi_id("3");
 
         when(mockMatchesInfoJpaRepository.findByMatch_Date()).thenReturn(dbList);
 
