@@ -81,7 +81,7 @@ public class GameInformationService {
         matchOdds.setAwayTeam(awayTeamName);
         matchOdds.setAwayTeamOdd(odds.get(awayTeamName));
 
-        matchOdds.setMatchDateTime(getFormattedDate(eventJSON.getStart()));
+        matchOdds.setMatchDate(getFormattedDate(eventJSON.getStart()));
 
         return matchOdds;
     }
