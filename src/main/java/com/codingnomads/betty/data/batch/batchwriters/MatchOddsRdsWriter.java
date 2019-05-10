@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class MatchOddsRdsWriter implements ItemWriter<MatchOdds>{
+public class MatchOddsRdsWriter implements ItemWriter<List<MatchOdds>>{
 
     private MatchOddsJpaRepository matchOddsJpaRepository;
 
@@ -18,9 +18,12 @@ public class MatchOddsRdsWriter implements ItemWriter<MatchOdds>{
         this.matchOddsJpaRepository = matchOddsJpaRepository;
     }
 
-    @Override
-    public void write(List<? extends MatchOdds> items) throws Exception {
 
-        matchOddsJpaRepository.save(items.get(0));
+    @Override
+    public void write(List<? extends List<MatchOdds>> items) throws Exception {
+
+        for (List<MatchOdds> list : items) {
+            matchOddsJpaRepository.saveAll(list);
+        }
     }
 }

@@ -15,8 +15,10 @@ public class BatchSchedulerTests {
 
     private JobLauncher mockJobLauncherForTweets;
     private JobLauncher mockJobLauncherForOdds;
+    private JobLauncher mockJobLauncherForMatches;
     private Job mockJobForTweets;
     private Job mockJobForOdds;
+    private Job mockJobForMatches;
     private BatchScheduler testBatchScheduler;
     private JobParameters jobParameters;
     private JobExecution mockJobExecution;
@@ -27,13 +29,20 @@ public class BatchSchedulerTests {
 
         mockJobLauncherForTweets = mock(JobLauncher.class);
         mockJobLauncherForOdds = mock(JobLauncher.class);
+        mockJobLauncherForMatches = mock(JobLauncher.class);
+
         mockJobForTweets = mock(Job.class);
         mockJobForOdds = mock(Job.class);
+        mockJobForMatches = mock(Job.class);
+
         mockJobExecution = mock(JobExecution.class);
+
         jobParameters = new JobParameters();
+
         batchStatus = mockJobExecution.getStatus();
-        testBatchScheduler = new BatchScheduler(mockJobLauncherForTweets, mockJobLauncherForOdds
-                , mockJobForTweets, mockJobForOdds);
+
+        testBatchScheduler = new BatchScheduler(mockJobLauncherForTweets, mockJobLauncherForOdds, mockJobLauncherForMatches
+                , mockJobForTweets, mockJobForOdds, mockJobForMatches);
     }
 
     @Test
@@ -52,5 +61,13 @@ public class BatchSchedulerTests {
         when(mockJobLauncherForOdds.run(mockJobForOdds, jobParameters)).thenReturn(mockJobExecution);
 
         assertThat(testBatchScheduler.oddsToDbJobScheduler()).isEqualTo(batchStatus);
+    }
+
+    @Test
+    public void whenRunFootballMatchesToDbJobScheduler_shouldReturnBatchStatus() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+
+        when(mockJobLauncherForMatches.run(mockJobForMatches, jobParameters)).thenReturn(mockJobExecution);
+
+        assertThat(testBatchScheduler.footballMatchesToDbJobScheduler()).isEqualTo(batchStatus);
     }
 }

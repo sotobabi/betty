@@ -36,6 +36,7 @@ public class StatusItemReader implements ItemReader<List<Status>> {
         }
 
         batchJobState = false;
+
         return null;
     }
 
