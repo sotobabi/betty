@@ -32,6 +32,7 @@ public class TwitterSourceRepositoryTest {
         mockStatus = mock(Status.class);
         testQuery = new Query("keyword");
         testQuery.setCount(1);
+        testQuery.setLang("en");
         mockTwitter = mock(Twitter.class);
         mockQueryResult = mock(QueryResult.class);
         list = Arrays.asList(mockStatus);

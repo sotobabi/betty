@@ -27,15 +27,11 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
         query.setCount(numberOfStatus);
         query.setLang("en");
 
-        QueryResult queryResult = null;
         try {
-            queryResult = twitter.search(query);
+            QueryResult queryResult = twitter.search(query);
+            return queryResult.getTweets();
         } catch (TwitterException te) {
             throw new TwitterSearchFailedException("Tweet Search Failed!", te);
         }
-
-        List<Status> tweets = queryResult.getTweets();
-
-        return tweets;
     }
 }
