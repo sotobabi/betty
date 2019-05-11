@@ -24,12 +24,34 @@ import java.util.List;
 @EnableBatchProcessing
 public class SpringBatchConfig {
 
-
     @Order(1)
+    @Bean("awayTeamTweets")
+    public Job awayTeamTweetsJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
+                                 @Qualifier("awayTeamTweets") ItemReader<List<Status>> itemReader,
+                                 @Qualifier("awayTeamTweets") ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
+                                 @Qualifier("awayTeamTweets") ItemWriter<List<Tweet>> itemWriter) {
+
+        Step homeTeamStep = stepBuilderFactory.get("read-process-save-away-team-tweets-in-db")
+                .<List<Status>, List<Tweet>>chunk(1)
+                .reader(itemReader)
+                .processor(itemProcessor)
+                .writer(itemWriter)
+                .build();
+
+
+        return jobBuilderFactory.get("get-away-team-tweets-from-api-and-save-to-db")
+                .incrementer(new RunIdIncrementer())
+                .start(homeTeamStep)
+                .build();
+    }
+
+
+    @Order(2)
     @Bean("homeTeamTweets")
-    public Job tweetJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-                   ItemReader<List<Status>> itemReader, ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
-                   ItemWriter<List<Tweet>> itemWriter) {
+    public Job homeTeamTweetsJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
+                                 @Qualifier("homeTeamTweets") ItemReader<List<Status>> itemReader,
+                                 @Qualifier("homeTeamTweets") ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
+                                 @Qualifier("homeTeamTweets") ItemWriter<List<Tweet>> itemWriter) {
 
         Step homeTeamStep = stepBuilderFactory.get("read-process-save-home-team-tweets-in-db")
                 .<List<Status>, List<Tweet>>chunk(1)
@@ -45,7 +67,7 @@ public class SpringBatchConfig {
                 .build();
     }
 
-    @Order(2)
+    @Order(3)
     @Bean("matches")
     public Job footballJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
             ,@Qualifier("apiReader") ItemReader<List<FootballMatchInfo>> reader, ItemProcessor<List<FootballMatchInfo>
@@ -65,7 +87,7 @@ public class SpringBatchConfig {
                 .build();
     }
 
-    @Order(3)
+    @Order(4)
     @Bean("odds")
     public Job oddToDbJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
             , @Qualifier("jpaReader") ItemReader<List<FootballMatchInfo>> itemReader, ItemProcessor<List<FootballMatchInfo>, List<MatchOdds>> itemProcessor

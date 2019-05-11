@@ -18,32 +18,48 @@ import java.util.Map;
 @EnableScheduling
 public class BatchScheduler {
 
-    private JobLauncher jobLauncherForTweets;
+    private JobLauncher jobLauncherForHomeTeamTweets;
+    private JobLauncher jobLauncherForAwayTeamTweets;
     private JobLauncher jobLauncherForOdds;
     private JobLauncher jobLauncherForFootballGames;
-    private Job jobForTweets;
+    private Job jobForHomeTeamTweets;
+    private Job jobForAwayTeamTweets;
     private Job jobForOdds;
     private Job jobForFootballGames;
 
     @Autowired
-    public BatchScheduler(JobLauncher jobLauncherForTweets, JobLauncher jobLauncherForOdds
+    public BatchScheduler(JobLauncher jobLauncherForHomeTeamTweets, JobLauncher jobLauncherForAwayTeamTweets
+            , JobLauncher jobLauncherForOdds
             , JobLauncher jobLauncherForFootballGames
-            , @Qualifier("homeTeamTweets") Job jobForTweets, @Qualifier("odds") Job jobForOdds
+            , @Qualifier("homeTeamTweets") Job jobForHomeTeamTweets
+            , @Qualifier("awayTeamTweets") Job jobForAwayTeamTweets
+            , @Qualifier("odds") Job jobForOdds
             , @Qualifier("matches") Job jobForFootballGames) {
 
-        this.jobLauncherForTweets = jobLauncherForTweets;
+        this.jobLauncherForHomeTeamTweets = jobLauncherForHomeTeamTweets;
+        this.jobLauncherForAwayTeamTweets = jobLauncherForAwayTeamTweets;
         this.jobLauncherForOdds = jobLauncherForOdds;
         this.jobLauncherForFootballGames = jobLauncherForFootballGames;
-        this.jobForTweets = jobForTweets;
+        this.jobForHomeTeamTweets = jobForHomeTeamTweets;
+        this.jobForAwayTeamTweets = jobForAwayTeamTweets;
         this.jobForOdds = jobForOdds;
         this.jobForFootballGames = jobForFootballGames;
     }
 
-   @Scheduled(cron = "0 0 */6 ? * *")
-    public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException,
+    @Scheduled(cron = "0 0 */6 ? * *")
+    public BatchStatus awayTeamTweetsToDbJobScheduler() throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        JobParameters parameters = getJobParameters();
+        JobExecution jobExecution = runAwayTeamTweetsJob(parameters);
+
+        return getBatchStatus(jobExecution);
+    }
+
+    @Scheduled(cron = "0 0 */6 ? * *")
+    public BatchStatus homeTeamTweetsToDbJobScheduler() throws JobParametersInvalidException,
            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         JobParameters parameters = getJobParameters();
-        JobExecution jobExecution = runTweetsJob(parameters);
+        JobExecution jobExecution = runHomeTeamTweetsJob(parameters);
 
         return getBatchStatus(jobExecution);
     }
@@ -73,9 +89,14 @@ public class BatchScheduler {
         return new JobParameters(maps);
     }
 
-    private JobExecution runTweetsJob(JobParameters parameters) throws JobParametersInvalidException,
+    private JobExecution runHomeTeamTweetsJob(JobParameters parameters) throws JobParametersInvalidException,
             JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        return jobLauncherForTweets.run(jobForTweets, parameters);
+        return jobLauncherForHomeTeamTweets.run(jobForHomeTeamTweets, parameters);
+    }
+
+    private JobExecution runAwayTeamTweetsJob(JobParameters parameters) throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+        return jobLauncherForAwayTeamTweets.run(jobForAwayTeamTweets, parameters);
     }
 
     private JobExecution runOddsJob(JobParameters parameters) throws JobParametersInvalidException,

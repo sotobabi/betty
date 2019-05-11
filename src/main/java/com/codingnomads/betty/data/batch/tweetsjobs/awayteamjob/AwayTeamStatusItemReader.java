@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob;
+package com.codingnomads.betty.data.batch.tweetsjobs.awayteamjob;
 
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
@@ -13,23 +13,18 @@ import twitter4j.Status;
 
 import java.util.List;
 
-@Qualifier("homeTeamTweets")
+@Qualifier("awayTeamTweets")
 @Component
-public class HomeTeamStatusItemReader implements ItemReader<List<Status>> {
+public class AwayTeamStatusItemReader implements ItemReader<List<Status>> {
 
     private TwitterMinerRepository twitterMinerRepository;
     private MatchOddsJpaRepository matchOddsJpaRepository;
-
-    public void setTeamKeyword(String teamKeyword) {
-        this.teamKeyword = teamKeyword;
-    }
-
     private String teamKeyword;
     private int numberOfStatus;
     private boolean batchJobState = false;
 
     @Autowired
-    public HomeTeamStatusItemReader(TwitterMinerRepository twitterMinerRepository,
+    public AwayTeamStatusItemReader(TwitterMinerRepository twitterMinerRepository,
                                     MatchOddsJpaRepository matchOddsJpaRepository) {
         this.twitterMinerRepository = twitterMinerRepository;
         this.matchOddsJpaRepository = matchOddsJpaRepository;
@@ -40,7 +35,7 @@ public class HomeTeamStatusItemReader implements ItemReader<List<Status>> {
             throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         if (!batchJobState) {
             batchJobState = true;
-            setTeamKeyword(matchOddsJpaRepository.findLatestInstanceInMatchOddsTable().getHomeTeam());
+            setTeamKeyword(matchOddsJpaRepository.findLatestInstanceInMatchOddsTable().getAwayTeam());
             return getTweetsForTeam();
         }
         batchJobState = false;
@@ -53,6 +48,10 @@ public class HomeTeamStatusItemReader implements ItemReader<List<Status>> {
 
     public String getTeamKeyword() {
         return teamKeyword;
+    }
+
+    public void setTeamKeyword(String teamKeyword) {
+        this.teamKeyword = teamKeyword;
     }
 
     public int getNumberOfStatus() {

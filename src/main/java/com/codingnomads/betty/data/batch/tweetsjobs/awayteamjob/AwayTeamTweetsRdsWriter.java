@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob;
+package com.codingnomads.betty.data.batch.tweetsjobs.awayteamjob;
 
 import com.codingnomads.betty.data.models.Tweet;
 import com.codingnomads.betty.logic.interfaces.TwitterJpaRepository;
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Qualifier("homeTeamTweets")
+@Qualifier("awayTeamTweets")
 @Component
-public class HomeTeamTweetsRdsWriter implements ItemWriter<List<Tweet>>{
+public class AwayTeamTweetsRdsWriter implements ItemWriter<List<Tweet>> {
 
     private TwitterJpaRepository twitterJpaRepository;
 
     @Autowired
-    public HomeTeamTweetsRdsWriter(TwitterJpaRepository twitterJpaRepository) {
+    public AwayTeamTweetsRdsWriter(TwitterJpaRepository twitterJpaRepository) {
         this.twitterJpaRepository = twitterJpaRepository;
     }
 
@@ -26,4 +26,6 @@ public class HomeTeamTweetsRdsWriter implements ItemWriter<List<Tweet>>{
             twitterJpaRepository.saveAll(tweets);
         }
     }
+
+
 }

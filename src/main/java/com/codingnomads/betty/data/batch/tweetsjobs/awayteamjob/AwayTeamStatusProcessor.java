@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob;
+package com.codingnomads.betty.data.batch.tweetsjobs.awayteamjob;
 
 import com.codingnomads.betty.data.models.Tweet;
 import org.springframework.batch.item.ItemProcessor;
@@ -11,15 +11,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Qualifier("homeTeamTweets")
+@Qualifier("awayTeamTweets")
 @Component
-public class HomeTeamStatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
-
-    private HomeTeamStatusItemReader homeTeamStatusItemReader;
+public class AwayTeamStatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
+    private AwayTeamStatusItemReader awayTeamStatusItemReader;
 
     @Autowired
-    public HomeTeamStatusProcessor(HomeTeamStatusItemReader homeTeamStatusItemReader) {
-        this.homeTeamStatusItemReader = homeTeamStatusItemReader;
+    public AwayTeamStatusProcessor(AwayTeamStatusItemReader awayTeamStatusItemReader) {
+        this.awayTeamStatusItemReader = awayTeamStatusItemReader;
     }
 
     @Override
@@ -34,7 +33,7 @@ public class HomeTeamStatusProcessor implements ItemProcessor<List<Status>, List
             tweet.setCreatedAt(status.getCreatedAt());
             tweet.setText(status.getText());
             tweet.setLanguage(status.getLang());
-            tweet.setKeywordUsed(homeTeamStatusItemReader.getTeamKeyword());
+            tweet.setKeywordUsed(awayTeamStatusItemReader.getTeamKeyword());
             listOfTweets.add(tweet);
         }
         return listOfTweets;
