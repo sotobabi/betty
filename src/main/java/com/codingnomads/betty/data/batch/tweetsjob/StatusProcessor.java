@@ -1,6 +1,5 @@
 package com.codingnomads.betty.data.batch.tweetsjob;
 
-import com.codingnomads.betty.data.batch.tweetsjob.StatusItemReader;
 import com.codingnomads.betty.data.models.Tweet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,11 @@ import java.util.List;
 @Component
 public class StatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
 
-    private StatusItemReader statusItemReader;
+    private HomeTeamStatusItemReader homeTeamStatusItemReader;
 
     @Autowired
-    public StatusProcessor(StatusItemReader statusItemReader) {
-        this.statusItemReader = statusItemReader;
+    public StatusProcessor(HomeTeamStatusItemReader homeTeamStatusItemReader) {
+        this.homeTeamStatusItemReader = homeTeamStatusItemReader;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class StatusProcessor implements ItemProcessor<List<Status>, List<Tweet>>
             tweet.setCreatedAt(status.getCreatedAt());
             tweet.setText(status.getText());
             tweet.setLanguage(status.getLang());
-            tweet.setKeywordUsed(statusItemReader.getKeyword());
+            tweet.setKeywordUsed(homeTeamStatusItemReader.getTeamKeyword());
             listOfTweets.add(tweet);
         }
         return listOfTweets;

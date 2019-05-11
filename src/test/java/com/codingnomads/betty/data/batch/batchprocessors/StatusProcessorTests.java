@@ -1,6 +1,6 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
-import com.codingnomads.betty.data.batch.tweetsjob.StatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjob.HomeTeamStatusItemReader;
 import com.codingnomads.betty.data.batch.tweetsjob.StatusProcessor;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
@@ -19,13 +19,13 @@ import static org.mockito.Mockito.when;
 public class StatusProcessorTests {
 
     @Mock
-    private StatusItemReader mockStatusItemReader;
+    private HomeTeamStatusItemReader mockHomeTeamStatusItemReader;
     private StatusProcessor testStatusProcessor;
 
     @Before
     public void setUp() throws Exception {
-        mockStatusItemReader = mock(StatusItemReader.class);
-        testStatusProcessor = new StatusProcessor(mockStatusItemReader);
+        mockHomeTeamStatusItemReader = mock(HomeTeamStatusItemReader.class);
+        testStatusProcessor = new StatusProcessor(mockHomeTeamStatusItemReader);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class StatusProcessorTests {
         List<Status> mockListOfStatus = new ArrayList<>();
         List<Tweet> expectedTweetsList = new ArrayList<>();
 
-        when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
+        when(mockHomeTeamStatusItemReader.getTeamKeyword()).thenReturn("testWord");
         assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
     }
 
@@ -44,7 +44,7 @@ public class StatusProcessorTests {
 
         List<Tweet> expectedTweetsList = Collections.emptyList();
 
-        when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
+        when(mockHomeTeamStatusItemReader.getTeamKeyword()).thenReturn("testWord");
         assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
 
     }

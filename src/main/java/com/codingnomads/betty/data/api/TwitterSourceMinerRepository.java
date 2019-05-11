@@ -25,6 +25,7 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
         Query query = new Query(keyword);
 
         query.setCount(numberOfStatus);
+        query.setLang("en");
 
         QueryResult queryResult = null;
         try {

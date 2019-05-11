@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.tweetsjob;
 
+import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
@@ -9,22 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
-import java.util.Collections;
 import java.util.List;
 
 @Component
-public class StatusItemReader implements ItemReader<List<Status>> {
+public class HomeTeamStatusItemReader implements ItemReader<List<Status>> {
 
     private TwitterMinerRepository twitterMinerRepository;
-    private String keyword;
+    private MatchOddsJpaRepository matchOddsJpaRepository;
+
+    public void setTeamKeyword(String teamKeyword) {
+        this.teamKeyword = teamKeyword;
+    }
+
+    private String teamKeyword;
     private int numberOfStatus;
     private boolean batchJobState = false;
 
-    //TODO: Keyword and status should not be hardcoded
     @Autowired
-    public StatusItemReader(TwitterMinerRepository twitterMinerRepository) {
+    public HomeTeamStatusItemReader(TwitterMinerRepository twitterMinerRepository,
+                                    MatchOddsJpaRepository matchOddsJpaRepository) {
         this.twitterMinerRepository = twitterMinerRepository;
-        this.keyword = "cat";
+        this.matchOddsJpaRepository = matchOddsJpaRepository;
     }
 
     @Override
@@ -32,18 +38,19 @@ public class StatusItemReader implements ItemReader<List<Status>> {
             throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         if (!batchJobState) {
             batchJobState = true;
-            return twitterMinerRepository.searchTweets(keyword,numberOfStatus);
+            setTeamKeyword(matchOddsJpaRepository.findLatestInstanceInMatchOddsTable().getHomeTeam());
+            return getTweetsForTeam();
         }
         batchJobState = false;
         return null;
     }
 
-    public String getKeyword() {
-        return keyword;
+    private List<Status> getTweetsForTeam() {
+        return twitterMinerRepository.searchTweets(getTeamKeyword(), numberOfStatus);
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public String getTeamKeyword() {
+        return teamKeyword;
     }
 
     public int getNumberOfStatus() {
