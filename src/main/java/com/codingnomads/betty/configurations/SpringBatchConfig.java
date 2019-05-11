@@ -30,7 +30,7 @@ public class SpringBatchConfig {
                    ItemReader<List<Status>> itemReader, ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
                    ItemWriter<List<Tweet>> itemWriter) {
 
-        Step step = stepBuilderFactory.get("read-process-save-tweets-in-db")
+        Step homeTeamStep = stepBuilderFactory.get("read-process-save-home-team-tweets-in-db")
                 .<List<Status>, List<Tweet>>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
@@ -39,7 +39,7 @@ public class SpringBatchConfig {
 
         return jobBuilderFactory.get("get-tweets-from-api-and-save-to-db")
                 .incrementer(new RunIdIncrementer())
-                .start(step)
+                .start(homeTeamStep)
                 .build();
     }
 

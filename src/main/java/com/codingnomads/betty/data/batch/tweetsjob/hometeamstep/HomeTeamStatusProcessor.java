@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.tweetsjob;
+package com.codingnomads.betty.data.batch.tweetsjob.hometeamstep;
 
 import com.codingnomads.betty.data.models.Tweet;
 import org.springframework.batch.item.ItemProcessor;
@@ -11,12 +11,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class StatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
+public class HomeTeamStatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
 
     private HomeTeamStatusItemReader homeTeamStatusItemReader;
 
     @Autowired
-    public StatusProcessor(HomeTeamStatusItemReader homeTeamStatusItemReader) {
+    public HomeTeamStatusProcessor(HomeTeamStatusItemReader homeTeamStatusItemReader) {
         this.homeTeamStatusItemReader = homeTeamStatusItemReader;
     }
 

@@ -1,7 +1,7 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
-import com.codingnomads.betty.data.batch.tweetsjob.HomeTeamStatusItemReader;
-import com.codingnomads.betty.data.batch.tweetsjob.StatusProcessor;
+import com.codingnomads.betty.data.batch.tweetsjob.hometeamstep.HomeTeamStatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjob.hometeamstep.HomeTeamStatusProcessor;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,16 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class StatusProcessorTests {
+public class HomeTeamStatusProcessorTests {
 
     @Mock
     private HomeTeamStatusItemReader mockHomeTeamStatusItemReader;
-    private StatusProcessor testStatusProcessor;
+    private HomeTeamStatusProcessor testHomeTeamStatusProcessor;
 
     @Before
     public void setUp() throws Exception {
         mockHomeTeamStatusItemReader = mock(HomeTeamStatusItemReader.class);
-        testStatusProcessor = new StatusProcessor(mockHomeTeamStatusItemReader);
+        testHomeTeamStatusProcessor = new HomeTeamStatusProcessor(mockHomeTeamStatusItemReader);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class StatusProcessorTests {
         List<Tweet> expectedTweetsList = new ArrayList<>();
 
         when(mockHomeTeamStatusItemReader.getTeamKeyword()).thenReturn("testWord");
-        assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+        assertThat(testHomeTeamStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class StatusProcessorTests {
         List<Tweet> expectedTweetsList = Collections.emptyList();
 
         when(mockHomeTeamStatusItemReader.getTeamKeyword()).thenReturn("testWord");
-        assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+        assertThat(testHomeTeamStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
 
     }
 }
