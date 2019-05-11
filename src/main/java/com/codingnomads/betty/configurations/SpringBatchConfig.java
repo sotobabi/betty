@@ -24,58 +24,59 @@ import java.util.List;
 @EnableBatchProcessing
 public class SpringBatchConfig {
 
+    @Order(1)
     @Bean("tweets")
     public Job tweetJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
                    ItemReader<List<Status>> itemReader, ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
                    ItemWriter<List<Tweet>> itemWriter) {
 
-        Step step = stepBuilderFactory.get("Sink-Tweets-To-DB")
+        Step step = stepBuilderFactory.get("read-process-save-tweets-in-db")
                 .<List<Status>, List<Tweet>>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
                 .build();
 
-        return jobBuilderFactory.get("Get-Tweets-To-DB-Job")
-                .incrementer(new RunIdIncrementer())
-                .start(step)
-                .build();
-    }
-
-    @Order(1)
-    @Bean("matches")
-    public Job footballJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
-            ,@Qualifier("apiReader") ItemReader<List<FootballMatchInfo>> reader, ItemProcessor<List<FootballMatchInfo>
-            , List<FootballMatchInfo>> processor
-            ,ItemWriter<List<FootballMatchInfo>> writer){
-
-        Step step = stepBuilderFactory.get("Saving Football Games To Database")
-                .<List<FootballMatchInfo>, List<FootballMatchInfo>> chunk(1)
-                .reader(reader)
-                .processor(processor)
-                .writer(writer)
-                .build();
-
-        return jobBuilderFactory.get("Football Games are Saving to Database")
+        return jobBuilderFactory.get("get-tweets-from-api-and-save-to-db")
                 .incrementer(new RunIdIncrementer())
                 .start(step)
                 .build();
     }
 
     @Order(2)
+    @Bean("matches")
+    public Job footballJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
+            ,@Qualifier("apiReader") ItemReader<List<FootballMatchInfo>> reader, ItemProcessor<List<FootballMatchInfo>
+            , List<FootballMatchInfo>> processor
+            ,ItemWriter<List<FootballMatchInfo>> writer){
+
+        Step step = stepBuilderFactory.get("read-process-save-football-games-in-db")
+                .<List<FootballMatchInfo>, List<FootballMatchInfo>> chunk(1)
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
+                .build();
+
+        return jobBuilderFactory.get("get-football-games-from-api-and-save-to-db")
+                .incrementer(new RunIdIncrementer())
+                .start(step)
+                .build();
+    }
+
+    @Order(3)
     @Bean("odds")
     public Job oddToDbJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
             , @Qualifier("jpaReader") ItemReader<List<FootballMatchInfo>> itemReader, ItemProcessor<List<FootballMatchInfo>, List<MatchOdds>> itemProcessor
             , ItemWriter<List<MatchOdds>> itemWriter){
 
-        Step step = stepBuilderFactory.get("Saving Odds To Database")
+        Step step = stepBuilderFactory.get("save-matches-and-odds-to-db")
                 .<List<FootballMatchInfo>, List<MatchOdds>>chunk(1)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
                 .build();
 
-        return jobBuilderFactory.get("Match-Odds-To-DB ")
+        return jobBuilderFactory.get("transform-football-games-from-db-as-matches-and-odds")
                 .incrementer(new RunIdIncrementer())
                 .start(step)
                 .build();
