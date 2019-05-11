@@ -1,6 +1,7 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
-import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjob.StatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjob.StatusProcessor;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
 import org.junit.Test;

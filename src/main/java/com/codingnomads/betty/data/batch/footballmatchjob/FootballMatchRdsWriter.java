@@ -1,6 +1,6 @@
-package com.codingnomads.betty.data.batch.batchwriters;
+package com.codingnomads.betty.data.batch.footballmatchjob;
 
-import com.codingnomads.betty.data.batch.exceptions.EmptyItemException;
+import com.codingnomads.betty.data.batch.footballmatchjob.exceptions.EmptyItemException;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
 import org.springframework.batch.item.ItemWriter;

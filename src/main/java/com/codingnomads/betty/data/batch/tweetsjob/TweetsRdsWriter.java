@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.batchwriters;
+package com.codingnomads.betty.data.batch.tweetsjob;
 
 import com.codingnomads.betty.data.models.Tweet;
 import com.codingnomads.betty.logic.interfaces.TwitterJpaRepository;

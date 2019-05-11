@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.scheduler;
+package com.codingnomads.betty.data.batch;
 
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -40,7 +40,8 @@ public class BatchScheduler {
     }
 
    @Scheduled(cron = "0 0 */6 ? * *")
-    public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    public BatchStatus tweetToDbJobScheduler() throws JobParametersInvalidException,
+           JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         JobParameters parameters = getJobParameters();
         JobExecution jobExecution = runTweetsJob(parameters);
 
@@ -48,7 +49,8 @@ public class BatchScheduler {
     }
 
     @Scheduled(cron = "0 0 */6 ? * *")
-    public BatchStatus oddsToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    public BatchStatus oddsToDbJobScheduler() throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         JobParameters parameters = getJobParameters();
         JobExecution jobExecution = runOddsJob(parameters);
 
@@ -56,7 +58,8 @@ public class BatchScheduler {
     }
 
     @Scheduled(cron = "0 0 0 * * *")
-    public BatchStatus footballMatchesToDbJobScheduler() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+    public BatchStatus footballMatchesToDbJobScheduler() throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
         JobParameters parameters = getJobParameters();
         JobExecution jobExecution = runFootballGamesJob(parameters);
@@ -70,25 +73,23 @@ public class BatchScheduler {
         return new JobParameters(maps);
     }
 
-    private JobExecution runTweetsJob(JobParameters parameters) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-
+    private JobExecution runTweetsJob(JobParameters parameters) throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         return jobLauncherForTweets.run(jobForTweets, parameters);
-
     }
 
-    private JobExecution runOddsJob(JobParameters parameters) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-
+    private JobExecution runOddsJob(JobParameters parameters) throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         return jobLauncherForOdds.run(jobForOdds, parameters);
-
     }
 
-    private JobExecution runFootballGamesJob(JobParameters parameters) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-
+    private JobExecution runFootballGamesJob(JobParameters parameters) throws JobParametersInvalidException,
+            JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         return jobLauncherForFootballGames.run(jobForFootballGames, parameters);
     }
 
     private BatchStatus getBatchStatus(JobExecution jobExecution) {
-        if (jobExecution!=null) {
+        if (jobExecution != null) {
             return jobExecution.getStatus();
         } else {
             return null;

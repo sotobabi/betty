@@ -1,6 +1,6 @@
-package com.codingnomads.betty.data.batch.batchprocessors;
+package com.codingnomads.betty.data.batch.tweetsjob;
 
-import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjob.StatusItemReader;
 import com.codingnomads.betty.data.models.Tweet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;

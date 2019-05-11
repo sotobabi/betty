@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.batchreaders;
+package com.codingnomads.betty.data.batch.tweetsjob;
 
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.batch.item.ItemReader;
@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class StatusItemReader implements ItemReader<List<Status>> {
 
-    TwitterMinerRepository twitterMinerRepository;
+    private TwitterMinerRepository twitterMinerRepository;
     private String keyword;
     private int numberOfStatus;
     private boolean batchJobState = false;
@@ -34,9 +34,7 @@ public class StatusItemReader implements ItemReader<List<Status>> {
             batchJobState = true;
             return twitterMinerRepository.searchTweets(keyword,numberOfStatus);
         }
-
         batchJobState = false;
-
         return null;
     }
 

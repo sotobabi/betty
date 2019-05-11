@@ -1,5 +1,6 @@
-package com.codingnomads.betty.data.batch.scheduler;
+package com.codingnomads.betty.data.batch.globalscheduler;
 
+import com.codingnomads.betty.data.batch.BatchScheduler;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.core.*;

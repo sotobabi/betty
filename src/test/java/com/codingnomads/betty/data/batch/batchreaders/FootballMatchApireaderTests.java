@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.batchreaders;
 
+import com.codingnomads.betty.data.batch.footballmatchjob.FootballMatchApiReader;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.logic.services.GameInformationService;
 import org.junit.Before;

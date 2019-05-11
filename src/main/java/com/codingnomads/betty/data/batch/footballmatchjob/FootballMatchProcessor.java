@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.batchprocessors;
+package com.codingnomads.betty.data.batch.footballmatchjob;
 
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
@@ -24,35 +24,24 @@ public class FootballMatchProcessor implements ItemProcessor<List<FootballMatchI
     public List<FootballMatchInfo> process(List<FootballMatchInfo> listFromApi) throws Exception {
 
         List<FootballMatchInfo> listFromDb = infoJpaRepository.findByMatch_Date();
-
         Iterator<FootballMatchInfo> apiIterator = listFromApi.iterator();
-
         List<FootballMatchInfo> uniqueList = new ArrayList<>();
 
         while(apiIterator.hasNext()){
-
             FootballMatchInfo infoApi = apiIterator.next();
-
             boolean flag = false;
-
             Iterator<FootballMatchInfo> dbIterator = listFromDb.iterator();
 
             while(dbIterator.hasNext()){
-
                 FootballMatchInfo infoDb = dbIterator.next();
-
                 if(infoApi.getApi_id().equals(infoDb.getApi_id())){
-
                     flag = true;
                 }
             }
-
-            if(!flag){
-
+            if (!flag) {
                 uniqueList.add(infoApi);
             }
         }
-
         return uniqueList;
     }
 }

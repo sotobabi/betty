@@ -42,25 +42,6 @@ public class SpringBatchConfig {
                 .build();
     }
 
-    @Order(2)
-    @Bean("odds")
-    public Job oddToDbJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
-            , @Qualifier("jpaReader") ItemReader<List<FootballMatchInfo>> itemReader, ItemProcessor<List<FootballMatchInfo>, List<MatchOdds>> itemProcessor
-            , ItemWriter<List<MatchOdds>> itemWriter){
-
-        Step step = stepBuilderFactory.get("Saving Odds To Database")
-                .<List<FootballMatchInfo>, List<MatchOdds>>chunk(1)
-                .reader(itemReader)
-                .processor(itemProcessor)
-                .writer(itemWriter)
-                .build();
-
-        return jobBuilderFactory.get("Match-Odds-To-DB ")
-                .incrementer(new RunIdIncrementer())
-                .start(step)
-                .build();
-    }
-
     @Order(1)
     @Bean("matches")
     public Job footballJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
@@ -76,6 +57,25 @@ public class SpringBatchConfig {
                 .build();
 
         return jobBuilderFactory.get("Football Games are Saving to Database")
+                .incrementer(new RunIdIncrementer())
+                .start(step)
+                .build();
+    }
+
+    @Order(2)
+    @Bean("odds")
+    public Job oddToDbJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory
+            , @Qualifier("jpaReader") ItemReader<List<FootballMatchInfo>> itemReader, ItemProcessor<List<FootballMatchInfo>, List<MatchOdds>> itemProcessor
+            , ItemWriter<List<MatchOdds>> itemWriter){
+
+        Step step = stepBuilderFactory.get("Saving Odds To Database")
+                .<List<FootballMatchInfo>, List<MatchOdds>>chunk(1)
+                .reader(itemReader)
+                .processor(itemProcessor)
+                .writer(itemWriter)
+                .build();
+
+        return jobBuilderFactory.get("Match-Odds-To-DB ")
                 .incrementer(new RunIdIncrementer())
                 .start(step)
                 .build();
