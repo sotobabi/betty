@@ -28,7 +28,7 @@ public class BatchScheduler {
     @Autowired
     public BatchScheduler(JobLauncher jobLauncherForTweets, JobLauncher jobLauncherForOdds
             , JobLauncher jobLauncherForFootballGames
-            , @Qualifier("tweets") Job jobForTweets, @Qualifier("odds") Job jobForOdds
+            , @Qualifier("homeTeamTweets") Job jobForTweets, @Qualifier("odds") Job jobForOdds
             , @Qualifier("matches") Job jobForFootballGames) {
 
         this.jobLauncherForTweets = jobLauncherForTweets;

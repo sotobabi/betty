@@ -1,7 +1,7 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
-import com.codingnomads.betty.data.batch.tweetsjob.hometeamstep.HomeTeamStatusItemReader;
-import com.codingnomads.betty.data.batch.tweetsjob.hometeamstep.HomeTeamStatusProcessor;
+import com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob.HomeTeamStatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob.HomeTeamStatusProcessor;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
 import org.junit.Test;

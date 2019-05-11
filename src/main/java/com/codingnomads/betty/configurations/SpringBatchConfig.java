@@ -24,8 +24,9 @@ import java.util.List;
 @EnableBatchProcessing
 public class SpringBatchConfig {
 
+
     @Order(1)
-    @Bean("tweets")
+    @Bean("homeTeamTweets")
     public Job tweetJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
                    ItemReader<List<Status>> itemReader, ItemProcessor<List<Status>, List<Tweet>> itemProcessor,
                    ItemWriter<List<Tweet>> itemWriter) {
@@ -37,7 +38,8 @@ public class SpringBatchConfig {
                 .writer(itemWriter)
                 .build();
 
-        return jobBuilderFactory.get("get-tweets-from-api-and-save-to-db")
+
+        return jobBuilderFactory.get("get-home-team-tweets-from-api-and-save-to-db")
                 .incrementer(new RunIdIncrementer())
                 .start(homeTeamStep)
                 .build();

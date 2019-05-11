@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.tweetsjob.hometeamstep;
+package com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob;
 
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
