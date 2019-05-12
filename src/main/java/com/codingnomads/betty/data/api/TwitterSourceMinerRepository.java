@@ -37,50 +37,23 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
 
     public void searchTweetsByUserId(String keyword) {
 
-        TwitterStream twitterStream = twitterConfigurer.getTwitterStream();
-        twitterStream.addListener(setUpSetUpListener());
+        Twitter twitter = twitterConfigurer.getTwitter();
+        Query query = new Query("Chelsea -Arsenal from:ChelseaFC");
+        query.setCount(20);
+        QueryResult queryResult = null;
+        try {
+            queryResult = twitter.search(query);
+        } catch (TwitterException te) {
+            throw new TwitterSearchFailedException("Tweet Search Failed!", te);
+        }
 
-        FilterQuery filterQuery = new FilterQuery();
-        filterQuery.language("EN");
-        String[] queries = {"Chelsea -Arsenal from:ChelseaFC", "Manchester City from:BBCSport"};
-        filterQuery.track(queries);
+        List<Status> tweets = queryResult.getTweets();
 
-        twitterStream.filter(filterQuery);
-        twitterStream.sample();
+        for(Status tweet: tweets){
+            System.out.println("--------------------------");
+            System.out.println(tweet.getCreatedAt() + "-->" + tweet.getId());
+            System.out.println(tweet.getText());
+        }
     }
 
-    private StatusListener setUpSetUpListener() {
-        return new StatusListener() {
-            @Override
-            public void onException(Exception ex) {
-                ex.printStackTrace();
-            }
-
-            @Override
-            public void onStatus(Status status) {
-                System.out.println("--------Inside OnStatus-----");
-                System.out.println(status.getText());
-            }
-
-            @Override
-            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-                System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
-            }
-
-            @Override
-            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
-                System.out.println("Got track limitation notice:" + numberOfLimitedStatuses);
-            }
-
-            @Override
-            public void onScrubGeo(long userId, long upToStatusId) {
-                System.out.println("Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
-            }
-
-            @Override
-            public void onStallWarning(StallWarning warning) {
-                System.out.println(warning);
-            }
-        };
-    }
 }
