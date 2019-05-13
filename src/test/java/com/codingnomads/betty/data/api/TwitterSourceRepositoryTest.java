@@ -63,7 +63,8 @@ public class TwitterSourceRepositoryTest {
         when(mockTwitter.search(testQuery2)).thenReturn(mockQueryResult);
         when(mockQueryResult.getTweets()).thenReturn(list);
 
-        assertTrue(testTwitterSourceMinerRepository.searchTweetFromAccounts("keyword","2019-05-10").size() == 1);
-
+        while(!mockSearchQueries.isEmpty()) {
+            assertTrue(testTwitterSourceMinerRepository.searchTweetFromAccounts("keyword", "2019-05-10").size() == 1);
+        }
     }
 }
