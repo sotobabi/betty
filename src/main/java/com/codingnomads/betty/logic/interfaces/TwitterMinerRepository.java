@@ -6,5 +6,5 @@ import java.util.List;
 public interface TwitterMinerRepository {
     List<Status> searchTweets(String keyword, int numberOfStatus);
 
-    void searchTweetFromAccounts(String keyword, String startDate);
+    List<Status> searchTweetFromAccounts(String keyword, String startDate);
 }

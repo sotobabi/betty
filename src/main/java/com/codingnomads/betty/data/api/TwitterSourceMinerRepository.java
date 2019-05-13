@@ -35,13 +35,14 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
         }
     }
 
-    public void searchTweetFromAccounts(String keyword, String startDate) {
+    public List<Status> searchTweetFromAccounts(String keyword, String startDate) {
         Queue<String> queries = new LinkedList<>();
         queries.add("Chelsea -Arsenal from:ChelseaFC");
         queries.add("Chelsea -Arsenal from:BBCSport");
 
         Twitter twitter = twitterConfigurer.getTwitter();
         int index = 1;
+        List<Status> tweets = new ArrayList<>();
 
         while (!queries.isEmpty()) {
             Query query = new Query(queries.poll());
@@ -55,7 +56,7 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
                 throw new TwitterSearchFailedException("Tweet Search Failed!", te);
             }
 
-            List<Status> tweets = queryResult.getTweets();
+            tweets = queryResult.getTweets();
 
             for (Status tweet : tweets) {
                 System.out.println(index++ + "--------------------------");
@@ -63,6 +64,7 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
                 System.out.println(tweet.getText());
             }
         }
+        return tweets;
     }
 
 }
