@@ -1,12 +1,14 @@
 package com.codingnomads.betty.logic.interfaces;
 
 import com.codingnomads.betty.data.models.MatchOdds;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MatchOddsJpaRepository extends JpaRepository<MatchOdds, Long> {
 
@@ -21,4 +23,10 @@ public interface MatchOddsJpaRepository extends JpaRepository<MatchOdds, Long> {
             "GROUP BY away_team" +
             ") tm ON t.id = tm.MaxId AND t.away_team = tm.away_team", nativeQuery = true)
     List<MatchOdds> findAll();
+
+    @Query(value = "SELECT id, away_team, away_team_odd, home_team, home_team_odd, match_date FROM match_odds " +
+            "WHERE match_date >= CURDATE() ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    MatchOdds findLatestInstanceInMatchOddsTable();
+
+
 }

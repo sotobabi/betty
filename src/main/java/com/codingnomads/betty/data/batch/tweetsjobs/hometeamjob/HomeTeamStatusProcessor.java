@@ -1,9 +1,9 @@
-package com.codingnomads.betty.data.batch.batchprocessors;
+package com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob;
 
-import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
 import com.codingnomads.betty.data.models.Tweet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 
@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Qualifier("homeTeamTweets")
 @Component
-public class StatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
+public class HomeTeamStatusProcessor implements ItemProcessor<List<Status>, List<Tweet>> {
 
-    private StatusItemReader statusItemReader;
+    private HomeTeamStatusItemReader homeTeamStatusItemReader;
 
     @Autowired
-    public StatusProcessor(StatusItemReader statusItemReader) {
-        this.statusItemReader = statusItemReader;
+    public HomeTeamStatusProcessor(HomeTeamStatusItemReader homeTeamStatusItemReader) {
+        this.homeTeamStatusItemReader = homeTeamStatusItemReader;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class StatusProcessor implements ItemProcessor<List<Status>, List<Tweet>>
             tweet.setCreatedAt(status.getCreatedAt());
             tweet.setText(status.getText());
             tweet.setLanguage(status.getLang());
-            tweet.setKeywordUsed(statusItemReader.getKeyword());
+            tweet.setKeywordUsed(homeTeamStatusItemReader.getTeamKeyword());
             listOfTweets.add(tweet);
         }
         return listOfTweets;

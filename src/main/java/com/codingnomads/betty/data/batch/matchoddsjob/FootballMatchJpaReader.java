@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.batchreaders;
+package com.codingnomads.betty.data.batch.matchoddsjob;
 
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;

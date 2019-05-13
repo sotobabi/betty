@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.batchwriters;
 
+import com.codingnomads.betty.data.batch.matchoddsjob.MatchOddsRdsWriter;
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import org.junit.Before;

@@ -1,5 +1,6 @@
-package com.codingnomads.betty.data.batch.scheduler;
+package com.codingnomads.betty.data.batch.globalscheduler;
 
+import com.codingnomads.betty.data.batch.BatchScheduler;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.batch.core.*;
@@ -13,10 +14,12 @@ import static org.mockito.Mockito.*;
 
 public class BatchSchedulerTests {
 
-    private JobLauncher mockJobLauncherForTweets;
+    private JobLauncher mockJobLauncherForHomeTeamTweets;
+    private JobLauncher mockJobLauncherForAwayTeamTweets;
     private JobLauncher mockJobLauncherForOdds;
     private JobLauncher mockJobLauncherForMatches;
-    private Job mockJobForTweets;
+    private Job mockJobForHomeTeamTweets;
+    private Job mockJobForAwayTeamTweets;
     private Job mockJobForOdds;
     private Job mockJobForMatches;
     private BatchScheduler testBatchScheduler;
@@ -27,11 +30,13 @@ public class BatchSchedulerTests {
     @Before
     public void setUp(){
 
-        mockJobLauncherForTweets = mock(JobLauncher.class);
+        mockJobLauncherForHomeTeamTweets = mock(JobLauncher.class);
+        mockJobLauncherForAwayTeamTweets = mock(JobLauncher.class);
         mockJobLauncherForOdds = mock(JobLauncher.class);
         mockJobLauncherForMatches = mock(JobLauncher.class);
 
-        mockJobForTweets = mock(Job.class);
+        mockJobForHomeTeamTweets = mock(Job.class);
+        mockJobForAwayTeamTweets = mock(Job.class);
         mockJobForOdds = mock(Job.class);
         mockJobForMatches = mock(Job.class);
 
@@ -41,17 +46,18 @@ public class BatchSchedulerTests {
 
         batchStatus = mockJobExecution.getStatus();
 
-        testBatchScheduler = new BatchScheduler(mockJobLauncherForTweets, mockJobLauncherForOdds, mockJobLauncherForMatches
-                , mockJobForTweets, mockJobForOdds, mockJobForMatches);
+        testBatchScheduler = new BatchScheduler(mockJobLauncherForHomeTeamTweets, mockJobLauncherForAwayTeamTweets,
+                mockJobLauncherForOdds, mockJobLauncherForMatches,
+                mockJobForHomeTeamTweets, mockJobForAwayTeamTweets, mockJobForOdds, mockJobForMatches);
     }
 
     @Test
     public void whenRunTweetToDbJobScheduler_shouldReturnBatchStatus() throws JobParametersInvalidException
             , JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
-        when(mockJobLauncherForTweets.run(mockJobForTweets, jobParameters)).thenReturn(mockJobExecution);
+        when(mockJobLauncherForHomeTeamTweets.run(mockJobForHomeTeamTweets, jobParameters)).thenReturn(mockJobExecution);
 
-        assertThat(testBatchScheduler.tweetToDbJobScheduler()).isEqualTo(batchStatus);
+        assertThat(testBatchScheduler.homeTeamTweetsToDbJobScheduler()).isEqualTo(batchStatus);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.codingnomads.betty.data.batch.exceptions;
+package com.codingnomads.betty.data.batch.footballmatchjob.exceptions;
 
 public class EmptyItemException extends Exception {
 

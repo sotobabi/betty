@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
+import com.codingnomads.betty.data.batch.footballmatchjob.FootballMatchProcessor;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
 import org.junit.Before;

@@ -1,6 +1,7 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
-import com.codingnomads.betty.data.batch.batchreaders.StatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob.HomeTeamStatusItemReader;
+import com.codingnomads.betty.data.batch.tweetsjobs.hometeamjob.HomeTeamStatusProcessor;
 import com.codingnomads.betty.data.models.Tweet;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,16 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class StatusProcessorTests {
+public class HomeTeamStatusProcessorTests {
 
     @Mock
-    private StatusItemReader mockStatusItemReader;
-    private StatusProcessor testStatusProcessor;
+    private HomeTeamStatusItemReader mockHomeTeamStatusItemReader;
+    private HomeTeamStatusProcessor testHomeTeamStatusProcessor;
 
     @Before
     public void setUp() throws Exception {
-        mockStatusItemReader = mock(StatusItemReader.class);
-        testStatusProcessor = new StatusProcessor(mockStatusItemReader);
+        mockHomeTeamStatusItemReader = mock(HomeTeamStatusItemReader.class);
+        testHomeTeamStatusProcessor = new HomeTeamStatusProcessor(mockHomeTeamStatusItemReader);
     }
 
     @Test
@@ -32,8 +33,8 @@ public class StatusProcessorTests {
         List<Status> mockListOfStatus = new ArrayList<>();
         List<Tweet> expectedTweetsList = new ArrayList<>();
 
-        when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
-        assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+        when(mockHomeTeamStatusItemReader.getTeamKeyword()).thenReturn("testWord");
+        assertThat(testHomeTeamStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
     }
 
     @Test
@@ -43,8 +44,8 @@ public class StatusProcessorTests {
 
         List<Tweet> expectedTweetsList = Collections.emptyList();
 
-        when(mockStatusItemReader.getKeyword()).thenReturn("testWord");
-        assertThat(testStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
+        when(mockHomeTeamStatusItemReader.getTeamKeyword()).thenReturn("testWord");
+        assertThat(testHomeTeamStatusProcessor.process(mockListOfStatus)).isEqualTo(expectedTweetsList);
 
     }
 }

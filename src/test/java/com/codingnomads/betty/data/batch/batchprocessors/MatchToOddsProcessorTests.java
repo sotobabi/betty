@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.batchprocessors;
 
+import com.codingnomads.betty.data.batch.matchoddsjob.MatchToOddsProcessor;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.services.GameInformationService;
