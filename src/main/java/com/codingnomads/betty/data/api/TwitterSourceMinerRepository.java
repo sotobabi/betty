@@ -6,8 +6,8 @@ import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import twitter4j.*;
-import java.util.List;
-import java.util.NoSuchElementException;
+
+import java.util.*;
 
 @Repository
 public class TwitterSourceMinerRepository implements TwitterMinerRepository {
@@ -35,24 +35,33 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
         }
     }
 
-    public void searchTweetsByUserId(String keyword) {
+    public void searchTweetFromAccounts(String keyword, String startDate) {
+        Queue<String> queries = new LinkedList<>();
+        queries.add("Chelsea -Arsenal from:ChelseaFC");
+        queries.add("Chelsea -Arsenal from:BBCSport");
 
         Twitter twitter = twitterConfigurer.getTwitter();
-        Query query = new Query("Chelsea -Arsenal from:ChelseaFC");
-        query.setCount(20);
-        QueryResult queryResult = null;
-        try {
-            queryResult = twitter.search(query);
-        } catch (TwitterException te) {
-            throw new TwitterSearchFailedException("Tweet Search Failed!", te);
-        }
+        int index = 1;
 
-        List<Status> tweets = queryResult.getTweets();
+        while (!queries.isEmpty()) {
+            Query query = new Query(queries.poll());
+            query.setLang("en");
+            query.setSince(startDate);
 
-        for(Status tweet: tweets){
-            System.out.println("--------------------------");
-            System.out.println(tweet.getCreatedAt() + "-->" + tweet.getId());
-            System.out.println(tweet.getText());
+            QueryResult queryResult = null;
+            try {
+                queryResult = twitter.search(query);
+            } catch (TwitterException te) {
+                throw new TwitterSearchFailedException("Tweet Search Failed!", te);
+            }
+
+            List<Status> tweets = queryResult.getTweets();
+
+            for (Status tweet : tweets) {
+                System.out.println(index++ + "--------------------------");
+                System.out.println(tweet.getCreatedAt() + "-->" + tweet.getId());
+                System.out.println(tweet.getText());
+            }
         }
     }
 

@@ -11,20 +11,16 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterConfig {
 
     private Twitter twitter;
-    private TwitterStream twitterStream;
     private TwitterFactory twitterFactory;
 
     public TwitterConfig() {
 
         buildTwitterConfiguration();
-        buildTwitterStreamConfiguration();
     }
 
     public Twitter getTwitter() {
         return twitter;
     }
-
-    public TwitterStream getTwitterStream() {return twitterStream;}
 
     private void buildTwitterConfiguration() {
 
@@ -42,18 +38,6 @@ public class TwitterConfig {
 
     }
 
-    private void buildTwitterStreamConfiguration(){
-        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-
-        configurationBuilder
-                .setDebugEnabled(true)
-                .setOAuthConsumerKey(System.getenv("CONSUMER_KEY"))
-                .setOAuthConsumerSecret(System.getenv("CONSUMER_SECRET"))
-                .setOAuthAccessToken(System.getenv("ACCESS_TOKEN"))
-                .setOAuthAccessTokenSecret(System.getenv("ACCESS_TOKEN_SECRET"));
-
-        twitterStream = new TwitterStreamFactory(configurationBuilder.build()).getInstance();
-    }
 }
 
 
