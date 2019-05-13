@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Queue;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -53,14 +54,12 @@ public class TwitterSourceRepositoryTest {
 
     @Test
     public void whenSearchTweetsFromAccountsCalled_shouldReturnListOfTweets() throws TwitterException {
-        Queue<String> mockSearchQueries = new LinkedList();
-        mockSearchQueries.add("keyword");
-        Query testQuery2 = new Query(mockSearchQueries.poll());
+        Query testQuery2 = new Query("keyword");
         testQuery2.setSince("2019-05-10");
         testQuery2.setLang("en");
 
         when(mockTwitterConfigurer.getTwitter()).thenReturn(mockTwitter);
-        when(mockTwitter.search(testQuery2)).thenReturn(mockQueryResult);
+        when(mockTwitter.search(any())).thenReturn(mockQueryResult);
         when(mockQueryResult.getTweets()).thenReturn(list);
 
         assertTrue(testTwitterSourceMinerRepository.searchTweetFromAccounts("keyword", "2019-05-10").size() == 1);
