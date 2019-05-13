@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +25,7 @@ public class TwitterSourceRepositoryTest {
     private List<Status> list;
 
     @Before
-    public void setUp(){
+    public void setUp() {
 
         mockTwitterConfigurer = mock(TwitterConfig.class);
         testTwitterSourceMinerRepository = new TwitterSourceMinerRepository(mockTwitterConfigurer);
@@ -47,7 +47,7 @@ public class TwitterSourceRepositoryTest {
         when(mockTwitter.search(testQuery)).thenReturn(mockQueryResult);
         when(mockQueryResult.getTweets()).thenReturn(list);
 
-        assertTrue(testTwitterSourceMinerRepository.searchTweets("keyword",1).size() == 1);
+        assertTrue(testTwitterSourceMinerRepository.searchTweets("keyword", 1).size() == 1);
 
     }
 
@@ -63,8 +63,7 @@ public class TwitterSourceRepositoryTest {
         when(mockTwitter.search(testQuery2)).thenReturn(mockQueryResult);
         when(mockQueryResult.getTweets()).thenReturn(list);
 
-        while(!mockSearchQueries.isEmpty()) {
-            assertTrue(testTwitterSourceMinerRepository.searchTweetFromAccounts("keyword", "2019-05-10").size() == 1);
-        }
+        assertTrue(testTwitterSourceMinerRepository.searchTweetFromAccounts("keyword", "2019-05-10").size() == 1);
+
     }
 }
