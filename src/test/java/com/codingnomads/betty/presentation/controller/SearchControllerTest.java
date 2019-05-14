@@ -1,7 +1,6 @@
 package com.codingnomads.betty.presentation.controller;
 
 import com.codingnomads.betty.logic.models.TeamProbabilityToWin;
-import com.codingnomads.betty.logic.services.AnalyzeTweetsService;
 import com.codingnomads.betty.logic.services.ProcessTweetsThroughNlpService;
 import com.codingnomads.betty.logic.services.SourceToResultPipelineService;
 import com.codingnomads.betty.logic.services.TwitterService;
@@ -16,7 +15,6 @@ import org.springframework.ui.Model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -29,9 +27,6 @@ public class SearchControllerTest {
     private TwitterService mockTwitterService;
 
     @Mock
-    private AnalyzeTweetsService mockAnalyzeTweetsService;
-
-    @Mock
     private SourceToResultPipelineService mockSourceToResultPipelineService;
 
     @Mock
@@ -40,20 +35,9 @@ public class SearchControllerTest {
     @Before
     public void setUp() {
         mockTwitterService = mock(TwitterService.class);
-        mockAnalyzeTweetsService = mock(AnalyzeTweetsService.class);
         mockSourceToResultPipelineService = mock(SourceToResultPipelineService.class);
         mockProcessTweetsThroughNlpService = mock(ProcessTweetsThroughNlpService.class);
-        testController = new SearchController(mockProcessTweetsThroughNlpService, mockAnalyzeTweetsService, mockTwitterService, mockSourceToResultPipelineService);
-    }
-
-    @Test
-    public void whenEstimateTeamOddsIsCalled_calculateOddsIsReturned() {
-        String teamName = "testTeam";
-        TeamProbabilityToWin testProbability = new TeamProbabilityToWin();
-        Model uiModel = new ConcurrentModel();
-        when(mockAnalyzeTweetsService.calculateProbabilityWithTweets(teamName)).thenReturn(testProbability);
-        assertThat(testController.estimateTeamOdds(teamName, uiModel)).contains("calculateOdds");
-
+        testController = new SearchController(mockProcessTweetsThroughNlpService, mockTwitterService, mockSourceToResultPipelineService);
     }
 
     @Test
