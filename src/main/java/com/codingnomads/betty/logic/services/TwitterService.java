@@ -46,5 +46,8 @@ public class TwitterService {
         return twitterRepository.saveTweets(listOfTweets);
     }
 
+    public void searchTweetFromAccounts(String keyword, String startDate){
+        twitterMinerRepository.searchTweetFromAccounts(keyword, startDate);
+    }
 
 }

@@ -33,7 +33,9 @@ public class TwitterConfig {
 
         twitterFactory = new TwitterFactory(configurationBuilder.build());
         twitter = twitterFactory.getInstance();
+
     }
+
 }
 
 

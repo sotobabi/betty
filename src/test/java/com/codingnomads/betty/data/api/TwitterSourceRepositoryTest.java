@@ -6,16 +6,17 @@ import org.junit.Test;
 import twitter4j.*;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TwitterSourceRepositoryTest {
 
-    private static final String keyword = "cat";
-    private static final int numberOfTweets = 15;
     private TwitterConfig mockTwitterConfigurer;
     private TwitterSourceMinerRepository testTwitterSourceMinerRepository;
     private Status mockStatus;
@@ -25,7 +26,7 @@ public class TwitterSourceRepositoryTest {
     private List<Status> list;
 
     @Before
-    public void setUp(){
+    public void setUp() {
 
         mockTwitterConfigurer = mock(TwitterConfig.class);
         testTwitterSourceMinerRepository = new TwitterSourceMinerRepository(mockTwitterConfigurer);
@@ -47,7 +48,21 @@ public class TwitterSourceRepositoryTest {
         when(mockTwitter.search(testQuery)).thenReturn(mockQueryResult);
         when(mockQueryResult.getTweets()).thenReturn(list);
 
-        assertTrue(testTwitterSourceMinerRepository.searchTweets("keyword",1).size() == 1);
+        assertTrue(testTwitterSourceMinerRepository.searchTweets("keyword", 1).size() == 1);
+
+    }
+
+    @Test
+    public void whenSearchTweetsFromAccountsCalled_shouldReturnListOfTweets() throws TwitterException {
+        Query testQuery2 = new Query("keyword");
+        testQuery2.setSince("2019-05-10");
+        testQuery2.setLang("en");
+
+        when(mockTwitterConfigurer.getTwitter()).thenReturn(mockTwitter);
+        when(mockTwitter.search(any())).thenReturn(mockQueryResult);
+        when(mockQueryResult.getTweets()).thenReturn(list);
+
+        assertTrue(testTwitterSourceMinerRepository.searchTweetFromAccounts("keyword", "2019-05-10").size() == 1);
 
     }
 }
