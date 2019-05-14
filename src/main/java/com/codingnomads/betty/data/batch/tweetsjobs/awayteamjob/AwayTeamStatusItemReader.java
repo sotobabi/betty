@@ -1,5 +1,6 @@
 package com.codingnomads.betty.data.batch.tweetsjobs.awayteamjob;
 
+import com.codingnomads.betty.data.batch.tweetsjobs.exceptions.LackOfUpdatedMatchDataExc;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.interfaces.TwitterMinerRepository;
 import org.springframework.batch.item.ItemReader;
@@ -35,8 +36,12 @@ public class AwayTeamStatusItemReader implements ItemReader<List<Status>> {
             throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         if (!batchJobState) {
             batchJobState = true;
-            setTeamKeyword(matchOddsJpaRepository.findLatestInstanceInMatchOddsTable().getAwayTeam());
-            return getTweetsForTeam();
+            try {
+                setTeamKeyword(matchOddsJpaRepository.findLatestInstanceInMatchOddsTable().getAwayTeam());
+                return getTweetsForTeam();
+            } catch (Exception exc) {
+                throw new LackOfUpdatedMatchDataExc("No odds or games found matching criteria in table", exc);
+            }
         }
         batchJobState = false;
         return null;
