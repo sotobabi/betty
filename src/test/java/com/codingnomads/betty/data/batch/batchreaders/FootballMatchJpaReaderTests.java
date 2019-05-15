@@ -2,7 +2,7 @@ package com.codingnomads.betty.data.batch.batchreaders;
 
 import com.codingnomads.betty.data.batch.matchoddsjob.FootballMatchJpaReader;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class FootballMatchJpaReaderTests {
 
-    private FootballMatchesInfoJpaRepository mockFootballMatchesInfoJpaRepository;
+    private FootballMatchInfoService mockFootballMatchInfoService;
     private FootballMatchJpaReader testFootballMatchJpaReader;
     private FootballMatchInfo matchInfo;
     private List<FootballMatchInfo> matchInfoList;
@@ -23,8 +23,8 @@ public class FootballMatchJpaReaderTests {
     @Before
     public void setUp(){
 
-        mockFootballMatchesInfoJpaRepository = mock(FootballMatchesInfoJpaRepository.class);
-        testFootballMatchJpaReader = new FootballMatchJpaReader(mockFootballMatchesInfoJpaRepository);
+        mockFootballMatchInfoService = mock(FootballMatchInfoService.class);
+        testFootballMatchJpaReader = new FootballMatchJpaReader(mockFootballMatchInfoService);
         matchInfo = mock(FootballMatchInfo.class);
         matchInfoList = Arrays.asList(matchInfo);
 
@@ -33,7 +33,7 @@ public class FootballMatchJpaReaderTests {
     @Test
     public void whenReadRun_shouldReturnFootballMatchInfoList(){
 
-        when(mockFootballMatchesInfoJpaRepository.findByMatch_Date()).thenReturn(matchInfoList);
+        when(mockFootballMatchInfoService.findLatestFootballMatchesFromDb()).thenReturn(matchInfoList);
 
         assertThat(testFootballMatchJpaReader.read()).isEqualTo(matchInfoList);
     }

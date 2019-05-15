@@ -2,7 +2,7 @@ package com.codingnomads.betty.data.batch.batchprocessors;
 
 import com.codingnomads.betty.data.batch.footballmatchjob.FootballMatchProcessor;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class FootballMatchProcessorTests {
 
-    private FootballMatchesInfoJpaRepository mockMatchesInfoJpaRepository;
+    private FootballMatchInfoService mockFootballMatchInfoService;
     private FootballMatchProcessor testFootballMatchProcessor;
     private FootballMatchInfo footballMatchInfo1;
     private FootballMatchInfo footballMatchInfo2;
@@ -28,8 +28,8 @@ public class FootballMatchProcessorTests {
     @Before
     public void setUp(){
 
-        mockMatchesInfoJpaRepository = mock(FootballMatchesInfoJpaRepository.class);
-        testFootballMatchProcessor = new FootballMatchProcessor(mockMatchesInfoJpaRepository);
+        mockFootballMatchInfoService = mock(FootballMatchInfoService.class);
+        testFootballMatchProcessor = new FootballMatchProcessor(mockFootballMatchInfoService);
 
         footballMatchInfo1 = new FootballMatchInfo();
         footballMatchInfo2 = new FootballMatchInfo();
@@ -49,7 +49,7 @@ public class FootballMatchProcessorTests {
 
         footballMatchInfo3.setApi_id("3");
 
-        when(mockMatchesInfoJpaRepository.findByMatch_Date()).thenReturn(dbList);
+        when(mockFootballMatchInfoService.findLatestFootballMatchesFromDb()).thenReturn(dbList);
 
         assertThat(testFootballMatchProcessor.process(apiList)).isEqualTo(newList);
     }

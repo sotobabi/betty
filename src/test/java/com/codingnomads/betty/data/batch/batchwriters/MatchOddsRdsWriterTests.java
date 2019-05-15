@@ -2,7 +2,7 @@ package com.codingnomads.betty.data.batch.batchwriters;
 
 import com.codingnomads.betty.data.batch.matchoddsjob.MatchOddsRdsWriter;
 import com.codingnomads.betty.data.models.MatchOdds;
-import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
+import com.codingnomads.betty.logic.services.MatchOddsService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,8 +13,8 @@ import static org.mockito.Mockito.*;
 
 public class MatchOddsRdsWriterTests {
 
+    private MatchOddsService mockMatchOddsService;
     private MatchOddsRdsWriter testMatchOddsRdsWriter;
-    private MatchOddsJpaRepository mockMatchOddsJpaRepository;
     private MatchOdds matchOdds;
     private List<MatchOdds> list = Arrays.asList(matchOdds);
     private List<List<MatchOdds>> items;
@@ -22,8 +22,8 @@ public class MatchOddsRdsWriterTests {
     @Before
     public void setUp(){
 
-        mockMatchOddsJpaRepository = mock(MatchOddsJpaRepository.class);
-        testMatchOddsRdsWriter = new MatchOddsRdsWriter(mockMatchOddsJpaRepository);
+        mockMatchOddsService = mock(MatchOddsService.class);
+        testMatchOddsRdsWriter = new MatchOddsRdsWriter(mockMatchOddsService);
         matchOdds = new MatchOdds();
         list = Arrays.asList(matchOdds);
         items = Arrays.asList(list);
@@ -32,10 +32,10 @@ public class MatchOddsRdsWriterTests {
     @Test
     public void whenWriteRun_shouldCallMatchOddsJpaRepositorySaveMethod() throws Exception {
 
-        when(mockMatchOddsJpaRepository.saveAll(list)).thenReturn(list);
+        when(mockMatchOddsService.saveMatchOddsList(list)).thenReturn(list);
 
         testMatchOddsRdsWriter.write(items);
 
-        verify(mockMatchOddsJpaRepository, times(1)).saveAll(list);
+        verify(mockMatchOddsService, times(1)).saveMatchOddsList(list);
     }
 }

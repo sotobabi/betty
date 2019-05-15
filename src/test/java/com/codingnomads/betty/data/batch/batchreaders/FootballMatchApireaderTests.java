@@ -2,7 +2,7 @@ package com.codingnomads.betty.data.batch.batchreaders;
 
 import com.codingnomads.betty.data.batch.footballmatchjob.FootballMatchApiReader;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.services.GameInformationService;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class FootballMatchApireaderTests {
 
-    private GameInformationService mockGameInformationService;
+    private FootballMatchInfoService mockFootballMatchInfoService;
     private FootballMatchApiReader testFootballMatchApiReader;
     private FootballMatchInfo mockFootballMatchInfo;
     private List<FootballMatchInfo> list;
@@ -24,9 +24,9 @@ public class FootballMatchApireaderTests {
     @Before
     public void setUp(){
 
-        mockGameInformationService = mock(GameInformationService.class);
+        mockFootballMatchInfoService = mock(FootballMatchInfoService.class);
         mockFootballMatchInfo = mock(FootballMatchInfo.class);
-        testFootballMatchApiReader = new FootballMatchApiReader(mockGameInformationService);
+        testFootballMatchApiReader = new FootballMatchApiReader(mockFootballMatchInfoService);
 
         list = Arrays.asList(mockFootballMatchInfo);
     }
@@ -34,7 +34,7 @@ public class FootballMatchApireaderTests {
     @Test
     public void whenReadRun_shouldReturnFootballMatchInfoList() throws Exception {
 
-        when(mockGameInformationService.getFootballMatchListFromApi()).thenReturn(list);
+        when(mockFootballMatchInfoService.getFootballMatchListFromApi()).thenReturn(list);
 
         assertThat(testFootballMatchApiReader.read()).isEqualTo(list);
     }

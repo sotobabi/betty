@@ -14,7 +14,7 @@ public class FootballMatchInfo {
     @Column
     private String name;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date matchDate;
 
     @Column
