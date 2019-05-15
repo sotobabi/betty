@@ -12,7 +12,7 @@ public class MatchOdds {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date matchDate;
 
     @Column

@@ -1,7 +1,7 @@
 package com.codingnomads.betty.data.batch.matchoddsjob;
 
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,13 +13,12 @@ import java.util.List;
 @Component
 public class FootballMatchJpaReader implements ItemReader<List<FootballMatchInfo>> {
 
-    private FootballMatchesInfoJpaRepository matchesInfoJpaRepository;
+    private FootballMatchInfoService footballMatchInfoService;
     private boolean batchJobState = false;
 
     @Autowired
-    public FootballMatchJpaReader(FootballMatchesInfoJpaRepository matchesInfoJpaRepository) {
-
-        this.matchesInfoJpaRepository = matchesInfoJpaRepository;
+    public FootballMatchJpaReader(FootballMatchInfoService footballMatchInfoService) {
+        this.footballMatchInfoService = footballMatchInfoService;
     }
 
     @Override
@@ -27,7 +26,7 @@ public class FootballMatchJpaReader implements ItemReader<List<FootballMatchInfo
 
         if(!batchJobState){
             batchJobState = true;
-            return matchesInfoJpaRepository.findByMatch_Date();
+            return footballMatchInfoService.findLatestFootballMatchesFromDb();
         }
 
         batchJobState = false;

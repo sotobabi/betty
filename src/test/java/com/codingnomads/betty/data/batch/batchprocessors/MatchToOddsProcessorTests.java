@@ -3,7 +3,7 @@ package com.codingnomads.betty.data.batch.batchprocessors;
 import com.codingnomads.betty.data.batch.matchoddsjob.MatchToOddsProcessor;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
 import com.codingnomads.betty.data.models.MatchOdds;
-import com.codingnomads.betty.logic.services.GameInformationService;
+import com.codingnomads.betty.logic.services.MatchOddsService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,20 +17,22 @@ import static org.mockito.Mockito.when;
 public class MatchToOddsProcessorTests {
 
 
-    private GameInformationService mockGameInformationService;
+    private MatchOddsService mockMatchOddsService;
     private MatchToOddsProcessor testMatchToOddsProcessor;
     private MatchOdds mockMatchOdds;
     private FootballMatchInfo mockFootballMatchInfo;
     private List<FootballMatchInfo> matchInfoList;
     private List<MatchOdds> matchOddsList;
+    private String matchName = "match";
 
     @Before
     public void setUp(){
-        mockGameInformationService = mock(GameInformationService.class);
-        testMatchToOddsProcessor = new MatchToOddsProcessor(mockGameInformationService);
+        mockMatchOddsService = mock(MatchOddsService.class);
+        testMatchToOddsProcessor = new MatchToOddsProcessor(mockMatchOddsService);
 
         mockMatchOdds = mock(MatchOdds.class);
         mockFootballMatchInfo = mock(FootballMatchInfo.class);
+        mockFootballMatchInfo.setName(matchName);
 
         matchInfoList = Arrays.asList(mockFootballMatchInfo);
         matchOddsList = Arrays.asList(mockMatchOdds);
@@ -39,7 +41,7 @@ public class MatchToOddsProcessorTests {
     @Test
     public void whenRunProcessMethodWithMatchOddsItem_shouldReturnMatchOddsItem() throws Exception {
 
-        when(mockGameInformationService.createOddsListFromFootballList(matchInfoList)).thenReturn(matchOddsList);
+        when(mockMatchOddsService.createMatchOdds(mockFootballMatchInfo.getName())).thenReturn(mockMatchOdds);
 
         assertThat(testMatchToOddsProcessor.process(matchInfoList)).isEqualTo(matchOddsList);
     }

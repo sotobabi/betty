@@ -1,7 +1,7 @@
 package com.codingnomads.betty.data.batch.footballmatchjob;
 
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.services.GameInformationService;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
@@ -16,12 +16,12 @@ import java.util.List;
 @Component
 public class FootballMatchApiReader implements ItemReader<List<FootballMatchInfo>> {
 
-    private GameInformationService gameInformationService;
+    private FootballMatchInfoService footballMatchInfoService;
     private boolean readState = false;
 
     @Autowired
-    public FootballMatchApiReader(GameInformationService gameInformationService) {
-        this.gameInformationService = gameInformationService;
+    public FootballMatchApiReader(FootballMatchInfoService footballMatchInfoService) {
+        this.footballMatchInfoService = footballMatchInfoService;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class FootballMatchApiReader implements ItemReader<List<FootballMatchInfo
 
         if(!readState){
             readState = true;
-            return gameInformationService.getFootballMatchListFromApi();
+            return footballMatchInfoService.getFootballMatchListFromApi();
         }
 
         readState = false;

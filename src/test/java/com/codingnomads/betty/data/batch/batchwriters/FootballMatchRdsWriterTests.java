@@ -2,7 +2,7 @@ package com.codingnomads.betty.data.batch.batchwriters;
 
 import com.codingnomads.betty.data.batch.footballmatchjob.FootballMatchRdsWriter;
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 
 public class FootballMatchRdsWriterTests {
 
-    private FootballMatchesInfoJpaRepository mockFootballMatchesInfoJpaRepository;
+    private FootballMatchInfoService mockFootballMatchInfoService;
     private FootballMatchRdsWriter testFootballMatchRdsWriter;
     private FootballMatchInfo mockFootballMatchInfo;
     private List<FootballMatchInfo> matchList;
@@ -22,8 +22,8 @@ public class FootballMatchRdsWriterTests {
     @Before
     public void setUp(){
 
-        mockFootballMatchesInfoJpaRepository = mock(FootballMatchesInfoJpaRepository.class);
-        testFootballMatchRdsWriter = new FootballMatchRdsWriter(mockFootballMatchesInfoJpaRepository);
+        mockFootballMatchInfoService = mock(FootballMatchInfoService.class);
+        testFootballMatchRdsWriter = new FootballMatchRdsWriter(mockFootballMatchInfoService);
 
         mockFootballMatchInfo = mock(FootballMatchInfo.class);
 
@@ -36,7 +36,7 @@ public class FootballMatchRdsWriterTests {
 
         testFootballMatchRdsWriter.write(items);
 
-        verify(mockFootballMatchesInfoJpaRepository, times(1)).saveAll(matchList);
+        verify(mockFootballMatchInfoService, times(1)).saveFootballMatchList(matchList);
 
 
     }

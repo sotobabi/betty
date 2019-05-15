@@ -1,47 +1,48 @@
 package com.codingnomads.betty.data.batch.footballmatchjob;
 
 import com.codingnomads.betty.data.models.FootballMatchInfo;
-import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
+import com.codingnomads.betty.logic.services.FootballMatchInfoService;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Component
 public class FootballMatchProcessor implements ItemProcessor<List<FootballMatchInfo>, List<FootballMatchInfo>> {
 
-    private FootballMatchesInfoJpaRepository infoJpaRepository;
+    private FootballMatchInfoService footballMatchInfoService;
 
     @Autowired
-    public FootballMatchProcessor(FootballMatchesInfoJpaRepository infoJpaRepository) {
-        this.infoJpaRepository = infoJpaRepository;
+    public FootballMatchProcessor(FootballMatchInfoService footballMatchInfoService) {
+        this.footballMatchInfoService = footballMatchInfoService;
     }
 
     @Override
     public List<FootballMatchInfo> process(List<FootballMatchInfo> listFromApi) throws Exception {
 
-        List<FootballMatchInfo> listFromDb = infoJpaRepository.findByMatch_Date();
-        Iterator<FootballMatchInfo> apiIterator = listFromApi.iterator();
+        List<FootballMatchInfo> listFromDb = footballMatchInfoService.findLatestFootballMatchesFromDb();
+
         List<FootballMatchInfo> uniqueList = new ArrayList<>();
 
-        while(apiIterator.hasNext()){
-            FootballMatchInfo infoApi = apiIterator.next();
-            boolean flag = false;
-            Iterator<FootballMatchInfo> dbIterator = listFromDb.iterator();
+        for (FootballMatchInfo apiInfo : listFromApi) {
 
-            while(dbIterator.hasNext()){
-                FootballMatchInfo infoDb = dbIterator.next();
-                if(infoApi.getApi_id().equals(infoDb.getApi_id())){
+            boolean flag = false;
+
+            for (FootballMatchInfo dbInfo : listFromDb) {
+
+                if(apiInfo.getApi_id().equals(dbInfo.getApi_id())){
+
                     flag = true;
                 }
             }
-            if (!flag) {
-                uniqueList.add(infoApi);
+
+            if(!flag){
+                uniqueList.add(apiInfo);
             }
         }
+
         return uniqueList;
     }
 }
