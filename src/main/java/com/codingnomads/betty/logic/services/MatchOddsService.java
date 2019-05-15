@@ -6,6 +6,7 @@ import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.models.betAPImodels.EventJSON;
 import com.codingnomads.betty.logic.models.betAPImodels.GameInformationJSON;
 import com.codingnomads.betty.logic.models.betAPImodels.MarketJSON;
+import com.codingnomads.betty.logic.models.betAPImodels.RunnerJSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +28,20 @@ public class MatchOddsService {
 
     public MatchOdds createMatchOdds(String match) {
 
-        String homeTeamName = match.split(" vs ")[0];
-        String awayTeamName = match.split(" vs ")[1];
-
         GameInformationJSON gameInformationJSON = gameInformationRepository.getGameInformation();
 
         EventJSON eventJSON = gameInformationRepository.getEventJSONforMatch(match, gameInformationJSON);
 
         MarketJSON marketJSON = gameInformationRepository.getMarketJSONforMatch(eventJSON);
 
-        Double homeTeamOdd = gameInformationRepository.getRunnerJSONforMarket(marketJSON, homeTeamName).getPriceJSONS().get(0).getOdds();
-        Double awayTeamOdd = gameInformationRepository.getRunnerJSONforMarket(marketJSON, awayTeamName).getPriceJSONS().get(0).getOdds();
+        String homeTeamName = eventJSON.getName().split(" vs ")[0];
+        String awayTeamName = eventJSON.getName().split(" vs ")[1];
+
+        RunnerJSON homeRunner = gameInformationRepository.getRunnerJSONforMarket(marketJSON, homeTeamName);
+        RunnerJSON awayRunner = gameInformationRepository.getRunnerJSONforMarket(marketJSON, awayTeamName);
+
+        Double homeTeamOdd = homeRunner.getPriceJSONS().get(0).getOdds();
+        Double awayTeamOdd = awayRunner.getPriceJSONS().get(0).getOdds();
 
         Instant instant = Instant.parse(eventJSON.getStart());
 
@@ -54,11 +58,6 @@ public class MatchOddsService {
 
     public List<MatchOdds> saveMatchOddsList(List<MatchOdds> list){
         return matchOddsJpaRepository.saveAll(list);
-    }
-
-    public MatchOdds findLatestInstanceInMatchOddsTable(){
-
-        return matchOddsJpaRepository.findLatestInstanceInMatchOddsTable();
     }
 
     public List<MatchOdds> findMostRecentMatchesAndOdds() {
