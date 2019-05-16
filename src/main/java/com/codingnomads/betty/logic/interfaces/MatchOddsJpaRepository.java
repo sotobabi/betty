@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MatchOddsJpaRepository extends JpaRepository<MatchOdds, Long> {
-
     @Override
     MatchOdds save(MatchOdds matchOdds);
 
@@ -23,6 +22,4 @@ public interface MatchOddsJpaRepository extends JpaRepository<MatchOdds, Long> {
     @Query(value = "SELECT id, away_team, away_team_odd, home_team, home_team_odd, match_date FROM match_odds " +
             "WHERE match_date >= CURDATE() ORDER BY id DESC LIMIT 1", nativeQuery = true)
     MatchOdds findLatestInstanceInMatchOddsTable();
-
-
 }

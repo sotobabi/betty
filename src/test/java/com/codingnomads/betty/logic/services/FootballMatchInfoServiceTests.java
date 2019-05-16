@@ -2,8 +2,8 @@ package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.logic.interfaces.FootballMatchesInfoJpaRepository;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
-import com.codingnomads.betty.logic.models.betAPImodels.EventJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.GameInformationJSON;
+import com.codingnomads.betty.logic.models.betapimodels.EventJSON;
+import com.codingnomads.betty.logic.models.betapimodels.GameInformationJSON;
 import org.junit.Before;
 import org.junit.Test;
 

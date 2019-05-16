@@ -1,9 +1,9 @@
 package com.codingnomads.betty.logic.interfaces;
 
-import com.codingnomads.betty.logic.models.betAPImodels.EventJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.GameInformationJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.MarketJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.RunnerJSON;
+import com.codingnomads.betty.logic.models.betapimodels.EventJSON;
+import com.codingnomads.betty.logic.models.betapimodels.GameInformationJSON;
+import com.codingnomads.betty.logic.models.betapimodels.MarketJSON;
+import com.codingnomads.betty.logic.models.betapimodels.RunnerJSON;
 
 public interface GameInformationRepository {
     GameInformationJSON getGameInformation();

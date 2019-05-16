@@ -1,10 +1,10 @@
 package com.codingnomads.betty.data.api;
 
 import com.codingnomads.betty.logic.exceptions.JSONNotFoundException;
-import com.codingnomads.betty.logic.models.betAPImodels.EventJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.GameInformationJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.MarketJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.RunnerJSON;
+import com.codingnomads.betty.logic.models.betapimodels.EventJSON;
+import com.codingnomads.betty.logic.models.betapimodels.GameInformationJSON;
+import com.codingnomads.betty.logic.models.betapimodels.MarketJSON;
+import com.codingnomads.betty.logic.models.betapimodels.RunnerJSON;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;

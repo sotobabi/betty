@@ -48,12 +48,6 @@ public class SearchControllerTest {
     }
 
     @Test
-    public void whenApiToDatabaseIsCalled_apiToDatabaseIsReturned() {
-        when(mockTwitterService.callApiAndSaveStatusesAsTweets("someText", 1)).thenReturn(true);
-        assertThat(testController.makeApiCallAndSinkTweetsToRemoteDatabase().contains("api-to-database")).isTrue();
-    }
-
-    @Test
     public void whenGetSentimentScoreByKeywordUsedIsCalled_SentimentScoreIsReturned() {
         Double sentimentScore = null;
         when(mockProcessTweetsThroughNlpService.returnSentimentScoreByKeywordUsed("someText")).thenReturn(sentimentScore);

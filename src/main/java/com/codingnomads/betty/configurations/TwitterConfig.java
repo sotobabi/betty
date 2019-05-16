@@ -21,7 +21,6 @@ public class TwitterConfig {
     }
 
     private void buildTwitterConfiguration() {
-
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 
         configurationBuilder
@@ -33,7 +32,6 @@ public class TwitterConfig {
 
         twitterFactory = new TwitterFactory(configurationBuilder.build());
         twitter = twitterFactory.getInstance();
-
     }
 
 }

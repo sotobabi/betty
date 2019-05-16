@@ -1,4 +1,4 @@
-package com.codingnomads.betty.logic.interfaces;
+package com.codingnomads.betty.data.repositories;
 
 import com.codingnomads.betty.data.models.Tweet;
 import org.springframework.stereotype.Repository;

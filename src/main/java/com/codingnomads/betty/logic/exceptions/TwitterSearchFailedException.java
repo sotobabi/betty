@@ -4,5 +4,4 @@ public class TwitterSearchFailedException extends RuntimeException {
     public TwitterSearchFailedException(String message, Throwable cause){
         super(message, cause);
     }
-
 }

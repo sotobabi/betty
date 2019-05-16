@@ -8,6 +8,7 @@
 </head>
 <body>
     <div th:replace="fragments/navBar :: navBarFragment"></div>
+
     <div class="container">
         <form class="form-inline my-2 my-lg-0" th:action="@{/display-odds}"
               th:object="${inputTeam}" method="get">
@@ -15,8 +16,7 @@
                    th:field="*{teamName}">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-
-        <!--<h3>Your team's probability of winning is <span th:text="${teamProbabilityToWin.probabilityToWin}"> </span></h3>-->
     </div>
+
 </body>
 </html>

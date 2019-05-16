@@ -3,10 +3,10 @@ package com.codingnomads.betty.logic.services;
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
-import com.codingnomads.betty.logic.models.betAPImodels.EventJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.GameInformationJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.MarketJSON;
-import com.codingnomads.betty.logic.models.betAPImodels.RunnerJSON;
+import com.codingnomads.betty.logic.models.betapimodels.EventJSON;
+import com.codingnomads.betty.logic.models.betapimodels.GameInformationJSON;
+import com.codingnomads.betty.logic.models.betapimodels.MarketJSON;
+import com.codingnomads.betty.logic.models.betapimodels.RunnerJSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +61,6 @@ public class MatchOddsService {
     }
 
     public List<MatchOdds> findMostRecentMatchesAndOdds() {
-        List<MatchOdds> mostCurrentOddsAndMatches = matchOddsJpaRepository.findAll();
-        return mostCurrentOddsAndMatches;
+        return matchOddsJpaRepository.findAll();
     }
 }
