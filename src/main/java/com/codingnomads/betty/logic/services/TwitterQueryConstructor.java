@@ -2,7 +2,7 @@ package com.codingnomads.betty.logic.services;
 
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
-import com.codingnomads.betty.logic.interfaces.TwitterKeyWordRepository;
+import com.codingnomads.betty.logic.interfaces.TwitterKeywordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -15,38 +15,52 @@ public class TwitterQueryConstructor {
     //teamName -awayTeamName from a list of accounts
     //awayTeamName -teamName from a list of accounts
 
-    private MatchOddsJpaRepository matchOddsJpaRepository;
-    private TwitterKeyWordRepository twitterKeyWordRepository;
+    private TwitterKeywordRepository twitterKeyWordRepository;
 
     @Autowired
-    public TwitterQueryConstructor(MatchOddsJpaRepository matchOddsJpaRepository, TwitterKeyWordRepository twitterKeyWordRepository) {
-        this.matchOddsJpaRepository = matchOddsJpaRepository;
+    public TwitterQueryConstructor(TwitterKeywordRepository twitterKeyWordRepository) {
         this.twitterKeyWordRepository = twitterKeyWordRepository;
     }
 
-    private List<String> constructQueryPrefixFromTeamNames(){
-        List<MatchOdds> matches = matchOddsJpaRepository.findAll();
-        List<String> queryPrefixList = new ArrayList<>();
-        for(MatchOdds match : matches){
-            String homeTeam = match.getHomeTeam();
-            String awayTeam = match.getAwayTeam();
-            queryPrefixList.add(homeTeam + " -" + awayTeam);
-            queryPrefixList.add(awayTeam + " -"+homeTeam);
+    public List<String> constructHomeTeamQueries(MatchOdds match) {
+        List<String> queries = new ArrayList<>();
+        String homeTeam = match.getHomeTeam();
+        String awayTeam = match.getAwayTeam();
+        String prefix = constructQueryPrefix(homeTeam, awayTeam);
 
+        List<String> suffixes = constructQuerySuffix(homeTeam);
+        for(String suffix : suffixes){
+            String query = prefix + suffixes;
+            queries.add(query);
         }
-        return queryPrefixList;
+        return queries;
     }
 
-    private List<String> searchForAccountsWithTeamNames(List<MatchOdds> matches){
-        for(MatchOdds match: matches){
-            String homeTeam = match.getHomeTeam();
-            twitterKeyWordRepository.getAccountsWithTeamName(homeTeam);
+    public List<String> constructAwayTeamQueries(MatchOdds match) {
+        List<String> queries = new ArrayList<>();
+        String homeTeam = match.getHomeTeam();
+        String awayTeam = match.getAwayTeam();
+        String prefix = constructQueryPrefix(awayTeam, homeTeam);
+
+        List<String> suffixes = constructQuerySuffix(awayTeam);
+        for(String suffix : suffixes){
+            String query = prefix + suffixes;
+            queries.add(query);
         }
-        return null;
+        return queries;
     }
 
-    private List<MatchOdds> getMostRecentMatches(){
-        return matchOddsJpaRepository.findAll();
+    private List<String> constructQuerySuffix(String teamName) {
+        List<String> twitterAccounts = twitterKeyWordRepository.getAccountsWithTeamName(teamName);
+        List<String> querySuffixes = new ArrayList<>();
+        for (String account : twitterAccounts) {
+            String querySuffix = teamName + " " + "from:" + account;
+            querySuffixes.add(querySuffix);
+        }
+        return querySuffixes;
     }
 
+    private String constructQueryPrefix(String includeTeam, String excludeTeam) {
+        return includeTeam + " -" + excludeTeam;
+    }
 }

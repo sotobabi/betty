@@ -2,7 +2,7 @@ package com.codingnomads.betty.logic.interfaces;
 
 import java.util.List;
 
-public interface TwitterKeyWordRepository {
+public interface TwitterKeywordRepository {
 
     List<String> getAccountsWithTeamName(String homeTeam);
 }
