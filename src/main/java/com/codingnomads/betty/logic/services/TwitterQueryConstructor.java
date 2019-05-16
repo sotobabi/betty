@@ -1,7 +1,5 @@
 package com.codingnomads.betty.logic.services;
 
-import com.codingnomads.betty.data.models.MatchOdds;
-import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
 import com.codingnomads.betty.logic.interfaces.TwitterKeywordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,11 +8,6 @@ import java.util.List;
 
 public class TwitterQueryConstructor {
 
-    //MatchOdds -> finds the corresponding teams' hashtags and accounts and construct query
-
-    //teamName -awayTeamName from a list of accounts
-    //awayTeamName -teamName from a list of accounts
-
     private TwitterKeywordRepository twitterKeyWordRepository;
 
     @Autowired
@@ -22,29 +15,14 @@ public class TwitterQueryConstructor {
         this.twitterKeyWordRepository = twitterKeyWordRepository;
     }
 
-    public List<String> constructHomeTeamQueries(MatchOdds match) {
+    public List<String> constructQueriesWithTeamNames(String searchTeam, String opponentTeam) {
         List<String> queries = new ArrayList<>();
-        String homeTeam = match.getHomeTeam();
-        String awayTeam = match.getAwayTeam();
-        String prefix = constructQueryPrefix(homeTeam, awayTeam);
 
-        List<String> suffixes = constructQuerySuffix(homeTeam);
-        for(String suffix : suffixes){
-            String query = prefix + suffixes;
-            queries.add(query);
-        }
-        return queries;
-    }
+        String prefix = constructQueryPrefix(searchTeam, opponentTeam);
 
-    public List<String> constructAwayTeamQueries(MatchOdds match) {
-        List<String> queries = new ArrayList<>();
-        String homeTeam = match.getHomeTeam();
-        String awayTeam = match.getAwayTeam();
-        String prefix = constructQueryPrefix(awayTeam, homeTeam);
-
-        List<String> suffixes = constructQuerySuffix(awayTeam);
-        for(String suffix : suffixes){
-            String query = prefix + suffixes;
+        List<String> suffixes = constructQuerySuffix(searchTeam);
+        for (String suffix : suffixes) {
+            String query = prefix + suffix;
             queries.add(query);
         }
         return queries;
