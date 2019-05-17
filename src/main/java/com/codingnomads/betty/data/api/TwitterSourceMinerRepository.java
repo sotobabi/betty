@@ -20,7 +20,6 @@ public class TwitterSourceMinerRepository implements TwitterMinerRepository {
     }
 
     public List<Status> searchTweets(String keyword, int numberOfStatus) {
-
         Twitter twitter = twitterConfigurer.getTwitter();
         Query query = new Query(keyword);
 

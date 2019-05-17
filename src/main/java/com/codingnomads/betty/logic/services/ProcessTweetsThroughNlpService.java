@@ -13,12 +13,9 @@ import java.util.List;
 @Service
 public class ProcessTweetsThroughNlpService {
 
-
-    //Fields
     private TwitterJpaRepository twitterJpaRepository;
     private SourceToResultPipelineService sourceToResultPipelineService;
 
-    //Constructor
     @Autowired
     public ProcessTweetsThroughNlpService(TwitterJpaRepository twitterJpaRepository, SourceToResultPipelineService sourceToResultPipelineService) {
         this.twitterJpaRepository = twitterJpaRepository;

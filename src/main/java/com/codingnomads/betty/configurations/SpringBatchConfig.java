@@ -45,7 +45,6 @@ public class SpringBatchConfig {
                 .build();
     }
 
-
     @Order(2)
     @Bean("homeTeamTweets")
     public Job homeTeamTweetsJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,

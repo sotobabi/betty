@@ -32,12 +32,6 @@ public class SearchController {
         return "/displayOdds";
     }
 
-    @GetMapping("/api-to-database")
-    public String makeApiCallAndSinkTweetsToRemoteDatabase() {
-        twitterService.callApiAndSaveStatusesAsTweets("cat", 15);
-        return "api-to-database";
-    }
-
     @GetMapping("/get-sentiment-score")
     public String getSentimentScoreByKeywordUsed(@RequestParam(name = "keyword", required = true) String keyword, Model model) {
         double sentimentScore = processTweetsThroughNlpService.returnSentimentScoreByKeywordUsed(keyword);

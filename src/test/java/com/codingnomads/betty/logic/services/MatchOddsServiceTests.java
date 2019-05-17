@@ -3,7 +3,7 @@ package com.codingnomads.betty.logic.services;
 import com.codingnomads.betty.data.models.MatchOdds;
 import com.codingnomads.betty.logic.interfaces.GameInformationRepository;
 import com.codingnomads.betty.logic.interfaces.MatchOddsJpaRepository;
-import com.codingnomads.betty.logic.models.betAPImodels.*;
+import com.codingnomads.betty.logic.models.betapimodels.*;
 import org.junit.Before;
 import org.junit.Test;
 

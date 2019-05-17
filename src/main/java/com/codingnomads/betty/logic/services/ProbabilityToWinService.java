@@ -12,12 +12,10 @@ public class ProbabilityToWinService {
         if (teamSentimentScore.getScore() == null) {
             throw new NullPointerException("Team Score is null");
         }
-
         return createTeamProbability(teamSentimentScore);
     }
 
     private TeamProbabilityToWin createTeamProbability(TeamSentimentScore teamSentimentScore) {
-
         Double teamScore = teamSentimentScore.getScore();
 
         TeamProbabilityToWin teamProbabilityToWin = new TeamProbabilityToWin();
@@ -36,7 +34,4 @@ public class ProbabilityToWinService {
 
         return teamScore/100;
     }
-
-
-
 }

@@ -21,9 +21,7 @@ public class SourceToResultPipelineService {
         this.probabilityToWinService = probabilityToWinService;
     }
 
-
     public TeamProbabilityToWin transformTextToTeamProbability(List<String> listOfTextToAnalyze){
-
         TeamSentimentScore teamSentimentScore = convertTextsToSentimentResultList(listOfTextToAnalyze);
 
         return probabilityToWinService.getProbabilityToWinFromSentimentAnalysis(teamSentimentScore);

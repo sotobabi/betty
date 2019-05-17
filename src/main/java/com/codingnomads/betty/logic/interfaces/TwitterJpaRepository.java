@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TwitterJpaRepository extends JpaRepository<Tweet, Long> {
-
     List<Tweet> findByKeywordUsedLike(String keywordUsed);
-
 }
