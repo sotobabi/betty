@@ -5,4 +5,27 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=sotobabi_betty&metric=code_smells)](https://sonarcloud.io/dashboard?id=sotobabi_betty)
 
 # betty
+Betty is a web application that analyzes real-time sports reporting and social media sentiment to make betting recommendations.
+
 Betty will make you $$$.
+
+# Built With
+-Spring MVC - Thymeleaf
+-Spring Boot
+
+### Framework
+-Spring Framework
+
+### Libraries
+
+#### Twitter API Consumption
+-Twitter 4J
+
+#### Sentiment Analyse 
+-Stanford NLP
+
+#### API Consumption CRUD Automation
+-Spring Batch
+
+#### Build Tool & Dependency Management
+-Gradle
